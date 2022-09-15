@@ -1,0 +1,186 @@
+\chapter{Modular Arithmetics}
+Chapter Description.
+
+\section{Introduction to Modular Arithmetics}
+
+\subsection{Motivation}
+Across several computational notions, we would utilize number lines that wrap around. What do we exactly mean? \\
+Think back to Project Enigma, where we increment letters by numbers, and we would like to increment the letter Z by one position. That would provide us A, but because Z is computational represented as number $25$, and A $0$, we need to wrap a number around back to $0$ whenever it exceeds $26$. \\
+The mathematical operation that allows it is called a number circle. \\
+On a number line, we proceed from one number to the next, until perhaps infinity; in a number circle, counting works like the hours of a clock: whenever we reach the maximum possible hour $(12)$, we notate the next hour as the minimum possible hour $(1)$. Essentially, the next number to the largest of a circle is the smallest number of a circle. \\
+Mathematically, such arithmetics are known as \textbf{Modular Arithmetics}.
+
+\subsection{Foundation}
+Let us take alphabets as an example. To computationally represent them, we would use the integers in the following range:
+\[\{0, 1, \dots, 24, 25\}\]
+There is a one-to-one correspondence of the $26$ digits towards $26$ alphabets. To consider alphabets whose representation is temporarily larger than the maximum of this range (number circle), $25$, since there are a total of $26$ consecutive integers from $0$ in the range: \textbf{the true numerical representation of a letter is the remainder of division from its current representation divided by the size of range}.
+\begin{ln-symbol}{Modulo}{}
+    The Modulo operator, $\pmod$, is used in the manner:
+    \[x\pmod{m} = \text{remainder of x divided by m}\]
+    For example:
+    \[26\pmod{26} = 0\]
+\end{ln-symbol}
+And as a review of the rules of remainder, let $r = x\pmod{m}$, it is ruled that $0 \leq r \leq m - 1 \land r \in Z$. \\
+Therefore, symbol wise:
+\[29\pmod{26} = -23\pmod{26} = 3\]
+\begin{ln-symbol}{Properties of $\pmod$}{}
+    \begin{bindenum}
+        \item $(a + b)\pmod{n} = [a\pmod{n} + b\pmod{n}]\pmod{n}$
+        \item $(a - b)\pmod{n} = [a\pmod{n} - b\pmod{n}]\pmod{n}$
+        \item $(a \times b)\pmod{n} = [a\pmod{n} \times b\pmod{n}]\pmod{n}$
+    \end{bindenum}
+\end{ln-symbol}
+
+\subsection{Set Representation}
+For a modulo $k$, it happens that we can categorize all integers into $k$ sets $S_i$, such that:
+\[S_i = {z : z\pmod{i} = i} \]
+These sets are called residue classes $\pmod$ $k$. And, to mathematically express their comraderies, we may use the following symbol:
+\begin{ln-symbol}{Congruency}{}
+    \[x \equiv y\pmod{k} \iff (x\pmod{k} = y\pmod{k}) \]
+    For example,
+    \[29 \equiv -23\pmod{26}\]
+\end{ln-symbol}
+Let us attempt to prove a relevant theorem:
+\begin{ln-think}{Prove this theorem in the following box}{}
+    Prove:
+    \[(a \equiv c\pmod{m} \land b \equiv d\pmod{m}) \implies (a + b \equiv c + d\pmod{m} \land ab \equiv cd\pmod{m})\]
+    \tcblower
+    Let $c = a + k \cdot m$, $d = b + l \cdot m$:
+    \begin{align*}
+        c + d
+        &= a + b + (k + l) \cdot m \\
+        &\equiv (a + b)\pmod{m}
+    \end{align*}
+    \begin{align*}
+        c \dot d
+        &= ab + alm + bkm + klm^2 \\
+        &= ab + (al + bk + klm) \cdot m \\
+        &\equiv (ab)\pmod{m}
+    \end{align*}
+\end{ln-think}
+
+\section{Exponentiation}
+How can we compute $x^y\pmod{m}$? \\
+Well, for instance, we can compute the sequence $x\pmod{m}, x^2\pmod{m}, \dots$ up to the $y^{th}$ term, but that takes time exponential to the number of bits in $y$, which is less efficient than wanted. \\
+Instead, let us not calculate all items of the sequence, but just some:
+\begin{ln-theorem}{Algorithm for Modular Exponentiation}{}
+    We solve the value of $x^y \mod{m}$ with the following procedure:
+    \begin{bindenum}
+        \item If $y$ is $0$, then return $1$. This is trivial solution!
+        \item {
+            Else, we'd use the following procedure:
+            \begin{bindenum}
+                \item Compute a new variable $z = x^{\frac{y}{2}}\pmod{m}$.
+                \item If $y$ is even, then return $z^2\pmod{m}$.
+                \item Else, return $z^2x\pmod{m}$
+            \end{bindenum}
+        }
+    \end{bindenum}
+    Essentially, we use the mathematical facts that:
+    \[
+        \begin{cases}
+            x^{2a} = {(x^a)}^2 \\
+            x^{2a + 1} = x \times {(x^a)}^2
+        \end{cases}
+    \]
+\end{ln-theorem}
+The concrete analysis of the above algorithm would be performed in CS170, but this algorithm holds essentially an $O(n)$ runtime, where $n$ is the number of bits in $y$. \\
+This is very efficient, much more efficeint than the exponential-time naive approach.
+
+\section{Bijections}
+Take this as a side track! \\
+A function is, in its nature, the relationship of sets: it is a relationship of elements from set $A$ to set $B$. Mathematically expressed, \\
+\[(\forall x \in A) (f(x) \in B), f : A \rightarrow B\]
+\begin{ln-define}{Injective, Surjective, Bijection}{}
+    Injective, Surjective, and Bijective are all properties of functions, relationship between two sets $A$ and $B$. We call the $A$ the set of \textit{pre-images}, and $B$ the set of \textit{images}.
+    \begin{bindenum}
+        \item{
+            \textbf{Injective}: Each image (output) has at most one pre-image (input). This type of function is thus called a "one-to-one" function.
+            \begin{center}
+                \begin{tikzpicture}
+                    \node[circ] (A1) at (0, 0) [label=left:$A_1$] {};
+                    \node[circ] (A2) at (0, 0.3) [label=left:$A_2$] {};
+                    \node[circ] (B1) at (2, 0) [label=right:$B_1$] {};
+                    \node[circ] (B2) at (2, 0.3) [label=right:$B_2$] {};
+                    \node[circ] (B3) at (2, 0.6) [label=right:$B_3$] {};
+                    \draw (A1) -- (B1);
+                    \draw (A2) -- (B2);
+                    \draw (0, 0.15) ellipse (0.8cm and 0.8cm);
+                    \draw (2, 0.3) ellipse (0.8cm and 0.8cm);
+                \end{tikzpicture}
+            \end{center}
+        }
+        \item{
+            \textbf{Surjective}: Each image (output) has at least one image (input). This type of function is "onto".
+            \begin{center}
+                \begin{tikzpicture}
+                    \node[circ] (A1) at (0, 0) [label=left:$A_1$] {};
+                    \node[circ] (A2) at (0, 0.3) [label=left:$A_2$] {};
+                    \node[circ] (A3) at (0, 0.6) [label=left:$A_3$] {};
+                    \node[circ] (B1) at (2, 0) [label=right:$B_1$] {};
+                    \node[circ] (B2) at (2, 0.3) [label=right:$B_2$] {};
+                    \draw (A1) -- (B1);
+                    \draw (A2) -- (B2);
+                    \draw (A3) -- (B2);
+                    \draw (0, 0.3) ellipse (0.8cm and 1.2cm);
+                    \draw (2, 0.15) ellipse (0.8cm and 1.2cm);
+                \end{tikzpicture}
+            \end{center}
+        }
+        \item {
+            \textbf{Bijective}: A function is Bijective if the function is both injective and surjective. In other words, each image (output) has exactly one pre-image (input).
+        }
+    \end{bindenum}
+\end{ln-define}
+Let us practice this concept with some modular functions:
+\begin{ln-quest}{Bijectivity of Modular Functions}{}
+    Show whether the following functions are bijective:
+    \[
+        \begin{cases}
+            f(x) \equiv x + 1\pmod{m} \\
+            g(x) \equiv 2x\pmod{m}
+        \end{cases}
+    \]
+    Where both functions map $\{0, \dots, m - 1\}$ onto themselves.
+    \tcblower
+    The function $f$ is bijective: every image, which are nonnegative integers from $0$ to $m - 1$, have a corresponding pre-image that is themselves. \\
+    The function $g$, however, would suffer under an even $m$ as odd nonnegative images will have no preimages. In that case, $g$ is only bijective for an odd $m$.
+\end{ln-quest}
+
+\section{Inverse Operations}
+We have discussed adding as an inverse operation of subtraction, but what is the inverse operation of multiplication in a modulo sense? \\
+In normal arithmetics, multiplying a number by $x$ is equivalent of dividing it by $\frac{1}{x}$, and for an equation $xy = 1$, we would call $y$ the multiplicative inverse of $x$ (because multiplying $y$ reduces the product into $1$). In linear algebra, we also had "inverse matrices" that can form multiplicative inverses via yielding a product of identity matrices $I_n = A^-1 \cdot A$. \\
+In a modular sense, then, the multiplicative inverse would be defined as follows: \\
+\begin{ln-define}{Multiplicative Inverse of Modular Arithmetics}{}
+    For $x$, $y$, $m$ such that $xy \equiv 1\pmod{m}$, \underline{$y$ is the multiplicative inverse of $x$ modulo $m$}.
+\end{ln-define}
+There turns out to be conditions under which the multiplicative inverse of a number $x$ modulo $m$ exists:
+\begin{ln-theorem}{Condition of Existence for Multiplicative Inverse in Modular}{}
+    \textbf{Theorem}: The necessary condition of multiplicative inverse of $x$ modulo $m$ is that $gcd(m, x) = 1$.
+    \tcblower
+    If there exists an inverse $y$ of $x$ modular $m$, then $xy \equiv 1\pmod{m}$. Therefore, $xy = km + 1$. \\
+    In that case, $xy - km = 1$. \\
+    Let $c$ be a common divisor of $x$ and $m$, then that divisor must be the factor of $xy$ and $km$ too, thus the factor of $xy - km = 1$. However, the only number that can be a factor of $1$ is $1$. \\
+    Therefore, assuming there exists a multiplicative inverse, then the only possible common divisor of $x$ and $m$ is $1$. Therefore, $m$ and $x$ are also coprime to each other.
+\end{ln-theorem}
+And the multiplicative inverse would be unique:
+\begin{ln-theorem}{Uniqueness of Multiplicative Inverse under Modular}{}
+    \textbf{Theorem}: The multiplicative inverse of $x$ modular $m$ is unique.
+    \tcblower
+    Let us state $a$ as the multiplicative inverse of $x$ modular $m$, then $ax \equiv 1\pmod{m}$. \\
+    For the sake of contradiction, let's assume another distinct multiplicative inverse $b$, such that $bx \equiv 1\pmod{m}$. \\
+    In that case, $bx - ax = x(b - a) \equiv 1\pmod{m}$, so if two or more distinct multiplicative inverse of $x$ modular $m$ exist, then $x$ and $m$ are not coprime to each other. This causes a contradiction with the condition of existence, which states that such inverses can only exist for coprime $x$ and $m$. \\
+    Therefore, by contradiction, there can only exist one multiplicative inverse of $x$ modular $m$.
+\end{ln-theorem}
+While the inverse of $x$ can be written as $y = x^{-1}\pmod{m}$, this is generally considered an abuse of notation, as $x^{-1}$ can also stand for $\frac{1}{x}$ under such ambiguous context.
+
+\subsection{Euclid's Algorithm}
+Lorem
+
+\subsection{Extended Euclid's Algorithm}
+Lorem
+
+\subsection{Brief Notes: Division via Inverse}
+Lorem
+
+\section{Chinese Remainder Theorem}

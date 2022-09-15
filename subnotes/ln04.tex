@@ -1,0 +1,117 @@
+\chapter{The Stable Matching Problem}
+In this chapter, we introduce the Stable Matching Problem and the Propose-And-Reject Algorithm, and use it as a case study of how proofs can be applied to problems of the computer science field to guarantee the efficiency and legitimacy of an algorithm.
+
+\section{Description of Stable Matching Problem}
+In this section, readers will be introduced to a frequently occuring problem of instutitions, called the "Stable Matching Problem", as well as learn an algorithmic solution of it that we will analyze the inner workings of in the next following section.
+
+\subsection{Stable Matching Problem and Propose-And-Reject Algorithm}
+Say we have an employment system, having to match $n$ jobs to $n$ candidates. Each job has a list of $n$ candidates ordered based on preference, while a preference-ordered list of $n$ jobs also exist for each candidates. \\
+Our problem is, how do we find the best match, defined as in "switching jobs does not benefit each candidate"? \\
+The algorithm that achieves this is called the "Propose-and-Reject algorithm", or more formally known as the Gale-Shapley algorithm. Let us see how this algorithm works in the hypothetical context we presented above, in "phases":
+\begin{ln-think}{How does the Gale-Shapley Algorithm Work?}{}
+    At phase 1, every job position proposes to the most preferred candidate on its list who has not yet rejected their position. \\
+    At phase 2, each candidate collect all offers they receive, and responds "maybe" to their favoirte positions while "no" to other offers. \\
+    At phase 3, each rejected position crosses off the candidate who rejected them. \\
+    We repeat the loop from phase 1, as we have completed phase 3. We stop looping when no offers are rejected, as that means each candidate has a job offer of their "maybe". The candidates will then accept their offers.
+\end{ln-think}
+In the following section, let us analyze this algorithm and answer the essential query: "How on Earth does this simple approach solve the significant problem?"
+
+\section{The Properties of Propose-And-Reject Algorithm}
+In this section, we will analyze the properties of Gale-Shapley Algorithm, as in what makes it a working algorithm and provide the proof that it works. This section will involve many mathematical induction, and we will finally see induction being applied to problems of the computer science fields!
+
+\subsection{The Properties of Propose-And-Reject Algorithm}
+When discussing whether an algorithm is good or not, we mind about two properties: whether it halts, and whether it outputs a stable (good) matching. \\
+The former can be proven true using a proof:
+\begin{ln-think}{Does the Gale-Shapley Halt?}{}
+    On each day the algorithm doesn't halt, at least one job must eliminate some candidate from its list. Or else, it means that every candidate accepted an offer, and therefore the matching has ended. \\
+    Assuming this worst case for lists of $n$ jobs and $n$ candidates, this algorithm has a worst case runtime of $O(n ^ 2)$ for it halts in at most a finite number, $n ^ 2$, of iterations.
+\end{ln-think}
+How do we define a "stable" match then? What is the heuristic, the metric, or the standards for deciding how good a matching is? \\
+In the context we work with, let us define the metric as:
+\begin{bindenum}
+    \item A matching is unstable if there is a job and a candidate who both prefer working with \underline{each other} over a current matching.
+    \item A matching is stable if there are no couples like above, called "rogue couples".
+\end{bindenum}
+First of all, we want to assess whether there could always be stable matchings, since if not, then the algorithm could still lead us astray from the combinations we want. \\
+Let us observe how the algorithm's list of choices develops. While each jobs begin with its first choice, their choice prime candidates could betray and reject them. Therefore, jobs have worse choices over time. However, candidates will reject any choices that they do not like among all they receive and "maybe", therefore only having better choices over time. \\
+This can be formalized into a lemma:
+\begin{ln-lemma}{Improvement of Choices in GS Algorithm}{}
+    If job J makes an offer to candidate C, then on every subsequent day C has a job offer in hand which candidate C likes at least as much as J.
+\end{ln-lemma}
+Time to do proofs for this lemma:
+\begin{ln-think}{And Prove the Improvement Lemma above}{}
+    Let us perform induction on a day $i \geq k$
+    \tcblower
+    \textbf{Base Case} ($i = k$): on day $k$, candidate receives at least one offer from job $J$. Since the candidate $C$ chooses whichever of the current favorite and offer from $J$ is better, in the case $J$ is not chosen, the offer $C$ holds is better than $J$, and in the case $J$ is chosen, $C$ has an offer as good as $J$ per se. \\
+    \textbf{Induction Hypothesis}: Let us assume the lemma holds for some arbitrary $n \geq k$. \\
+    \textbf{Inductive Step}: Let the current favorite offer of candidate $C$ be $B$, and the offer received today be from job $J$. Since $C$ must choose the better among $B$ and $J$, if $B$ is chosen, then $B$ is at least more favored and liked than $J$, while if $J$ is chosen, the offer that $C$ holds is as good as $J$. Considering both cases, the offer can only be as good as or better than $J$.
+\end{ln-think}
+Or, there is an alternative way to prove this lemma, utilizing another mathematical principle that makes its debut in this chapter.
+\begin{ln-think}{Proving the Improvement Lemma, Alternative}{}
+    Before moving on, let us consider:
+    \begin{ln-define}{Well-Ordering Principle}{}
+        If $S \subseteq \N$ and $S$ is not empty, then $S$ has a smallest element. Or, put in mathematical symbols as an implication:
+        \[S \subseteq \N \land S \neq \emptyset \implies \exists x \in S (\forall y \in S (x \leq y))\]
+    \end{ln-define}
+    Now, let us assume that there exists an $n > k$ after our base case in the previous induction proof such that at day $n$, a first counterexample to the lemma occurs. The candidate $C$ has either no offer or an offer from some other job $H$ less favorite than the current favortie $J$. \\
+    On day $n - 1$, candidate then receives an offer from some job $K$ and liked it at least as mucha s $J$, which is as the lemma proposes. Therefore, this offer $K$ still exists on day $n$, the exception day, which must make the new favorite be better than $K$, thus $J$, thus $H$. \\
+    We see from the above logic that the proposition $\neg (P(i) \implies P(i + 1))$ cannot hold for any values $i$. Therefore, by the law of excluded middle, $(P(i) \implies P(i + 1))$ will hold for any arbitrary value $i$. A Proof by Contraposition guides to the completion of a mathematical induction. \\
+    The above proof is secured by the Well-Ordering Principle because the order of proof in induction that assumes the smaller natural number to be ordered before the larger natural number is required for both the hypothesis of some day $n$ being a first counterexample and the basic hypothesis of induction on proving the proposition to an incremented number.
+\end{ln-think}
+Now, we only need to know two more things. First of all, the propose-and-reject algorithm does halt, and furthermore, terminate with a matching. Second of all, the amtching produced by the algorithm is always stable, now that we have the improvement lemma to help proving this statement with.
+\begin{ln-think}{Does the GS Algorithm always terminate with a matching?}{}
+    Let us suppose it does not, such that there is a job $J$ left unpaired when the algorithm terminates. That means the job $J$ has offered to and been rejected by all possible candidates. \\
+    By the Improvement Lemma, this means each candidate must have had a better offer than what job $J$ provided. Therefore, there in fact exists $n$ jobs better than $J$, leaving us with a list of $n + 1$ jobs. However, we only assumed there to be $n$ jobs. \\
+    Therefore, via proof by contradiction, we have proved the lemma:
+    \begin{ln-lemma}{Termination of GS Algorithm}{}
+        The Gale-Shapley algorithm always terminates with a matching.
+    \end{ln-lemma}
+\end{ln-think}
+Taking this to the next step, we verify the stability of each matching.
+\begin{ln-think}{The Stability of Matching by Termination}{}
+    Let us consider an arbitrary couple $(J, C)$ in the final result of matching. \\
+    Let us suppose that this arbitrary job $J$ prefers some other arbitrary better candidate $C^*$ to $C$. However, $C^*$ is currently paired with some other job $K$, and by the Improvement Lemma, this must be because that $K$ is at least as favorable as $J$, making $C^*$ having fovored $K$ more than $J$. \\
+    Job $J$ also wouldn't want to switch to a worse candidate, so the best it can have now is $C$. The job $J$ can therefore never be involved in a rogue couple. \\
+    We have proved there cannot be any job $J$ involved in a rogue couple, such that for any candidate $J$ prefers better, that candidate doesn't want $J$ more.
+    \begin{ln-theorem}{The Property of GS Algorithm}{}
+        The matching produced by the Gale-Shapley algorithm is always stable.
+    \end{ln-theorem}
+\end{ln-think}
+
+\subsection{Optimality of Propose-And-Reject Algorithm}
+We would also like to discuss whether the matches this algorithm provides is optimal. However, before discussing so, to make good mathematical propositions, we must define optimality.
+\begin{ln-define}{Optimality of Match in GS Algorithm}{}
+    For a given job $J$, its optimal candidate is the highest rank candidate on the preference list of $J$ that $J$ could be paired with in any stable matching. \\
+    For a given candidate $C$, its optimal job is the highest rank job on the preference list of $C$ that $C$ could be paired with in any stable matching. \\
+    Put more straightforward, optimal is the highest ranked choice posssible for the resulting match to be stable. \\
+    A matching where each job is paired with its optimal candidate is known as a job optimal matching. On the other hand, a matching where each candidate is paired with their respective optimal job is known as a candidate optimal matching.
+    The opposite of this concept is "pessimal".
+\end{ln-define}
+And now, let us decide whether the matching output by our GS Algorithm is job-optimal:
+\begin{ln-think}{Is the GS Algorithm providing a job-optimal matching?}{}
+    For the sake of contradiction, let us propose that the algorithm doesn't. \\
+    Let there exist a day on which a job has its offer rejected by the optimal candidate, and the first day of this counter be on day $k$ (mind that we are again using the well-ordered principle here via having a "first counterexample"). \\
+    Suppose on that day, $J$ was rejected by the optimal candidate $C^*$ in favor of an offer from $J^*$. Then, this couple $(J, C^*)$ should exist in some stable matching. Therefore, the matching would look something like:
+    \[T = \{\dots, (J, C^*), \dots, (J^*, C'), \dots\}\]
+    First of all, if $C^*$ rejected $J$ in favor of $J^*$, then $C^*$ must have liked to work on $J^*$ more. Furthermore, $J^*$ is assumed to have made an offer to $C^*$, but accepts $C'$ in turn. This means $C^*$ is at least as good as $C'$, and that $J^*$ would've wanted to work with $C^*$ instead. \\
+    We have came to see that $(J^*, C^*)$ is in fact a rogue couple, making $T$ an unstable match rather than a stable one as we assumed with the above logic. \\
+    Therefore, via proof by contradiction, we found:
+    \begin{ln-theorem}{The Optimality of GS Algorithm I}{}
+        The matching produced by the Gale-Shapley algorithm is always Job-Optimal.
+    \end{ln-theorem}
+\end{ln-think}
+as well as candidate-optimal:
+\begin{ln-think}{Is the GS Algorithm providing a candidate-optimal matching?}{}
+    Let us utilize the Job-Optimality of GS Algorithm and let $T$ be an employer-optimal matching:
+    \[T = \{\dots, (J, C), \dots\}\]
+    For the sake of contradiction, let us propose that there exists a stable matching:
+    \[S = \{\dots, (J^*, C), \dots, (J, C'), \dots\}\]
+    such that job $J^*$ is ranked lower than job $J$ on the preference of $C$. \\
+    However, if so, then $C$ must have wanted to work with $J$ more and $J$'s current candidate $C'$ is not preferred more than $C$ given the stable amtching $T$. \\
+    We managed to show that the matching $S$ is both stable and unstable, which itself is a contradiction. Therefore, the matching from GS Algorithm cannot be candidate-optimal. \\
+    If so:
+    \begin{ln-theorem}{The Optimality of GS Algorithm II}{}
+        The matching produced by the Gale-Shapley algorithm is always Candidate-Pessimal.
+    \end{ln-theorem}
+\end{ln-think}
+Notably, this algorithm can still be modified in finer details to provide a priori in preference from jobs, as well as converting the algorithm into possessing candidate-optimality instead.

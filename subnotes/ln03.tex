@@ -1,0 +1,120 @@
+\chapter{Mathematical Induction}
+In this chapter, we introduce and discuss a new form of deduction called "Mathematical Induction". In the examples offered by the chapter, we discuss the power and practicality of mathematical induction, as well as the different forms of inductions that come with different tips of using. \\
+Meanwhile, as the chapter does not include the lecture note's description on a connection between COMPSCI 61A's "Leap of Faith" and mathematical induction, the readers are encouraged to nurture an understanding towards this connection in their vision. Hopefully, it will facilitate the understanding towards mathematical induction and provide a firmer ground on recursive functions/programs.
+
+\section{Introduction to Mathematical Induction}
+In this section, we introduce mathematical induction as a tool of proof, and discuss the usage of mathematical induction via examples.
+
+\subsection{Definition of Mathematical Induction}
+Previously, we introduced "techniques", or directions we can take to produce mathematical proofs. Here, we will introduce a new powerful tool, a new proof technique, a form of deduction called "mathematical indcution". Such form of logic establishes a statement holds for all natural numbers. \\
+This is an important contribution. When we are asked to prove statements for all natural numbers, there are an infinite number of values to be checked for the statement. It poses the problem: while mathematical proof requires a finite sequence of logic, the prompt requires us to guarantee a proposition for infinite values. This implies how strong a tool mathematical induction can be for mathematicians, and furthermore, computer scientists. \\
+How exactly does mathematical induction work? Or, how does it guarantee the statement to be right for all natural numbers? Each mathematical induction is composed of three fundamental aspects: \textbf{Base case}, \textbf{Induction Hypothesis}, and \textbf{Inductive Step}:
+\begin{bindenum}
+    \item \textbf{Base Case}: that the statement works for an initial value $k$. In the case we are proving for all natural numbers, $k = 0$ is a popular choice. Therefore, we attempt to prove at this step that the prompt proposition $P(n)$ works for the value $0$.
+    \item \textbf{Induction Hypothesis}: We here make the assumption that for an arbitrary value $n \geq k$, $P(n)$ is true. Building on that, we proceed into the next step:
+    \item \textbf{Inductive Step}: With the induction hypothesis, we here attempt to prove that $P(n + 1)$ is true.
+\end{bindenum}
+Let us see an example of mathematical induction utilized in a direct proof:
+\begin{ln-think}{Mathematical Induction in Direct, Algebraic Proof}{}
+    Prompt: $\forall n \in \N (\sum_{i = 0}^{n} {i} = \frac{n(n + 1)}{2})$
+    \tcblower
+    For brevity, let the proposition $P(x)$ be the second clause of the prompt: $\sum_{i = 0}^{x} {i} = \frac{x(x + 1)}{2}$. \\
+    \textbf{Base Case}: Prove $P(0)$.
+    \[\sum_{i = 0}^{0} {i} = 0 = \frac{0(0 + 1)}{2}\]
+    Hereby, $P(0)$ has been proven. \\
+    \textbf{Induction Hypothesis}: Assume for an arbitrary $k$, $P(k)$ holds, such that $\sum_{i = 0}^{k} {i} = \frac{k(k + 1)}{2}$. \\
+    \textbf{Inductive Step}: Assuming $P(k)$ is true, prove $P(k + 1)$.
+    \begin{align*}
+        \sum_{i = 0}^{k} {i} &= \frac{k(k + 1)}{2} \\
+        \sum_{i = 0}^{k + 1} {i} &= \frac{k(k + 1)}{2} + (k + 1) \\
+        &= \frac{k^2 + k}{2} + \frac{2k + 2}{2} \\
+        &= \frac{k^2 + 3k + 2}{2} = \frac{(k + 1)(k + 2)}{2} = \frac{(k + 1)((k + 1) + 1)}{2}
+    \end{align*}
+\end{ln-think}
+As seen in the above proof, we assumed the induction hypothesis to hold when attempting to complete the inductive step. Often, the induction hypothesis even serves as a critical step towards the completion of an induction.
+
+\subsection{Graphical Mathematical Induction}
+Mathematical Inductions not only work from the algebraic perspective. Since it can prove statements to hold for all natural numbers, these statements ought to not only be propositions for algebraic identities. It can also be geometrical phenomenons. Let us view an example from the lecture notes:
+\begin{ln-think}{Mathematical Induction in Geometric Proof}{}
+    Define n-colorable as able to color a map with n colors such that no adjacent areas share the same color. \\
+    Prompt: Let $P(n)$ denote the statement \textit{"Any map where the border of all areas are marked by within n lines is two-colorable"}, then prove that $\forall n \in \N (P(n))$.
+    \tcblower
+    \textbf{Base Case}: Consider $P(0)$. In this case, a map with $0$ lines to mark the border of areas is just one huge area, which is definitely two-colorable. \\
+    \textbf{Induction Hypothesis}: Assume for some arbitrary $k \geq 0$, $P(k)$ holds. \\
+    \textbf{Inductive Step}: Let us assume that the induction hypothesis is true. In the inductive step, our map will provided a new line to mark the borders of newly created regions. These newly created regions of the map must come as a partition of previously whole areas. \\
+    Now, let us set the line onto the map. Let us defined the side left or above the new added line (the $(k + 1)^{th}$ line) as the left hand side (LHS), and the other (RHS). \\
+    We notice that the current map would not be two-colorable, because the newly created regions must have the same color with their other partition. \\
+    Let us save this proof with a small maneuver. By swapping all colors existing on the LHS to their opposite, then while the two-colorable property is preserved under any color swapping, all original whole areas will now hold partitions of different colors, for their partitions are splitted across the LHS (the swapped side) and RHS (the unswapped side). \\
+    Consequentially, for the $k$-line map is two-colorable as the induction hypothesis states, the $k + 1$-line map must also be. Therefore, under such assumption, the inductive step works and $P(k + 1)$ holds.
+\end{ln-think}
+Not only are mathematical inductions useful on such graphical proofs, it can further provide strong proofs towards theorems that are considered really hard to prove in algebraic means. Graphical proofs rely more on geometry and logic than mere algebra, which makes it different in property from the conventional mathematical inductions we see in the lecture notes dealing with number theory and arithmetic manipulations.
+
+\subsection{The Strength of Induction Hypothesis}
+However, mathematical induction is not all-able. If the prompt is too difficult to prove, or if the induction hypothesis is too weak for us to proceed the inductive step with, we will be unable to complete a proof. Let us visit an example from the lecture notes regarding this problem.
+\begin{ln-think}{When the Induction Hypothesis is Suspicious}{}
+    Prompt: for all $n \geq 1$, the sum of the first $n$ odd numbers is a perfect square.
+    \tcblower
+    \textbf{Base Case}: Prove the prompt for $n = 1$. The first odd number is $1$, and $1 = 1 ^ 2$ is a perfect square. \\
+    \textbf{Induction Hypothesis}: Assume that for an arbitrary $k \geq 1$, the sum of the first $k$ odd numbers is a perfect square. \\
+    \textbf{Inductive Step}: The $(k + 1)^{th}$ odd number would be (2k + 1). Considering the sum of the first $k$ odd numbers is a perfect square $m^2$, the sum of the first $k + 1$ odd numbers would be $m^2 + 2k + 1$. \\
+    What next......? Proof incomplete.
+\end{ln-think}
+We were not able to complete the above induction because our induction hypothesis was not powerful enough to drive us towards completing the inductive step. This induction hypothesis, or a prior assumption that we may call \textbf{priori}, needs to be a different proposition that speaks the same thing as an induction hypothesis does. Or, it has to be a stricter, stronger proposition for us to assume. Let us try a different induction hypothesis for the same prompt:
+\begin{ln-think}{When the Induction Hypothesis is Powerful}{}
+    Prompt: for all $n \geq 1$, the sum of the first $n$ odd numbers is $n^2$.
+    \tcblower
+    \textbf{Base Case}: Prove the prompt for $n = 1$. The first odd number is $1$, and $1 = 1 ^ 2$. \\
+    \textbf{Induction Hypothesis}: Assume that for an arbitrary $k \geq 1$, the sum of the first $k$ odd numbers is a $k ^ 2$. \\
+    \textbf{Inductive Step}: The $(k + 1)^{th}$ odd number would be (2k + 1). Considering the sum of the first $k$ odd numbers is a perfect square $k^2$, the sum of the first $k + 1$ odd numbers would be $k^2 + 2k + 1 = (k + 1) ^ 2$. \\
+    What next......? Proof incomplete.
+\end{ln-think}
+While this prompt allows us to prove the previous, it also has a stricter proposition to prove with, which comes with a more convenient statement to prove with. \\
+In other words, the original prompt was too vague, causing our Induction Hypothesis to be weaker. \\
+As for how we can discover a stronger hypothesis, we can usually manually demonstrate the proposition of prompt and attempt to see the pattern in which it was achieved:
+\begin{ln-think}{Finding A Stronger Prompt}{}
+    Prompt: for all $n \geq 1$, the sum of the first $n$ odd numbers is a perfect square.
+    \tcblower
+    \begin{align*}
+        n = 1 &: 1 = 1^2 \\
+        n = 2 &: 1 + 3 = 2^2 \\
+        n = 3 &: 1 + 3 + 5 = 3^2 \\
+        n = 4 &: 1 + 3 + 5 + 7 = 4^2
+    \end{align*}
+    We found there seems to be a pattern that: Prompt: for all $n \geq 1$, the sum of the first $n$ odd numbers is $n^2$. \\
+    We then performed mathematical induction on it as an attempt to find a stronger hypothesis to prove the original prompt with, which worked!
+\end{ln-think}
+
+\section{Simple Induction and Strong Induction}
+In this section, we describe strong induction as an idea similar to simple induction, demonstrate the TPO of using either techniques, and will form an analogy of both inductions as tools that perform the same purpose with different equipped power. \\
+We might recognize a strong induction as a TI-84, if simple induction is a TI-83. How so? Let us attempt to answer this by exploring the contents of this section.
+
+\subsection{The Strength of Induction: Simple or Strong}
+Up until now, we have used the three-part format of mathematical induction known as "simple induction", or "weak induction". \\
+Notably, there is another notion of induction called "strong induction", which expects a slightly different induction hypothesis:
+\[\land ^ {k} _ {i = 0} {P(i)} \text{is true}\]
+While both forms of induction hold the same purpose and accomplish the same result, the amount of power needed in completing objectives is different across these two tools. Strong induction provides us a stronger hypothesis to work with, thus is more simple to use. Let us demonstrate so with an example:
+\begin{ln-think}{New Technique: Strong Induction}{}
+    Prove: $(\forall n \in \N)((n > 12) \implies (\exists x, y \in \N (n = 4x + 5y)))$
+    \tcblower
+    \textbf{Base Case}:
+    \begin{align*}
+        n = 12 = 3 \times 4 + 0 \times 5 \\
+        n = 13 = 2 \times 4 + 1 \times 5 \\
+        n = 14 = 1 \times 4 + 2 \times 5 \\
+        n = 15 = 0 \times 4 + 3 \times 5
+    \end{align*}
+    \textbf{Induction Hypothesis}: Assume that the prompt holds for all $12 \leq n \leq k$ for some arbitrary $k \geq 15$. \\
+    \textbf{Inductive Step}: We need to prove the claim for numbers beyond such limit $k$. We will prove for the case $n = k + 1 \geq 16$, or with some algebra: the case $(k + 1) - 4 \geq 12$. \\
+    Since $12 \leq (k + 1) - 4 \leq k$, by the induction hypothesis, $\exists a, b \in \N ((k + 1) - 4 = 4a + 5b)$. \\
+    It would then provide: $(k + 1) = 4a + 4 + 5b = 4(a + 1) + 5b$. Therefore, the prompt holds for value $(k + 1)$
+\end{ln-think}
+Let us provide another example to witness the efficiency in strong induction, as well as to explore an example on the lecture note.
+\begin{ln-think}{New Technique: Strong Induction, ex2}{}
+    Prove that: every natural number $n > 1$ can be written as a product of one or more primes.
+    \tcblower
+    \textbf{Base Case}: The number $n = 2$ itself is prime, therefore can be written as a product of a prime number (itself). \\
+    \textbf{Induction Hypothesis}: Let us assume the prompt holds for all numbers $2 \leq n \leq k$, for an arbitrary $k$. \\
+    \textbf{Inductive Step}: We face the number $k + 1$ to prove the prompt for. Here are two cases: either $k + 1$ is prime, or not prime. \\
+    If $k + 1$ is prime, then the problem is resolved as it can be written as a product of one prime number (itself). If it is not prime, however, then we would assume it is the product of two natural numbers $x, y$ such that $1 < x \leq y < k + 1$, as multiplication should work. \\
+    However, such numbers $x, y$ should by the induction hypothesis be able to be written as a product of one or more prime numbers. If so, then so can $k + 1$. Via proof by case and mathematical induction, we have proved the prompt to hold true over the range of natural numbers it quantifies over.
+\end{ln-think}
