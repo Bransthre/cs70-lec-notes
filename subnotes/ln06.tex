@@ -174,7 +174,8 @@ And the multiplicative inverse would be unique:
     In that case, $bx - ax = x(b - a) \equiv 1\pmod{m}$, so if two or more distinct multiplicative inverse of $x$ modular $m$ exist, then $x$ and $m$ are not coprime to each other. This causes a contradiction with the condition of existence, which states that such inverses can only exist for coprime $x$ and $m$. \\
     Therefore, by contradiction, there can only exist one multiplicative inverse of $x$ modular $m$.
 \end{ln-theorem}
-While the inverse of $x$ can be written as $y = x^{-1}\pmod{m}$, this is generally considered an abuse of notation, as $x^{-1}$ can also stand for $\frac{1}{x}$ under such ambiguous context.
+While the inverse of $x$ can be written as $y = x^{-1}\pmod{m}$, this is generally considered an abuse of notation, as $x^{-1}$ can also stand for $\frac{1}{x}$ under such ambiguous context. \\
+Another way to express the multiplicative inverse can be $y = (x)_{m}^{-1}$
 
 But we cannot just settle with knowing that an inverse exist. Let us attempt at finding a way to compute it; namely, let us produce an algorithm that can compute the multiplicative inverse of $x$ modulo $m$. \\
 Let us begin our passage by thinking about greatest common divisors. Suppose that for any pair of numbers $x$, $y$, then the greatest common divisors can be expressed as:
@@ -248,3 +249,72 @@ Let us attempt to apply this onto solving a congruence:
 \end{ln-quest}
 
 \section{Chinese Remainder Theorem}
+The Chinese Remainder Theorem is another craftsman algorithm developed by Sunzi for counting the number of soldiers. The simplest case of the theorem is as follows:
+\begin{ln-define}{Chinese Remainder Theorem, Claim}{}
+    For $m,n$ with $gcd(m, n) = 1$, there is exactly one $x\pmod{mn}$ such that:
+    \[x \equiv a\pmod{n} \land x \equiv b\pmod{m}\]
+    \begin{flushright}
+        \textit{-- Sunzi, The Art of War}
+    \end{flushright}
+\end{ln-define}
+\begin{ln-quest}{Prove the Simplest Case of Chinese Remainder Theorem}{}
+    The proof follows from the existence of multiplicative inverse for $n$, $m$, respectively modulo $m$, modulo $n$. By prior discussions, this holds when $gcd(n, m) = 1$. \\
+    Let us follow from this fact and declare some variables:
+    \[
+        \begin{cases}
+            u \equiv m(m^-1\pmod(n)) \\
+            v \equiv n(n^{-1}\pmod{m})
+        \end{cases}
+    \]
+    Here, for analysis on $u$: 
+    \begin{align*}
+        m(m^{-1}\pmod{n}) &\equiv mm^{-1} \equiv 1\pmod{n} \\
+        u &\equiv 0\pmod{m} \text{ (because it is a multiple of $m$)}
+    \end{align*}
+    Applying a similar logic onto the value of $n(n^{-1}\pmod{m})$, we will attain the following:
+    \[
+        \begin{cases}
+            u \equiv 1\pmod{n} \land u \equiv 0\pmod{m} \\
+            v \equiv 0\pmod{n} \land v \equiv 1\pmod{m}
+        \end{cases}
+    \]
+    And therefore, let $x = au + bv$:
+    \[
+        \begin{cases}
+            x = au + bv \equiv a(1) + b(0) \equiv a\pmod{n} \\
+            x = au + bv \equiv a(0) + b(1) \equiv b\pmod{m}
+        \end{cases}
+    \]
+\end{ln-quest}
+Such a solution can be argued unique:
+\begin{ln-think}{Might the solutions of CRT be unique?}{}
+    Consider for the sake of contradiction a second distinct solution $y$ exists, then due to the modular properties, $x - y \equiv 0\pmod{m}$ and $x - y \equiv 0\pmod{n}$. \\
+    Since $gcd(m, n) = 1$, and $x - y$ is some multiple of $m, n$, and $x \neq y$, then either $|x - y| = 0mn$ or $|x - y| \geq mn$. The former implies $x = y$, while the latter suggests that one of $x$ and $y$ is not in $\{0, \dots, mn - 1\}$. \\
+\end{ln-think}
+And therefore, it's not exactly that the solution is unique. It's that distinct solutions must have a difference that is a multiple of $mn$. In other words, it potentially has infinite solutions. \\
+We have now figured that CRT helps to solve systems of congruences, and now we are able to solve systems of 2 congruences. What is left to us is to solve systems of more congruences. \\
+And so, let us now move onto the more complex cases of CRT:
+\begin{ln-theorem}{Chinese Remainder Theorem}{}
+    Let $n_1, n_2, \dots, n_k$ be coprime natural numbers, then for any sequence of integers $a$, there is a unique integer $0 < x < N = \prod_{i = 1}^k n_i$ such that:
+    \[
+        \begin{cases}
+            x \equiv a_{1}\pmod{n_1} \\
+            \vdots \equiv \vdots \\
+            x \equiv a_{i}\pmod{n_i} \\
+            \vdots \equiv \vdots \\
+            x \equiv a_{k}\pmod{n_k}
+        \end{cases}
+    \]
+    where
+    \[b_i = \frac{N}{n_i} \bigg(\frac{N}{n_i} \bigg)_{n_i}^{-1},\ x \equiv \bigg(\sum_{i = 1}^k a_i b_i \bigg)\pmod{N}\]
+    \begin{flushright}
+        \textit{-- Sunzi, The Art of War}
+    \end{flushright}
+\end{ln-theorem}
+Now, a linear algebra perspective:
+\begin{ln-think}{The set of solutions is a Vector Space}{}
+    Here, each $b_i$ is congruent to $1\pmod{n_i}$ and $0\pmod{n_j}$ by the theorem, so a multiple of $b_i$ can be used to satisfy congreunce $\pmod{n_i}$ while not integering with other congruences of other modulo. \\
+    In that sense, we can construct multiple unit vectors from $b_i$ across the indices of congruence to construct linear combinations that become a solution by itself. The set of all solutions is then that span. \\
+    This might be a convenient point of vectorizaton for compuation.
+\end{ln-think}
+The uniqueness condition is very similar: distinct solutions must have a distance that is a multiple of $N$ as defined in theorem.
