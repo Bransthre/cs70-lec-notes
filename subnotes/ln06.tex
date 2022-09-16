@@ -176,13 +176,75 @@ And the multiplicative inverse would be unique:
 \end{ln-theorem}
 While the inverse of $x$ can be written as $y = x^{-1}\pmod{m}$, this is generally considered an abuse of notation, as $x^{-1}$ can also stand for $\frac{1}{x}$ under such ambiguous context.
 
+But we cannot just settle with knowing that an inverse exist. Let us attempt at finding a way to compute it; namely, let us produce an algorithm that can compute the multiplicative inverse of $x$ modulo $m$. \\
+Let us begin our passage by thinking about greatest common divisors. Suppose that for any pair of numbers $x$, $y$, then the greatest common divisors can be expressed as:
+\[d = gcd(x, y) = ax + by\]
+Let's express the relationship of numbers $m$ and $x$ when there exists a multiplicative inverse of $x$ modulo $m$, in the above mathematical format:
+\[1 = gcd(m, x) = am + bx\]
+This would imply that $bx \equiv am + bx \equiv 1\pmod{m}$, such that $b$ is a multiplicative inverse of $x$ modulo $m$. \\
+Euclid's Algorithm, which is for computing greatest common divisors, helps us to find the integers $a$ and $b$ in the above equation. Thus, let's explore Euclid's Algorithm as a method of computing modulo inverses!
+
 \subsection{Euclid's Algorithm}
-Lorem
+The Euclid's Algoirithm, which is more of a folk algorithm by ancient engineers, relies on the theorem below:
+\begin{ln-theorem}{Reduction of GCD Computation via Modular Arithmetics}{}
+    \textbf{Theorem}: Let $x \geq y > 0$, then $gcd(x, y) = gcd(y, x\pmod{y})$
+    \tcblower
+    Let us express $x = qy + r$, where $q \in \Z$ and $r = x\pmod{y}$. Note its an equal sign, not congruence. \\
+    If their greatest common divisor $gcd(x, y) = d$ divides $x$ and $y$, then it also divides $x$ and $qy$, thus also $r = x - qy = x\pmod{y}$. \\
+    Therefore, $gcd(x, y) = gcd(y, x\pmod{y})$.
+\end{ln-theorem}
+The Euclid's Algorithm is the process to keep applying $gcd(x, y) = gcd(y, x\pmod{y})$ until the second argument becomes $0$. At termination, the first argument is the greatest common divisor of original inputs $x$ and $y$. \\
+Now, let's verify whether it works:
+\begin{ln-theorem}{Correctness of Euclid's Algorithm}{}
+    Prove that Euclid's Algorithm correctly computes $gcd(x, y)$.
+    \tcblower
+    Let us perform strong induction on the second argument (which should be the smaller of two inputs). \\
+    Let the proposition for functionality of Euclid's Algorithm be that:
+    \[P(n) : \text{The algorithm computes $gcd(x, n)$ for all $x$ correctly, and $x \geq y > 0$}\]
+    \textbf{Base Case}: $n = 0$ \\
+    In this case, $gcd(x, 0) = x$, which the algorithm correctly computes; meanwhile, the inequality stated in proposition regarding input size is maintained. \\
+    \textbf{Induction Hypothesis}: Assume $P$ holds for all values $k < y$. \\
+    \textbf{Induction Step}: Now's the highlight, prove that $P(y)$ holds. \\
+    According to the steps of Euclid's Algorithm, $gcd(x, y) = gcd(y, x\pmod{y})$. This equality is proven in an above cube, and it is also guaranteed that $y > x\pmod{y}$ by the nature of $mod$. Therefore, $P(y)$ holds! 
+\end{ln-theorem}
+The runtime of Euclid's Algorithm is $O(n)$, where $n$ is the total number of bits in input $(x, y)$. This is because for every two recursion call, the first initial input is reduced by at least one bit!
 
 \subsection{Extended Euclid's Algorithm}
-Lorem
+The extended Euclid's Algorithm provides us the coefficients $a$ and $b$ such that $d = gcd(x, y) = ax + by$:
+\setbox\codebox=\hbox{
+    \begin{lstlisting}
+        def extended_gcd(x, y):
+            if y == 0:
+                return (x, 1, 0)
+            d, a, b = extended_gcd(y, x % y)
+            return (d, b, a - x // y * b)
+    \end{lstlisting}
+}
+\begin{ln-think}{Extended Euclid's Algorithm}{}
+    \usebox\codebox
+\end{ln-think}
+Let us now consider the inner workings of it: how the return for non-base-case functions?
+\begin{ln-think}{Inner Working of EEA}{}
+    To establish some foundation, $d = gcd(x, y) = ay + b(x\pmod{y}) = Ax + By$. \\
+    We will need to find the expressions for new coefficients $A$, $B$, in terms of previous coefficients $a$, $b$ throughout the calls of recursions.
+    \begin{align*}
+        d &= ay + b(x\pmod{y}) \\
+        &= ay + b(x - \lfloor \frac{x}{y} \rfloor y) \\
+        &= bx + (a - \lfloor \frac{x}{y} \rfloor)y \\
+        A &= b \\
+        B &= a - \lfloor \frac{x}{y} \rfloor
+    \end{align*}
+\end{ln-think}
 
 \subsection{Brief Notes: Division via Inverse}
-Lorem
+We have learned that to find the multiplicative inverse of $x$ modulo $m$, we would just need to solve $b$ from the equation $1 = ak + bn$, where $k=max(x,m)$ and $n$ the other. \\
+Let us attempt to apply this onto solving a congruence:
+\begin{ln-quest}{Solve the following congruence using modular inverses}{}
+    Solve: $8x \equiv 9\mod{15}$
+    \tcblower
+    The inverse of $8$ modulo $15$ is $2$. How? $1 = -1 \times 15 + 2 \times 8$ \\
+    So, let us multiply both sides of the congruence by $8^{-1}\pmod{15}$:
+    \[x \equiv 9 \times 2 \equiv 3\pmod{15}\]
+\end{ln-quest}
 
 \section{Chinese Remainder Theorem}
