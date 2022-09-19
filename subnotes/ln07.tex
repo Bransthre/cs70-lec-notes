@@ -1,0 +1,121 @@
+\chapter{Public Key Cryptography}
+
+\section{Introduction to Cryptography}
+Cryptography is the study that develops the most secure ways of delivering messages. \\
+The basic setting for cryptography is typically described over a plot involving three characters:
+\begin{bindenum}
+    \item Crewmate A: Trying to communicate confidentially over a link.
+    \item Crewmate B: Trying to communicate confidentially over a link.
+    \item Sus person: Trying to listen in crewmates' conversations to do sussy things.
+\end{bindenum}
+Or, to formalize what is a `sus person', feel free to use the word `spy' or `evesdropper' too.
+
+To let the communication be confidential and secure between crewmates, each crewmate will apply an Encryption function $E$ to a message $x$, and send $E(x)$ to the other crewmate.
+Upon the receipt, the other crewmate applies a decryption function $D$ onto $E(x)$ such that $D(E(x))$ provides information resembling the original message $x$. In most cases, $D(E(x)) = x$. \\
+These functions $E$ and $D$ are not necessarily single-variable. We will touch on this soon. But, without knowing anything about the inner workings of $E$ and $D$, the `sus person' cannot know what the original function $x$ at all.
+
+For many centuries, humans study \textbf{private-key protocols}, which also requires a codebook, which contains all future correspondence between encrypted and decrypted messages. This requires a codebook, to begin with. \\
+On the other hand, \textbf{public-key schemes} allow crewmates to communicate, encrypt, and decrypt without the need of codebook. This seems off. If crewmate $B$ and the sus person both have equal information on the encrypted message $E(x)$, are they not equally capable of solving the encryption? \\
+The essence of \textbf{public-key schemes} hides in implementing a digital lock, which only the decrypter can have a key for. Therefore. the decrypter send the encrypter a method of sending secured message that the decrypter has the key for. While the sus person can attempt finding the key, it should be difficult to do so, so arduous that it is almost impossible.
+
+That's the point of cryptography.
+
+Now, since we also need a key to decrypt the message, the function $D$ is indeed multivariate rather than single-variable on the encrypted message $E(x)$.
+
+\section{Cryptography in Modular Arithmetics Theorems}
+
+\subsection{The RSA Scheme of Cryptography}
+The RSA scheme is based heavily on modular arithmetics.
+
+Let $p$ and $q$ be two large primes (typically with 512 bits, so larger than $2^{511}$). \\
+Let $N = pq$. Messages to the decrypter are numbers modulo $N$, excluding $0$ and $1$. \\
+Then, let $e$ be any number relatively prime to $(p - 1)(q - 1)$. \\
+The public key of decryption is the pair of numbers $(N, e)$. While this key is published to the whole world, the numbers $p$ and $q$ are not public. \\
+The private key of decryption, meanwhile, is $d = {e}_{(p - 1)(q - 1)}^{-1}$, which would exist by the definition of $e$. \\
+Now, let us explore the encryption and decryption functions:
+\begin{ln-define}{Encryption and Decryption functions for RSA Scheme}{}
+    Provided the values:
+    \begin{align*}
+        p, q &\text{ are large prime numbers} \\
+        N &= pq \\
+        e &\text{ is coprime with $(p - 1)(q - 1)$} \\
+        d &= {e}_{(p - 1)(q - 1)}^{-1}
+    \end{align*}
+    \begin{enumerate}
+        \item[] \textbf{Encryption}: $E(x) \equiv x^e\pmod{N}$
+        \item[] \textbf{Decryption}: $D(x) \equiv y^d\pmod{N}$
+    \end{enumerate}
+\end{ln-define}
+\begin{ln-quest}{Demonstration of RSA Scheme}{}
+    Let $p = 5$, $q = 11$, so $N = pq = 55$. In this case, $(p - 1)(q - 1) = 40$. For a number coprime with it, let's choose $e = 3$. \\
+    The public key of this scheme is $(N, e) = (55, 3)$, and the private key is $d \equiv 3_{40}^{-1} \equiv 27$. \\
+    For any message $x$ that the encrypter will send, the encryption of $x$ is $y \equiv x^e\pmod{55}$. Meanwhile, the decryption of $y$ is $x \equiv y^d\pmod{55}$. \\
+    Therefore, for a message $x = 13$, the encryption is $y = {13}^3 \equiv 52\pmod{55}$, and the decryption of $y$ is $x = {52}^{27} \equiv 13\pmod{55}$.
+\end{ln-quest}
+
+\subsection{The Supporting Pillars: Theorems}
+Let us first introduce a significant theorem of modular arithmetics:
+\begin{ln-theorem}{Fermat's Little Theorem}{}
+    \textbf{Theorem}: For any prime $p$ and any $a \in \{1, 2, \dots, p - 1\}$, $a^{p - 1} \equiv 1\pmod{p}$.
+    \tcblower
+    Let $S$ denote the set of possible results from mod $p$. \\
+    Provided that $p$ and $a$ are coprime, $gcd(p,a) = 1$. \\
+    Consider the set of numbers $\{a, 2a, \dots, (p - 1)a\}$. Because $a$ and $p$ are coprime, for two numbers of the prior set to be congruent under $\pmod{p}$, it must be their multiple is the same. \\
+    Consequentially, the following sets are equal:
+    \[
+        \{1, 2, \dots, p - 1\} = \{a\pmod{p}, 2a\pmod{p}, \dots, (p-1)a\pmod{p}\}
+    \]
+    Following from that equality of sets:
+    \begin{align*}
+        1 \times 2 \times \dots \times (p - 1) &\equiv (p - 1)!\pmod{p} \\
+        a \times 2a \times \dots \times (p - 1)a &\equiv a^{p - 1}(p - 1)!\pmod{p} \\
+        1 \times 2 \times \dots \times (p - 1) &= a \times 2a \times \dots \times (p - 1)a \\
+        a^{p - 1}(p - 1)! &\equiv (p - 1)!\pmod{p} \\
+        \text{Here, multiply both sides by } &{(p - 1)!}_{p}^{-1} \\
+        a^{p - 1} &\equiv 1\pmod{p}
+    \end{align*}
+\end{ln-theorem}
+As a side note, the value ${(p - 1)!}_{p}^{-1}$ exists because $p$ is prime and must therefore be relatively prime to the components of $(p - 1)!$. \\
+Now, let us ensure that the message will get encrypted and decrypted correctly:
+\begin{ln-theorem}{Correctness of Encryption and Decryption}{}
+    \textbf{Theorem}: Under the above definitions of the encryption and decryption functions $E$ and $D$,
+    \[\forall x \in \{0, 1, \dots, N - 1\} (D(E(x)) \equiv x\pmod(N))\]
+    \tcblower
+    Mathematically expressing the prompt:
+    \[\forall x \in \{0, 1, \dots, N - 1\} (D(E(x)) \equiv {(x^e)}^d \equiv x\pmod{N})\]
+    By the definition of $d = {e}_{(p - 1)(q - 1)}^{-1}$, $ed \equiv 1\pmod{(p - 1)(q - 1)}$. Let us then express $ed = 1 + k(p - 1)(q - 1)$, leading to:
+    \[x^{ed} - x = x^{1 + k(p - 1)(q - 1)} - x = x(x^{k(p - 1)(q - 1)} - 1)\]
+    Let us inspect whether $pq | x^{ed} - x$, or in other words, $p | x^{ed} - x \land q | x^{ed} - x$. \\
+    For the argument of divisibility with $p$, we consider two cases: the trivial case where $p | x$ and the harder case where $p \neg| x$. \\
+    If $x$ is not a multiple of $p$, then since $p$ is prime, by Fermat's Little Theorem:
+    \begin{align*}
+        x^{p - 1} &\equiv 1\pmod{p} \\
+        x^{k(p - 1)(q - 1)} - 1 &\equiv 0\pmod{p} \\
+        p &| x^{k(p - 1)(q - 1)} - 1
+    \end{align*}
+    If $p | x$, then the case is trivial. We are just subtracting two multiples of $p$. \\
+    We can prove under similar logic that $q | x^{ed} - x$, so in the end, $pq | x^{ed} - x$. \\
+\end{ln-theorem}
+Chinese Remainder Theorem can also be used to provide a similar proof, where we construct a system of congruences and find $x\pmod{pq}$ to be the only viable solution. \\
+So, why is RSA secure? It is based on the assumption:
+\begin{quote}
+    Given $N$, $e$, and $y \equiv x^e \pmod{N}$, there is no efficient algorithm for determining $x$.
+\end{quote}
+This is because to guess $x$, we would have to try on the order of $N$ values; however $N$ is the product of two 512-bit prime numbers, which makes thi unrealistic. \\
+Or, even if we factor $N$ into its prime factors, this is still a majorly impossible problem to deal with computationally.
+So in summary, the security of RSA depends on the difficulty to solve a message from it. \\
+
+\subsection{Prime Number Theorem}
+Now, all that is left is for the crewmates to:
+\begin{enumerate}
+    \item Find huge prime numbers $p$ and $q$.
+    \item Compute exponentials mod $N$.
+\end{enumerate}
+Both of which are not so shrimple. \\
+But, to find large prime numbers, we can attempt to find efficient algorithms of determining whether a number is prime, and fortunately, a large portion of numbers are prime. \\
+\begin{ln-theorem}{Prime Number Theorem}{}
+    \textbf{Theorem}: Let $\pi (n)$ denote the number of prime numbers that are less than or equal to $n$. \\
+    \[\forall n \geq 17 \bigg( \pi (n) > \frac{n}{\ln(n)} \bigg)\]
+\end{ln-theorem}
+For exponentiation, the exponentiation algorithm provided in Chapter 6 is actually good enough. \\
+So RSA is quite plausible for implementation and usage!
