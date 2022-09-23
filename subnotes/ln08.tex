@@ -1,0 +1,95 @@
+\chapter{Polynomials}
+In this chapter, we discuss the application of polynomials and their mathematical properties, as well as a concise instance of its performance in cryptography.
+
+\section{Re-Introduction to Polynomial}
+Polynomial is a category of functions that are easy in their algebra expression while also widely applicable to various mathematical techniques. While we have already encountered polynomials in high school mathematics, let us define polynomial in a formal fashion that we might not have done before:
+\begin{ln-define}{Polynomial}{}
+    A polynomial of single variable is a single-variable expression with an associated function:
+    \[p(x) = a_d x^d + a_{d - 1} x^{d - 1} + \dots + a_1 x + a_0\]
+    Here, while the variable and coefficients are usually real numbers, the exponents need be integer. \\
+    An n-degree polynomial is a polynomial whose largest exponent is $n$.
+\end{ln-define}
+The root of a polynomial is the value $x$ for a polynomial function $p$ such that $p(x) = 0$. \\
+And following the existence of ``roots'', we now discuss some properties of roots and polynomials.
+\begin{ln-symbol}{Properties of Polynomials}{}
+    \begin{enumerate}
+        \item A non-zero $n$-degree polynomial has at most $n$ roots.
+        \item Given $n + 1$ pairs $(x_1, y_1), \dots, (x_{d + 1}, y_{d + 1})$ with all $x_i$ distinct, there is a unique polynomial $p(x)$ of degree $n$ such that $p(x_i) = y_i$ for $1 \leq i \leq d + 1$.
+    \end{enumerate}
+\end{ln-symbol}
+The implication of property 2 would be that a line is define-able by two points.
+
+\section{Polynomial Interpolation}
+Polynomial Interpolation is the property that helps locate the $n$-degree polynomial described in property 2, and the name of the algorithmic method for it is Lagrange Interpolation:
+\begin{ln-think}{A Startpoint}{}
+    Suppose that we will construct a polynomial $p(x)$ where $y_1 = k$, $y_j = 0$, where $2 \leq j \leq d + 1$. \\
+    Let us begin with an arbitrary $d$-degree polynomial:
+    \[q(x) = (x - x_2)(x - x_3)\dots(x - x_{d + 1})\]
+    Here, since $(x - x_j)$ is involved as a factor of $q(x)$, we can confirm $q(x_j) = 0$. \\
+    Meanwhile, as $q(x_1) = (x_1 - x_2)(x_1 - x_3)\dots(x_1 - x_{d + 1})$, we may define $p(x)$ as follows:
+    \[p(x) = \frac{k q(x)}{q(x_1)} \rightarrow p(x_1) = \frac{k q(x_1)}{q(x_1)} = k\]
+\end{ln-think}
+Let us generalize the above example into the construction of polynomial $\Delta_i (x)$, the $d$-degree polynomial where $y_i = k$, $y_j = 0$:
+\[\Delta_i (x) = \frac{\prod_{j \neq i} (x - x_j)}{\prod_{j \neq i} (x_i - x_j)}\]
+So, for a set of $d+1$ points $\{(x_1, y_1), \dots, (x_{d + 1}, y_{d + 1})\}$, we will respectively produce $\Delta_1(x), \dots, \Delta_{d + 1}(x)$. We can acquire the polynomial $p$:
+\[p(x) = \sum_{i = 1}^{d + 1} y_i \Delta_i(x)\]
+We have put our coefficients $y_i$ back at this point, so the definition of $\Delta(x)$ is easier to handle. \\
+Let us discuss why such a $p$ work. First of all, $p$ is still $d$-degree, since we are just adding multiple $d$-degree polynomials together. Second of all, when evaluated at $x_i$, the $Delta$ polynomials that contain $(x - x_i)$ will not contribute to the sum due to being zero, and will let $\Delta_i(x)$ alone contribute! \\
+The discussion of second property above will probably remind you of constructing solutions for Chinese Remainder Theorem!
+\begin{ln-theorem}{Property 2 of Polynomials from Section 8-1}{}
+    \textbf{Theorem}: Given $d + 1$ pairs $(x_1, y_1), \dots, (x_{d + 1}, y_{d + 1})$, with all $x_i$ distinct, there is a unique polynomial $p(x)$ of degree at most $d$, such that $\forall i (p(x_i) = y_i)$.
+    \tcblower
+    The existence of such a polynomial is secured by Lagrange Interpolation. We now just perform a separate proof for uniqueness. \\
+    For the sake of contradiction, assume the existence of $q(x)$ such that $q(x_i) = y_i$ for all listed pairs. \\
+    Then, consider a polynomial $r(x) = p(x) - q(x)$. Since $p$ and $q$ are, for the sake of contradiction as aforementioned, considered different polynomials, $r(x)$ must be a non-zero polynomial of degree at most $d$. Property 1 suggests it can only have at most $d$ roots. \\
+    However, $\forall i \in {1, 2, \dots, d + 1} (r(x_i) = p(x_i) - q(x_i) = 0)$. In this case, $r$ has at least $d + 1$ roots, producing a contradiction. \\
+    Therefore, there can only exist one polynomial to satisfy the listed points.
+\end{ln-theorem}
+
+\section{Re-Introducing Polynomial Division}
+For a polynomial $p(x)$ of degree $d$, we may divide it by another polynomial $q(x)$ of degree $\leq d$ via long division:
+\[p(x) = q'(x) q(x) + r(x)\]
+This technique has been employed in Algebra 2 as well as integration in MATH 1A (or 1B, somewhere in the Calculus BC range to be sure). \\
+We would define the quotient of such division $q'(x)$, and the remainder $r(x)$. The degree of $r(x)$ must be smaller than that of $q(x)$. \\
+Instead of taking this space to re-introduce long division, let's leave that as an exercise for the reader to review high-school mathematics, and move on to the proof of Property 1 as listed in Section 8-1:
+\begin{ln-theorem}{Property 1 of Polynomials from Section 8-1}{}
+    \textbf{Theorem}: A non-zero polynomial of degree $d$ has at most $d$ roots.
+    \tcblower
+    This proof can be constructed via the proof of two smaller claims. \\
+    \textbf{Claim 1}: If $a$ is a root of $p(x)$ with degree $\geq 1$, then $p(x) = (x - a)q(x)$, where $q(x)$ is a $d-1$-degreed polynomial. \\
+    To prove this claim, we can use the property of remainders in polynomial division. If we divide $p(x)$ by $(x - a)$, then the remainder of this division must be smaller than the degree of $(x - a)$, which would make the remainder a constant term $c$. \\
+    Menahilwe, since $a$ is a root of $p(x)$, and $p(x) = (x - a)q(x) + c$, $p(a) = c = 0$. \\
+    Therefore, there doesn't really exist a remainder. \\
+    \textbf{Claim 2}: A polynomial $p(x)$ of degree $d$ with distinct roots $a_1, \dots, a_d$ can be written as $p(x) = c(x - a_1)\dots(x - a_d)$, where $c \in \R$. \\
+    Time for mathematical induction to be back! \\
+    Base Case: $d = 0$. \\
+    If $p(x)$ is degree-0, then it is a constant $c$ to be written in the above form. \\
+    Induction Hypothesis: The prompt holds for some $d \geq 0$. \\
+    Induction Step: prove the case for $d + 1$. \\
+    Let $p(x)$ be a polynomial of degree $d + 1$ with distinct roots, then Claim 1 supports that $p(x) = (x - a_{d + 1})q(x)$ for some degree-$d$ $q(x)$. \\
+    For all $i \neq d + 1$, $p(a_i) = (x - d_{a + 1})q(a_i) = 0$. It will be helpful if we reference the induction hypothesis, notice that $q(x)$ has $d$ distinct roots, and thus is a polynomial of degree $d$. \\
+    Therefore, $q(x) = c(x - a_1)\dots(x - a_d)$, and following the product form of $p$:
+    \[p(x) = c(x - a_1)\dots(x - a_{d + 1})\]
+    Claim 2 implies Property 1 if we can show that the only roots of $p(x)$ are $a_1, \dots, a_d$, but that also can be confirmed from the factorizaton of such polynomial $p(x)$.
+\end{ln-theorem}
+
+\section{Interlude: Finite Fields}
+Property 1 and 2 of polynomial expression as noted above would both work when coefficients and bases are chosen complex or rational, other than the real cases we have assumed along the way. This is because the proofs of properties rely on legal arithmetics that recieve arguments of one set (rational, complex... etc.) and return arguments of a same set. \\
+This would imply that if we have chosen to conduct the proof of properties 1 and 2 via, say natural numbers and integers, then since we cannot secure the property of recieving and returning arguments of same set, the proofs cannot function. \\
+Is there a workaround for natural numbers then? If we work with numbers modulo some prime number $m$, then legal arithmetics will still return us any number from $\{1, \dots, m - 1\}$, so properties 1 and 2 would still hold! So interestingly, properties 1 and 2 hold under a finite set like that of numbers modulo $m$ as well. \\
+We describe such situation as we are working over a finite field.
+
+\subsection{Counting}
+How many possible polynomials are there modulo $m$? Well, for a $n$-degree polynomial who has $m$ values to choose from per $n$ coefficient, it would be $m^n$. \\
+How many possible polynomials are there that satisfy $k$ points modulo $m$? \\
+Well, for each point we neglect, we gain $m$ possibilities for that empty coordinate that can bode any value of $y$. Therefore, considering $n$ points, the total number of possible polynomials modulo $m$ would be $m^{k - n}$.
+
+\section{Secret Sharing}
+Let us attempt to devise a secret sharing scheme such that, for the condition of secret decryption to be having a $k$-member faction:
+\begin{enumerate}
+    \item Any group of $k$ of all members can pool their information to configure the secret.
+    \item No group of $k - 1$ or fewer members have any information about the secret, no matter how they pool their knowledge.
+\end{enumerate}
+So now, suppose there are $n$ officials indexed from $1$ to $n$, and the secret is a natural number $s$. Let $q$ be a prime number lrager than $n$ and $s$, let us work over the finite field of modulo $q$. \\
+Pick a random polynomial $P(x)$ of degree $k - 1$ such that $P(0) = s$, and provide $P(i)$ to each official indexed $i$. \\
+Now, since you need $k$ points to figure out the explicit expression of a $k - 1$ degree polynomial $P(x)$, you must need at least $k$ officials who hold one point of information to contribute.

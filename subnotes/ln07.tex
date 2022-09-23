@@ -1,4 +1,5 @@
 \chapter{Public Key Cryptography}
+In this chapter, we discuss public key cryptography: a convenient means of confidential conversation, and explore it as an application of modular arithmetics, which was the explained subject of previous chapter.
 
 \section{Introduction to Cryptography}
 Cryptography is the study that develops the most secure ways of delivering messages. \\
@@ -43,7 +44,7 @@ Now, let us explore the encryption and decryption functions:
     \end{align*}
     \begin{enumerate}
         \item[] \textbf{Encryption}: $E(x) \equiv x^e\pmod{N}$
-        \item[] \textbf{Decryption}: $D(x) \equiv y^d\pmod{N}$
+        \item[] \textbf{Decryption}: $D(y) \equiv y^d\pmod{N}$
     \end{enumerate}
 \end{ln-define}
 \begin{ln-quest}{Demonstration of RSA Scheme}{}

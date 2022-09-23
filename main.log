@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.6.26)  18 SEP 2022 11:46
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.6.26)  23 SEP 2022 12:17
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1261,46 +1261,50 @@ Underfull \vbox (badness 2856) has occurred while \output is active []
 
  [46]) [47] (./subnotes/ln07.tex
 Chapter 7.
-[48
 
-]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [49]
-Underfull \hbox (badness 10000) in paragraph at lines 95--98
+ [48
+
+] [49]
+Underfull \hbox (badness 10000) in paragraph at lines 96--99
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 104--107
+Underfull \hbox (badness 10000) in paragraph at lines 105--108
 
  []
 
 [50]
-Underfull \hbox (badness 10000) in paragraph at lines 117--118
+Underfull \hbox (badness 10000) in paragraph at lines 118--119
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 114--119
+Underfull \hbox (badness 10000) in paragraph at lines 115--120
 
  []
 
-) [51] (./main.aux)
+) [51] (./subnotes/ln08.tex
+Chapter 8.
+[52
+
+] [53] [54]) [55] (./main.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.55997pt have occurred.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 4F8CA03B324ABD5881A807F1C487CF7B;5467.
+(rerunfilecheck)             Checksum: B7C287486EBADE1E4A5F280FDEFD7F45;6490.
  ) 
 Here is how much of TeX's memory you used:
- 63902 strings out of 475882
- 1614486 string characters out of 5806027
- 2266247 words of memory out of 5000000
- 84020 multiletter control sequences out of 15000+600000
+ 63917 strings out of 475882
+ 1614736 string characters out of 5806027
+ 2266250 words of memory out of 5000000
+ 84032 multiletter control sequences out of 15000+600000
  524879 words of font info for 128 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  114i,15n,145p,863b,2126s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (51 pages).
+Output written on main.pdf (55 pages).
