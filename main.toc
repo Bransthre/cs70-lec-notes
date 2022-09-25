@@ -83,3 +83,7 @@
 \contentsline {section}{\numberline {8.4}Interlude: Finite Fields}{54}{section.8.4}%
 \contentsline {subsection}{\numberline {8.4.1}Counting}{54}{subsection.8.4.1}%
 \contentsline {section}{\numberline {8.5}Secret Sharing}{55}{section.8.5}%
+\contentsline {chapter}{\numberline {9}Error Correcting Codes}{56}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Erasure Errors}{56}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Polynomial Interpolation in Error Correction}{57}{section.9.2}%
+\contentsline {section}{\numberline {9.3}General Errors}{57}{section.9.3}%
