@@ -3,10 +3,9 @@ This chapter provides an introduction and demonstration for the lines of thought
 The reader will also be exposed to the variety of proof techniques, and be encouraged to explore them via examples provided in the lecture notes. \\
 In this chapter, we concentrate specifically on mathematical proof for its breadth of application and significant role as the foundational concept and tool of understanding and observing the corusework's contents. \\
 Proofs are known to be more complicated concepts, and as well the first barricade for students when studying discrete mathematics. The creativity and "intuition" for generating proofs usually comes with practice and experience with variety of prompts. Readers are encouraged to explore beyond the examples of this lecture note for that reason. \\
-Without further ado, let us start.
+But before we start, let me preface with this. Proofs have learning curves. My advice for you, sincerely, is to have fun and enjoy tackling challenges.
 
 \section{Introduction to Proofs}
-This section provides an introduction to the definition and usage of proof, as well as some preliminary knowledge and tools for constructing mathematical proofs. We will introduce the necessary symbols used in mathematical language for proofs as well.
 
 \subsection{Definition of Proofs}
 In many occassions, we aim to provide some explanation towards the trueness and falseness of mathematical propositions, statements. The process of doing so is called "proving", and produces a \textbf{mathematical proof}.
@@ -14,10 +13,11 @@ In many occassions, we aim to provide some explanation towards the trueness and 
     A mathematical proof provides a means for guaranteeing the truthfulness of a statement. \\
     Concretely, it is a finite sequence of steps that construct an entire logical deduction, such that this deduction proves the statement for the range of values it is quantified over. In some cases, this means guaranteeing a proposition for infinite cases.
 \end{ln-define}
-Proofs are widely applied not only on the mathematic fields, but also those of computer science. For example, we might want to prove the correctness of a program as in following its contract, or even on the famous "halting problem". In that regard, for the variety of fields the concept of "proof" is applied on, it is not necessarily mathematic. Still, it is completely based on logic. \\
-Proofs that can successfully guarantee the trueness of a statement, or provide conclusive evidence for it, helps us be certain of a proposition. Such proof is welcomedly named a \textbf{rigourous} proof. 
+Proofs are widely applied not only on the mathematic fields, but also those of computer science. \\
+For instance, we might want to prove the correctness of a program as in following its contract, or even on the famous "halting problem". In that regard, for the variety of fields the concept of "proof" is applied on, it is not necessarily mathematic. Still, it is completely based on logic.
+
+Proofs that can successfully guarantee the trueness of a statement, or provide conclusive evidence for it, helps us be certain of a proposition. Such proof is welcomedly named a \textbf{rigourous} proof. \\
 A rigorous proof has some structural convention. Proofs usually begin with \textbf{axiom}, or self-evident propositions, and the proof proceeds with a sequence of simple logical steps from axioms to further statements. In some sense, it is human thinking put on paper without any jumps. \\
-Having introduced the form and foundation of proof, let us also observe the basic notations we speak in mathematical language to present a proof with.
 
 \subsection{Basic Notations}
 There are some basic mathematical notations we have not introduced in previous chapters, but will prove useful and foundational in discrete mathematics, including the symbols of some universes that we have discussed before. It will be listed in the following table:
@@ -44,15 +44,15 @@ There are some basic mathematical notations we have not introduced in previous c
 \end{ln-symbol}
 
 \section{Proof Technique}
-This section discusses the various cursed techniques for proofs, each accompanied with some example and line of thought. \\
-Since proofs are not necessarily algorithmic processes \(yet\), the demonstrations of proofs attached per subsections could help organize relevant logistics for practical uses and tips of each technique.
 
 \subsection{Direct Proof}
-Each techniques of proofs will have to do with guaranteeing some form of implication, say $P(x) \implies Q(x)$. The main style of attack from a Direct Proof user is to prove the legitimacy of $Q(x)$ via assuming $P(x)$. \\
-To be more specific, we assume an \textbf{arbitrary}, another word for "general, any", value $x$ such that $P(x)$ holds. We then write logical deduction that guarantees $Q(x)$ assuming that $P(x)$ is true, therefore proving that if $P(x)$ holds then $Q(x)$ works. \\
-That above is a very literal description of direct proof, and in fact, might have sound like it doesn't offer much about the supposedly esoteric arts of mathematical proofs. Well, Direct Proof is known as the foundational technique of proofs, and most of the time (as encountered in other courseworks), while the approach of direct proof is concise and simply comprehensible, finding the mathematical rules to support this approach is often difficult. It requires creativity. \\
-To demonstrate the use of the Direct Proof Technique, let us consider the following prompt:
-\begin{ln-think}{Show me an example of direct proof}{}
+Each techniques of proofs will have to do with guaranteeing some form of implication, say $P(x) \implies Q(x)$. The main approach of a Direct Proof user is to prove the legitimacy of $Q(x)$ via assuming $P(x)$. \\
+
+We assume an \textbf{arbitrary}, another word for "general, any", value $x$ such that $P(x)$ holds. We then write logical deduction that guarantees $Q(x)$ assuming that $P(x)$ is true, therefore proving that if $P(x)$ holds then $Q(x)$ works.
+
+That above is a very literal description of direct proof, and in fact, might have sound like it doesn't offer much about the supposedly esoteric arts of mathematical proofs. Direct Proof is known as the foundational technique of proofs, and most of the time (as encountered in other courseworks), while the approach of direct proof is concise and simply comprehensible, finding the mathematical rules to support this approach is often difficult. It requires creativity. \\
+To demonstrate the Direct Proof Technique, let us consider the following prompt:
+\begin{ln-think}{Example of Direct Proof}{}
     Prove that: for any $a,\ b,\ c \in \Z$, if $a|b$ and $a|c$, then $a|(b+c)$
     \tcblower
     The proposition above is quantified over some three integers $a$, $b$ and $c$. The hypothesis is that $a$ divides $b$ and $b$ divides $c$. Let us write the hypothesis in mathematical notation:
@@ -84,55 +84,58 @@ Derivations are often forms of direct proof as well. This means direct proofs ca
 \subsection{Proof by Contraposition}
 This is the second proof technique we will discuss, called \textbf{Proof by Contraposition}. We should first recap on what exactly is a contraposition. \\
 The contraposition to an implication $P \implies Q$ is another logically equivalent proposition to the original implication, in the form of $\neg Q \implies \neg P$. Since the implication is logically equivalent to its contrapositive, by proving the contrapositive statement of the prompt, we have indirectly proved the prompt. \\
-Let us demonstrate now:
 \begin{ln-think}{Demonstrating the Proof by Contraposition Technique}{}
     Prove the theorem: \textit{Let n be a positive integer and d|n. If n is odd, then d is odd.}
     \tcblower
     We will use proof by contraposition to prove this theorem. \\
     Stating the prompt in mathematical symbol:
-    \[(\forall n \in \Z)(d|n) \implies (n \mod 2 = 1 \implies d \mod 2 = 1)\]
+    \[(\forall n \in \Z)(d|n) \implies (n\pmod{2} = 1 \implies d\pmod{2} = 1)\]
     The contrapositive of this prompt assuming the provided information for $n$ and $d$ would be:
-    \[(\forall n \in \Z)(d|n) \implies (d \mod 2 \neq 1 \implies n \mod 2 \neq 1)\]
+    \[(\forall n \in \Z)(d|n) \implies (d\pmod{2} \neq 1 \implies n\pmod{2} \neq 1)\]
     Provided so, in the contrapositive proposition, our hypothesis is $2|d$. Meanwhile, by prompt, $d|n$, thus for some $k \in \Z$, $n = dk$. \\
     Combining the above knowledge:
     \begin{align*}
-        n &= d \times k = 2 \times (\frac{d}{2} \times k) \\
+        n &= d \times k = 2 (\frac{d}{2} \times k) \\
         2|d &\implies \frac{d}{2} \in \Z\\
         (\frac{d}{2} \times k) \in \Z &\implies 2|n
     \end{align*}
 \end{ln-think}
 In the above proof, we first attempted to find a contrapositive proposition to the original prompt. After so, we directly apply the Direct Proof technique in our current technique. \\
-In other words, proof by contraposition is just finding the contrapositive proposition to the prompt and using direct proof on it! It is a variant!
+In other words, proof by contraposition is just finding the contrapositive proposition to the prompt and using direct proof on it: it is a variant of direct proof.
 
 \subsection{Proof by Contradiction}
 Proof by Contradiction proves a proposition P by first assuming its negation, $\neg P$. After so, attempt to directly prove that this situation, $\neg P$, can lead to both results of $R$ and $\neg R$. In other words, we prove the implications $\neg P \implies (\neg R \land R)$ simultaneously. \\
-This is contradictory. Furthermore, applying the definition of implications, this provides the insight $\neg P \implies (\neg R \land R) \equiv \text{False}$ (referring to the Law of Excluded Middle). The contrapositive of such proven proposition is $\text{True} \implies P$, proving that proposition P is true. \\
-This process is slightly similar to "disproving", via showing that the negation of the prompt to be proven is a ridiculous, impossible situation to be real. \\
+This is contradictory. \\
+Furthermore, applying the definition of implications, this provides the insight $\neg P \implies (\neg R \land R) \equiv \text{False}$ (referring to the Law of Excluded Middle). The contrapositive of such proven proposition is $\text{True} \implies P$, proving that proposition P is true.
+
+This process is slightly similar to "disproving": via showing that the negation of the prompt to be proven is a ridiculous, impossible situation to be real. \\
 Let us begin with an example then:
 \begin{ln-think}{Now, an example of Proof by Contraposition Technique}{}
     Prove that: There are infinitely many prime numbers.
     \tcblower
     Now, let us consider the negation of the prompt: there are finitely many prime numbers. \\
     If so, then let us also enumerate these finite amount of (let us say $k$) prime numbers: $p_1 < p_2 < \dots < p_k$. \\
+    \textbf{Step 1: For the sake of Contradiction...} \\
     Let us then have a number:
     \[q \coloneqq\ p_1p_2\dots p_k + 1\]
     This number cannot be prime, for the largest prime number is $p_k < q$. Since $q$ is not prime, it then has a prime divisor $p$ that is among the enumerated list of prime numbers. \\
-    However, provided $p|p_1p_2\dots p_k$ and supposedly $p|p_1p_2\dots p_k + 1$, we reach a proposition that would prove fatal:
+    \textbf{Step 2: However, if we follow the assumption...} \\
+    Provided $p|p_1p_2\dots p_k$ and supposedly $p|p_1p_2\dots p_k + 1$, we reach a proposition that would prove fatal:
     \[p|((p_1p_2\dots p_k + 1) - (p_1p_2\dots p_k))\]
     (This comes from another proof in the lecture, stating that $(a|b \land a|c \land (b > c)) \implies (a|(b-c))$) \\
     The above proposition tells us that $p|1$, and this requires that $p \leq 1$. Since there does not exist such prime divisor $p$, $q$ has no prime divisor and is therefore prime itself. \\
     We have created a contradiction, stating that if there are finitely many prime numbers, then such defined number $q$ is \underline{prime and not prime}. \\
+    \textbf{Step 3: We have formed a contradiction:} \\
     From this contradiction, we clearly see that there cannot just be finitely many prime numbers. \\
     Rather, as the prompt says, there must be infinitely many prime numbers!
 \end{ln-think}
-In the above proof, we were able to find a contradiction from the negation of the prompt. This process disproves the \textbf{negation} of the prompt, or in other words, proves such proposition false. \\
 Let us continue the series of demonstration with another example to enhance our understanding towards the process of disproving:
 \begin{ln-think}{Another example for Proof by Contraposition Technique}{}
     Prove that: $\sqrt{2}$ is irrational.
     \tcblower
     To prove by contradiction, we should first present a contradiction in the proposition "$\sqrt{2}$ is rational". \\
     If that above negation of the prompt works true, then the following proposition holds by the definition of rational numbers:
-    \[\exists p \exists q (\sqrt{2} = \frac{p}{q} \land \text{$p$ and $q$ are coprime})\]
+    \[\exists p \exists q \bigg( \sqrt{2} = \frac{p}{q} \land \text{$p$ and $q$ are coprime} \bigg)\]
     And therefore, squaring both sides of the later clause for this proposition:
     \[2 = \frac{p^2}{q^2}\]
     And therefore, $2q^2 = p^2$. \\
@@ -143,27 +146,30 @@ Let us continue the series of demonstration with another example to enhance our 
         &= 4n^2 + 4n + 1 \\
         &= 2(2n^2 + 2n) + 1 \\
         (2n^2 + 2n) &\in \Z \\
-        a^2 &\mod 2 = 1 \implies \text{$a^2$ is odd}
+        a^2 \% 2 = 1 \implies \text{$a^2$ is odd}
     \end{align*}
     Having proven this smaller property, let us move back to the original demonstration. The minor proof indicates to us that if $p^2$ is even, so should $p$. Therefore, $p = 2c$ for some integer $c$.\\
     This leads us to $2q^2 = p^2 = 4c^2$, which shows $q^2 = 2c^2$, and provided from there that $q^2$ is even, so should $q$. \\
-    If $p$ and $q$ are both even, then they are not coprime. Yet, by the definition of irrational number, it is defined that $p$ and $q$ are coprime. There exists a contradiction formed from the hypothesis "$\sqrt{2}$ is rational": it is wrong. \\
+    If $p$ and $q$ are both even, then they are not coprime. Yet, by the definition of irrational number, it is defined that $p$ and $q$ are coprime. 
+    
+    There exists a contradiction formed from the hypothesis "$\sqrt{2}$ is rational": it is wrong. \\
     Via proof by contradiction, we have disproved the negation of prompt and in turn proved $\sqrt{2}$ is irrational. 
 \end{ln-think}
 
 \subsection{Proof by Cases}
 The technique of proof by cases is slightly more complex. \\
-For some claim with an unknown variable, let us set finite amount of cases for that unknown variable, without knowing which of the possible cases is true. Then, prove for each possible cases that for either one to be a legitimate proposition, the general prompt still holds. Therefore, in turn, for any possibility of the unknown variable in our prompt, the prompt holds. \\
+For some claim with an unknown variable, let us set finite amount of cases for that unknown variable, without knowing which of the possible cases is true. Then, prove for each possible cases that for either one to be a legitimate proposition, the general prompt still holds. \\
+\underline{Therefore, in turn, for any possibility of the unknown variable in our prompt, the prompt holds.} \\
 Let us demonstrate this underlying line of thought with an example below:
 \begin{ln-think}{An example for Proof by Cases}{}
-    Prove that: $((\exists x \notin \Q)(\exists y \notin \Q))(x^y \notin \Q)$
+    Prove that: $((\exists x \notin \Q)(\exists y \notin \Q))(x^y \in \Q)$
     \tcblower
     Let us attempt the proof by cases. \\
     Since the prompt's quantifying is involved with existential quantifiers, showing one set of numbers $x$ and $y$ would suffice to prove the prompt. \\
     Let us use the set $x = y = \sqrt{2}$ to proceed with the prompt. Our cases to prove would then be:
     \begin{enumerate}
-        \item[Case 1.] $\sqrt{2} ^ {\sqrt{2}} \in \Q$
-        \item[Case 2.] $\sqrt{2} ^ {\sqrt{2}} \notin \Q$
+        \item \textbf{Case 1}: $\sqrt{2} ^ {\sqrt{2}} \in \Q$
+        \item \textbf{Case 2}: $\sqrt{2} ^ {\sqrt{2}} \notin \Q$
     \end{enumerate}
     \textbf{Case 1} \\
     If this case holds, then the prompt is already proved the case's existence. \\
@@ -177,8 +183,10 @@ Let us demonstrate this underlying line of thought with an example below:
     \end{align*}
     Therefore, we still manage to prove that there exists irrational numbers $x$, $y$ such that $x^y$ is rational, via proving every possible cases of our prompt's unknown variable letting our prompt guaranteed to be true.
 \end{ln-think}
-Albeit the introduction said "finitely many cases", we in reality are expected to deal with just 2 or 3 cases for this technique. If we manage to encounter a prompt that requires more cases for so, revise the categorization of cases or try some othe rtechnique of proofs. \\
-On a broader horizon, every proof has some techniques to prove by, and some are to be more efficient than others. It is therefore encouraged of mathematicians to explore some different techniques, and encouraged of students to familiarize with each of the four to provide flexibility during problemsolving.
+Albeit the introduction said "finitely many cases", we in reality are expected to deal with just 2 or 3 cases for this technique. If we manage to encounter a prompt that requires more cases for so, revise the categorization of cases or try some othe rtechnique of proofs.
+
+Applying the above claim to a broader horizon, every proof has some techniques to prove by, and some are to be more efficient than others. The selection of method is purely context-based. \\
+It is therefore encouraged of mathematicians to explore some different techniques, and encouraged of students to familiarize with each of the four to provide flexibility during problemsolving.
 
 \subsection{General Advice in Proofs, Bullet Points}
 \begin{bindenum}
@@ -189,4 +197,24 @@ On a broader horizon, every proof has some techniques to prove by, and some are 
     \item Still, there are some famous lemmas in the world that serve almost the same roles as theorems. This is why the boundary is said to not be that clear cut.
 \end{bindenum}
 
-\textbf{Side Note from Future:} You might find another form of proof, \textbf{Proof by Construction}, useful as we proceed into constructions and considerations of larger mathematical objects, such as those that can span several dimensions or levels.
+\textbf{Side Note from Future:} You might find another form of proof, \textbf{Proof by Construction}, useful as we proceed into constructions and considerations of larger mathematical objects, such as those that can span several dimensions or levels. 
+However, they are structurally very similar to mathematical inductions, which is the topic of discussion for the next chapter.
+
+\section{Personal Regard on This Topic}
+Proofs are difficult, and we all need to practice it. In fact, most of the problems in computer science are resolved or concluded via proofs. \\
+Why are proofs so difficult? Here are some of my own difficulties and my own methods of resolving it:
+\begin{bindenum}
+    \item Where do I start on a proof? The prompt looks so abstract! It looks like the Minecraft enchantment texts!
+    \subitem The worst thing you can do to your brain during an exam is making it panick. Minecraft enchantment texts prespective will mystify the prompt, and possibly discourage you from approaching it. At these times, try just listing out every single thing the prompt has provided you. Work with these pieces of puzzles, and paraphrase the prompt mathematically.
+    \item Ho-ho. Are you approaching the proof prompt? Then, what's the next step after writing out all the ideas that trivially exist?
+    \subitem Think about equivalent statements. Let's take \textit{Think! 2.2.4} as an example. If there are infinitely many prime numbers, then that means there doesn't exist a smallest or largest prime numbers. So the contradiction would be that. 
+    \item Now that I have equivalent statements, what do I head for next, if I just have very insufficient information to work with?
+    \subitem If you don't have anything, try crafting something. In this case, \textbf{for the sake of contradiction} saved our lives in 2.2.4 by providing us an imaginary case to work with, where there exists a largest prime number $p_k$ and a number that is some value more than it and must be non-prime. In my view, everything afterwards really just depends on creative work.
+    \item How do I get better at creative work?
+    \subitem Read more proofs. Read how people approach different problems with different perspectives, internalize homework solutions and online forum proofs, the criticisms on them. You will only broaden your horizon via looking at how other people create proofs (well, at the cost of playing less Smash Bros Ultimate).
+    \item What do you really mean by a perspective?
+    \subitem In COMPSCI 61B, we have approached a topic called ``view'', which means an abstraction of a complicated system. For example, the view of a social network might be a graph, the view of a playlist might be a queue. In this case, we can manage and switch between views when encountering proofs with different mathematical objects. \\
+    View, or perspectives (which is my preferred word choice), usually deals greater effort on mathematical object proofs. Number theory related proofs take more insights and approaches that rely on the properties of numbers, such as division results and rationality of numbers. \\
+    And as mentioned before, these efforts can be improved by reading more proofs and learning more about conducting proofs by some individual learning.
+\end{bindenum}
+In summary, everything starts with making a first step.

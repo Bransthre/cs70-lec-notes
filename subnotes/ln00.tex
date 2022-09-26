@@ -1,5 +1,6 @@
 \chapter{Review of Sets and Mathematical Notation}
-In this chapter, we provide a brief review of fundamental mathematical notations that will be used throughout the coursework. This involves set notation, set properties, as well as convenient mathematical notations that aid to simplify, abbreviate, as well as clarify the different conditions and clauses that we used to literally write out in mathematical statements.
+In this chapter, we provide a brief review of fundamental mathematical notations that will be used throughout the coursework. \\
+This involves set notation, set properties, as well as convenient mathematical notations that aid to simplify, abbreviate, as well as clarify the different conditions and clauses that we used to literally write out in mathematical statements.
 
 \section{Set Theory}
 This chapter describes the fundamental properties of mathematical objects called Sets. Sets are widely applied throughout and beyond the subfields of mathematics, whose origins and characteristics shared across those applications are described by the mathematical definition of sets.
@@ -7,7 +8,8 @@ This chapter describes the fundamental properties of mathematical objects called
 \subsection{Fundamental Properties of Sets}
 As you may have guessed, in set theory, we mainly discuss a mathematical object called "set".
 \begin{ln-define}{Set}{}
-    A set is a collection of objects. The mathematical objects that are members of a set are called elements. \\
+    A set is a collection of objects. \\
+    The mathematical objects that are members of a set are called elements. \\
     Sets are normally expressed in the format of:
     \[\{\text{element 1}, \text{element 2}, \dots, \text{element n}\}\]
 \end{ln-define}
@@ -16,14 +18,21 @@ The symbol representing membership in a set works as follows:
     If a mathematical object $x$ is a member of a set $A$, then we may mathematically express that $x \in A$. \\
     Otherwise, for a mathematical object $y$ that does not belong to $A$, $y \notin A$.
 \end{ln-symbol}
-There are several more properties to sets. The size of a set is defined as the number of elements in it. This property of set is called \textbf{cardinality}. The cardinality of a set $A$ can be mathematically denoted as $|A|$. The equality of a set is held when two sets have exactly same elements; order and repetition does not matter, albeit in computers, many implementations of sets do not allow repetition. Sets whose cardinality are 0, or in other words empty sets, are denoted as ${}$ as well as $\emptyset$. \\
-To denote a set of mathematical objects that all belong to some other set but suffices some property, we may utilize a notation called \textbf{set-builder notation}. This allows us to abbreviate a set of objects. The format is as follows:
+There are several more properties to sets:
+\begin{bindenum}
+    \item The size of a set is defined as the number of elements in it. This property of set is called \textbf{cardinality}. The cardinality of a set $A$ can be mathematically denoted as $|A|$.
+    \item The equality of a set is held when two sets have exactly same elements; order and repetition does not matter, albeit in computers, many implementations of sets do not allow repetition. 
+    \item Sets whose cardinality are 0, or in other words empty sets, are denoted as ${}$ as well as $\emptyset$. \\
+\end{bindenum}
+To denote a set of mathematical objects that all belong to some other set but suffices some property, we may utilize a notation called \textbf{set-builder notation}:
 \begin{ln-symbol}{Set-Builder Notation}{}
     A set $A$ whose members all follow expression $exp$, and the terms of $exp$ all fit some list of conditions can be written as:
-    \[\{exp | \text{condition 1}, \dots, \text{condition n}\}\]
+    \[\{exp : \text{condition 1}, \dots, \text{condition n}\}\]
     \tcblower
+    The colon above can be replaced by a vertical bar. Since we will be using vertical bars for other purposes in later chapters, a colon is perhaps the least abusive notation to play with. \\
+    But, to conform the formatting of official lecture notes, let us continue with vertical bars. \\
     For example, the list of all rational numbers can be written as:
-    \[\Q = \{\frac{p}{q} | p,q \in \R, q \neq 0\}\]
+    \[\Q = \bigg\{ \frac{p}{q} | p,q \in \R, q \neq 0 \bigg\}\]
 \end{ln-symbol}
 
 \subsection{Relationships between Sets}
@@ -60,21 +69,21 @@ Regarding the way empty sets work in the above arithmetic, for an arbitrary set 
     \item $A \cap \emptyset = \emptyset$
     \item $A \cup \emptyset = A$
 \end{bindenum}
-At last, let us regard the notion of "complements". This concept corresponds to the difference between sets.
+At last, let us regard the notion of \textbf{``complements'', the difference between sets}.
 \begin{ln-define}{Complement}{}
     Imagine the arithmetic of sets to work solely upon their members, and let the difference of sets be defined such that:
     \[A - B = A \backslash B = \{x \in A | x \notin B\}\]
     This set $A \ B$ is called the set difference between A and B, or alternatively, the relative complement of B in A.
 \end{ln-define}
-This also indicates that the "subtraction arithmetic" for sets is not commutative. Using empty sets as examples:
+This also indicates that the ``subtraction arithmetic'' for sets is not commutative. Using empty sets as examples:
 \begin{bindenum}
-    \item $A \backslash \emptyset = A$
-    \item $\emptyset \backslash A = \emptyset$
+    \item $A\ \backslash\ \emptyset = A$
+    \item $\emptyset\ \backslash\ A = \emptyset$
 \end{bindenum}
-And the last arithmetic is the "multiplication of sets":
+And the last arithmetic is the \textbf{``multiplication of sets'': Cartesian Products}.
 \begin{ln-define}{Cartesian Products}{}
     The Cartesian Product (cross product) of sets $A$ and $B$ is defined such that:
-    \[A \times B = \{(a, b) | a \in \R, b \in \R\}\]
+    \[A \times B = \{(a, b)\ |\ a \in \R, b \in \R\}\]
 \end{ln-define}
 And last but not least, we have mathematical operations that generate a set of sets (nested) based on other sets:
 \begin{ln-define}{Power Set}{}
@@ -118,3 +127,10 @@ There also exists some variations to the existential quantifier:
     \item There exists only one: $\exists!$
     \item There does not exist: $\nexists$
 \end{bindenum}
+
+\section{Personal Regard on this Topic}
+Personal log for mathematical topics, because why not! Just don't treat this section as educational content. \\
+Sets are very useful objects for mathematical generalizations, which we'd do a TON in discrete mathematics, hence its practicality. There will, however, come times where statements are hard to write out. \\
+In that case, don't bother with making the statements multi-part! There's a clear trend in homework questions and solutions for that. \\
+
+Also, my reader didn't grade one of my homework questions and I missed my regrade deadline :v

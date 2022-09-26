@@ -1,19 +1,23 @@
 \chapter{Mathematical Induction}
 In this chapter, we introduce and discuss a new form of deduction called "Mathematical Induction". In the examples offered by the chapter, we discuss the power and practicality of mathematical induction, as well as the different forms of inductions that come with different tips of using. \\
-Meanwhile, as the chapter does not include the lecture note's description on a connection between COMPSCI 61A's "Leap of Faith" and mathematical induction, the readers are encouraged to nurture an understanding towards this connection in their vision. Hopefully, it will facilitate the understanding towards mathematical induction and provide a firmer ground on recursive functions/programs.
+Meanwhile, as the chapter does not include the lecture note's description on a connection between COMPSCI 61A's "Leap of Faith" and mathematical induction, the readers are encouraged to nurture an understanding towards this connection in their vision. \\
+Hopefully, it will facilitate the understanding towards mathematical induction and provide a firmer ground on recursive functions/programs.
 
 \section{Introduction to Mathematical Induction}
-In this section, we introduce mathematical induction as a tool of proof, and discuss the usage of mathematical induction via examples.
 
 \subsection{Definition of Mathematical Induction}
-Previously, we introduced "techniques", or directions we can take to produce mathematical proofs. Here, we will introduce a new powerful tool, a new proof technique, a form of deduction called "mathematical indcution". Such form of logic establishes a statement holds for all natural numbers. \\
-This is an important contribution. When we are asked to prove statements for all natural numbers, there are an infinite number of values to be checked for the statement. It poses the problem: while mathematical proof requires a finite sequence of logic, the prompt requires us to guarantee a proposition for infinite values. This implies how strong a tool mathematical induction can be for mathematicians, and furthermore, computer scientists. \\
-How exactly does mathematical induction work? Or, how does it guarantee the statement to be right for all natural numbers? Each mathematical induction is composed of three fundamental aspects: \textbf{Base case}, \textbf{Induction Hypothesis}, and \textbf{Inductive Step}:
+Previously, we introduced techniques and directions we can take to produce mathematical proofs. Here, we will introduce a new powerful tool, a new proof technique, a form of deduction called "mathematical indcution". Such form of logic establishes a statement holds for all natural numbers. \\
+This is an important contribution. \\
+First of all, many mathematical objects are closely associated with natural numbers, especially those that we will encounter in COMPSCI 70. \\
+And second of all, when we are asked to prove statements for all natural numbers, there are an infinite number of values to be checked for the statement. It poses the problem: while mathematical proof requires a finite sequence of logic, the prompt requires us to guarantee a proposition for infinite values. This implies how strong a tool mathematical induction can be for mathematicians, and furthermore, computer scientists.
+
+How exactly does mathematical induction work? Or, how does it guarantee the statement to be right for all natural numbers? Here is a structural summary of mathematical induction to answer this doubt:
 \begin{bindenum}
     \item \textbf{Base Case}: that the statement works for an initial value $k$. In the case we are proving for all natural numbers, $k = 0$ is a popular choice. Therefore, we attempt to prove at this step that the prompt proposition $P(n)$ works for the value $0$.
     \item \textbf{Induction Hypothesis}: We here make the assumption that for an arbitrary value $n \geq k$, $P(n)$ is true. Building on that, we proceed into the next step:
     \item \textbf{Inductive Step}: With the induction hypothesis, we here attempt to prove that $P(n + 1)$ is true.
 \end{bindenum}
+
 Let us see an example of mathematical induction utilized in a direct proof:
 \begin{ln-think}{Mathematical Induction in Direct, Algebraic Proof}{}
     Prompt: $\forall n \in \N (\sum_{i = 0}^{n} {i} = \frac{n(n + 1)}{2})$
@@ -47,11 +51,13 @@ Mathematical Inductions not only work from the algebraic perspective. Since it c
     Let us save this proof with a small maneuver. By swapping all colors existing on the LHS to their opposite, then while the two-colorable property is preserved under any color swapping, all original whole areas will now hold partitions of different colors, for their partitions are splitted across the LHS (the swapped side) and RHS (the unswapped side). \\
     Consequentially, for the $k$-line map is two-colorable as the induction hypothesis states, the $k + 1$-line map must also be. Therefore, under such assumption, the inductive step works and $P(k + 1)$ holds.
 \end{ln-think}
-Not only are mathematical inductions useful on such graphical proofs, it can further provide strong proofs towards theorems that are considered really hard to prove in algebraic means. Graphical proofs rely more on geometry and logic than mere algebra, which makes it different in property from the conventional mathematical inductions we see in the lecture notes dealing with number theory and arithmetic manipulations.
+Not only are mathematical inductions useful on such graphical proofs, it can further provide strong proofs towards theorems that are considered really hard to prove in algebraic means. \\
+Graphical proofs rely more on geometry and logic than mere algebra, which makes it different in property from the conventional mathematical inductions we see in the lecture notes dealing with number theory and arithmetic manipulations. This comes very clear when we start using abstractions for graphical objects in discrete mathematics.
 
 \subsection{The Strength of Induction Hypothesis}
-However, mathematical induction is not all-able. If the prompt is too difficult to prove, or if the induction hypothesis is too weak for us to proceed the inductive step with, we will be unable to complete a proof. Let us visit an example from the lecture notes regarding this problem.
-\begin{ln-think}{When the Induction Hypothesis is Suspicious}{}
+However, mathematical induction is not all-able. If the prompt is too difficult to prove, or if the induction hypothesis is too weak for us to proceed the inductive step with, we will be unable to complete a proof. \\
+Let us visit an example from the lecture notes regarding this problem.
+\begin{ln-think}{When the Induction Hypothesis is SUSpicious}{}
     Prompt: for all $n \geq 1$, the sum of the first $n$ odd numbers is a perfect square.
     \tcblower
     \textbf{Base Case}: Prove the prompt for $n = 1$. The first odd number is $1$, and $1 = 1 ^ 2$ is a perfect square. \\
@@ -59,8 +65,9 @@ However, mathematical induction is not all-able. If the prompt is too difficult 
     \textbf{Inductive Step}: The $(k + 1)^{th}$ odd number would be (2k + 1). Considering the sum of the first $k$ odd numbers is a perfect square $m^2$, the sum of the first $k + 1$ odd numbers would be $m^2 + 2k + 1$. \\
     What next......? Proof incomplete.
 \end{ln-think}
-We were not able to complete the above induction because our induction hypothesis was not powerful enough to drive us towards completing the inductive step. This induction hypothesis, or a prior assumption that we may call \textbf{priori}, needs to be a different proposition that speaks the same thing as an induction hypothesis does. Or, it has to be a stricter, stronger proposition for us to assume. Let us try a different induction hypothesis for the same prompt:
-\begin{ln-think}{When the Induction Hypothesis is Powerful}{}
+We were not able to complete the above induction because our induction hypothesis was not powerful enough to drive us towards completing the inductive step. This induction hypothesis, or a prior assumption that we may call \textbf{priori}, needs to be a different proposition that speaks the same thing as an induction hypothesis does. Or, it has to be a stricter, stronger proposition for us to assume. \\
+Let us try a different induction hypothesis for the same prompt:
+\begin{ln-think}{When the Induction Hypothesis is Reliable}{}
     Prompt: for all $n \geq 1$, the sum of the first $n$ odd numbers is $n^2$.
     \tcblower
     \textbf{Base Case}: Prove the prompt for $n = 1$. The first odd number is $1$, and $1 = 1 ^ 2$. \\
@@ -118,3 +125,28 @@ Let us provide another example to witness the efficiency in strong induction, as
     If $k + 1$ is prime, then the problem is resolved as it can be written as a product of one prime number (itself). If it is not prime, however, then we would assume it is the product of two natural numbers $x, y$ such that $1 < x \leq y < k + 1$, as multiplication should work. \\
     However, such numbers $x, y$ should by the induction hypothesis be able to be written as a product of one or more prime numbers. If so, then so can $k + 1$. Via proof by case and mathematical induction, we have proved the prompt to hold true over the range of natural numbers it quantifies over.
 \end{ln-think}
+
+\section{Build-Up Error}
+However, it is very easy to make mistakes on mathematical inductions if we blindly assume the induction hypothesis to be non-vacuously true. \\
+In other words, we can dangerously assume for an arbitrary $k$ and the prompt's proposition $P$ that $P(k)$ is true, while it might not be!
+\begin{ln-think}{When Mathematical Induction is SUSpicious}{}
+    \textbf{Prompt:} Every horse has a same color
+    \tcblower
+    \textbf{Wrong Proof:} \\
+    \textbf{Base Case}: Let there be only one horse. One horse has one color, prompt is trivially true. \\
+    \textbf{Induction Hypothesis}: Let a set of $n$ horses always have the same color. (Hey, this is MEGA-SUS! We'll explain why later.) \\
+    \textbf{Induction Step}: Let the new set of horses have $n + 1$ members. Then, any $n$-element subset of this set of horses must have the same color, thus all horses must have the same color!
+\end{ln-think}
+Where did it go wrong? Or, more exactly, why is mathematical induction sus? Well, there suddenly exist counterexamples to the induction hypothesis, and we blindly assumed that there isn't. \\
+This is known as a \textbf{build-up error}, where we falsely assume the prompt to work for any natural number input already and thus falsely prove the prompt as right.
+
+Let us take a stricter look at the above proof. \\
+In the induction step, let us first remove an arbitrary horse from the set of $n + 1$ horses. The induction hypothesis can tell us that this leftover set of $n$ horses all have a same color. \\
+But when we apply $n = 1$, this entire claim becomes suspicious: we, if following the induction step, actually get two disjoint sets (which means without common elements) of horses, each of cardinality $1$. So the horses are never in the same color group, and cannot necessarily just have the same color!
+
+The build-up error occurs: it shows some valid reasoning via a reasoning that is fundamentally flawed, and it is up to the prover to recognize the flaw. 
+
+\section{Personal Regard on This Topic}
+Mathematical Induction is difficult to deal with, because induction hypotheses are sometimes hard to seek and in many cases difficult to configure and debug around. \\
+But as always, practicing will help a lot in familiarizing with the content and coming with esoteric and maverick ways to prove diverse prompts! \\
+For more advices regarding proofs, try searching in the previous chapter and your experiences.
