@@ -109,9 +109,21 @@ as well as candidate-optimal:
     such that job $J^*$ is ranked lower than job $J$ on the preference of $C$. \\
     However, if so, then $C$ must have wanted to work with $J$ more and $J$'s current candidate $C'$ is not preferred more than $C$ given the stable amtching $T$. \\
     We managed to show that the matching $S$ is both stable and unstable, which itself is a contradiction. Therefore, the matching from GS Algorithm cannot be candidate-optimal. \\
-    If so:
+    If so, then the employer-optimal pairing is already the worst possible pairing for candidates, and therefore:
     \begin{ln-theorem}{The Optimality of GS Algorithm II}{}
         The matching produced by the Gale-Shapley algorithm is always Candidate-Pessimal.
     \end{ln-theorem}
 \end{ln-think}
 Notably, this algorithm can still be modified in finer details to provide a priori in preference from jobs, as well as converting the algorithm into possessing candidate-optimality instead.
+
+\section{Personal Regard on This Topic}
+When doing proofs regarding stability, it is always advised to operate with imaginary entities. This almost always offers a more concrete insight to the proof of operation. \\
+This algorithm is an interesting topic that demonstrate the importance of mathematical induction, as well as showcases the discussion and analytics we may perform on an algorithm. \\
+Personally, here are a few topics that I chose to highlight during revision:
+\begin{bindenum}
+    \item \textbf{Improvement Lemma}: Candidates will only hold better or equal offers.
+    \item \textbf{Optimality}: Candidate-pessimal and job-optimal for our current settings. However, by switching the places of candidates and jobs, this optimality reverses.
+    \item \textbf{Stability}: Definition is customizable across different short answer settings, but the commonality is there should not be rogue couples (matchings), where the second and first element of some different pair wants to be with each other instead.
+    \item \textbf{Uniqueness of Stable Match}: Stable matches can be generated via other algorithms. This is just one of them. Therefore, there can exist more stable matchings than we know.
+\end{bindenum}
+Woah, that's a LOT of contents!

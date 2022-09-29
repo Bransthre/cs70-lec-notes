@@ -154,9 +154,10 @@ Now that we know it is possible to find a polynomial, what is an efficient metho
     Let us reflect on the approach. \\
     Define $Q(x) := P(x)E(x)$, which has degree $n + k - 1$ and therefore is described by $n + k$ coefficients. \\
     Meanwhile, $E(x)$ is described by $k + 1$ coefficients as a $k$-degree polynomial. \\
-    Therefore, we interpolate $n + k$ coefficients from $Q(x) = r_x E(x)$ and $k$ coefficients from $E(x)$ (via making the highest degree term have coefficient of 1). This forms $n + 2k$ linear equations for us to configure the coefficients of $Q(x)$ and $E(x)$. \\
+    Therefore, we interpolate $n + k$ coefficients from $Q(x) = r_x E(x)$ and $k$ coefficients from $E(x)$ (which is a polynomial of $(x - e_i)$, and we find that $e_i$ and there are $k$ of these). \\
+    This forms $n + 2k$ linear equations for us to configure the coefficients of $Q(x)$ and $E(x)$. \\
     At last, we perform long division to acquire $P(x)$:
-    \[P(x) = \frac{Q(x)}{E(x)}\] 
+    \[P(x) = \frac{Q(x)}{E(x)}\]
 \end{ln-theorem}
 \begin{ln-theorem}{Correctness of Error-Locator Approach}{}
     Let us for the sake of proof assume the existence of alternative solutions $Q'$, $E'$, such that:
@@ -177,3 +178,7 @@ Now that we know it is possible to find a polynomial, what is an efficient metho
     \end{align*}
     Therefore, any possible set of polynomials would function to find us the right polynomial!
 \end{ln-theorem}
+
+\section{Personal Regard on This Topic}
+It really probably is just about reading the notes a few more times and knowing how to perform polynomial interpolation :p \\
+For now, there's nothing I'd like to add on top of the notes for this section.

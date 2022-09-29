@@ -78,7 +78,8 @@ To let repeated edges that might have had different directions be counted distin
 \end{ln-fig}
 The example shown above is known as a \textbf{directed graph}, graphs equipped with directed edge.
 \begin{ln-define}{Directed-ness of Edge}{}
-    If an edge models a one-way path from one vertex to another, such an edge is known as a \textbf{directed edge}. Mathematically, it is represented as an edge with an arrowmark. For the edge set from the above example,
+    If an edge models a one-way path from one vertex to another, such an edge is known as a \textbf{directed edge}. Mathematically, it is represented as an edge with an arrowmark. \\
+    For the edge set \underline{from the above example},
     \[(x_1, x_2) \in E \land (x_2, x_1) \notin E\]
     If an edge is not arrowmarked, such that it allows travel between two vertices in both directions, then the edge is an \textbf{undirected edge}.
 \end{ln-define}
@@ -260,7 +261,6 @@ In this case, since the graph of Seven Bridge is not even-degreed, it cannot hav
 \subsection{Trees}
 Unfortunate. Regardless, let`s talk about trees. \\
 As mentioned in CS61B, a graph is a tree if it is connected and acyclic. \\
-And don't worry. We will talk more about trees in the next section.
 
 \subsection{Planar Graphs}
 What is a planar graph?
@@ -343,7 +343,8 @@ This implies that planar graphs are sparse, or, they cannot have too many edges.
 Therefore, specific graphs whose number of edges and vertices do not follow the above inequality can be seen as non-planar:
 \begin{ln-define}{Planarity}{}
     For a connected planar graph, $e \leq 3v - 6$. \\
-    Mind that this does not serve as a planarity test, as such property is satisfied by $K_{3, 3}$ as well.
+    Mind that this does not serve as a planarity test, as such property is satisfied by $K_{3, 3}$ as well. \\
+    However, its contrapositiv can serve as a non=planarity test.
 \end{ln-define}
 In that case, both $K_5$ and $K_{3,3}$ are non-planar. We can explore these graphs further: these are the only non-planar graphs, made precise by the mathematician Kuratowski (where the capital K came from).
 \begin{ln-theorem}{A graph is non-planar iff it contains $K_5$ or $K_{3,3}$}{}
@@ -392,9 +393,10 @@ But Brandon, \textbf{I hear your thoughts}. Why did you put a LaTeX-ized dual gr
     \end{center}
 \end{ln-fig}
 and why is Duality important at all? \\
-That's because it reduces area-coloring map into a planar graph. \\
+That's because it reduces area-coloring map into a planar graph. Since a map's faces ought to be distinguishable, its dual graph can serve as a planar graph for us to work with. \\
 Now let's talk about coloring. Essentially, two-coloring a graph is working with a bipartite graph, where one group of vertex has one specific color, the other group the other color. \\
 Or, we may proceed with a breadth-first algorithm that colors any uncolored neighbor with alternative colors. This will let us discover cycles of odd lengths in the event of failing to color.
+Notably, we have the four color theorem, which states that you may graph any map with four colors. This implies that any planar graph can be vertex-colored in four or more colors!
 
 \section{Classes of Graphs}
 
@@ -419,7 +421,8 @@ Starting with a definition$\dots$ well, in fact, many definitions.
 Why do we want trees? I don't know, maybe retaking CS61B will provide you some insights.
 
 In a rooted trees, which algorithms are mainly concerned with, there is a designated node called the root at the topmost level of a tree. The bottom-most nodes are called leaves, and the intermediate nodes are called internal nodes. \\
-In a rooted tree, a root should never be a leaf; and throughout types of trees, leaves ought to be degree-1 vertices.
+In a rooted tree, a root should never be a leaf; and throughout types of trees, leaves ought to be degree-1 vertices. \\
+But why does this matter? That's a nice question. James. I have been tested on this when practicing Leetcode. I think that shows something.
 
 \subsection{Hypercubes}
 We would like a graph to be strongly connected, and a complete graph is such example. But, complete graphs take a lot, a lot of edges. Since graphs are abstractions of real-life objects, this implies huge operational and development costs. Our alternative solution would be a hypercube.
@@ -461,3 +464,19 @@ Well, let's take a further investigation into its connectivity, so to make sure 
     The edges that cross between the $0$-subcubes and $1$-subcubes would be at least $|S_0| - |S_1|$ because there is an edge between every pair of vertices ($0x$, $1x$). Therefore, finally, the number of edges crossing is indeed \underline{at least} $2^k \geq |S|$ as desired. \\
     (The $|S_0| - |S_1|$ was derived from the cardinality of complement from $\{x : 0x \in S_0\} - \{x : 1x \in S_1\}$).
 \end{ln-quest}
+
+\section{Personal Regard on This Topic}
+This is probably the most abstract topic you'll encounter in CS70, just because everyone is new to graphs. \\
+Here is also an organization of results we have proven during discussion and homework:
+\begin{bindenum}
+    \item Every even-degreed connected graph has an Eulerian Tour, a tour on which every edge is used. (Eulerian Theorem)
+    \item If a graph contains $K_{3,3}$ or $K_5$, it is non-planar. (Kuratowski)
+    \item For a connected planar graph, $v + f = e + 2$. (Euler's Formula)
+    \item For a connected planar graph, $e \leq 3v - 6$. This inequality is even tighter on disconnected planar graphs. (Proven in Lecture)
+    \item Every planar graph can be vertex-colored with four colors. (Four Color Theorem)
+    \item Hypercubes of $n$ dimension has $n 2^{n - 1}$ edges. (Proven in Lecture)
+    \item The number of vertices in an undirected graph with odd-degree is even. (Discussion 2B)
+    \item An $n$-dimensional hypercube can be vertex-colored with $n$ colors. (Discussion 3A)
+    \item Every hypercube is bipartite. (Discussion 3A)
+    \item A Hamiltonian Tour is a tour where each vertex appears only once, each pair of consecutive vertices are connected by an edge, and the first and last vertex of this path are connected by an edge. (Definition)
+\end{bindenum}

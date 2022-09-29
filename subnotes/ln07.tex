@@ -42,6 +42,7 @@ Now, let us explore the encryption and decryption functions:
         e &\text{ is coprime with $(p - 1)(q - 1)$} \\
         d &= {e}_{(p - 1)(q - 1)}^{-1}
     \end{align*}
+    Among these values, only $N$ and $e$ are known.
     \begin{enumerate}
         \item[] \textbf{Encryption}: $E(x) \equiv x^e\pmod{N}$
         \item[] \textbf{Decryption}: $D(y) \equiv y^d\pmod{N}$
@@ -97,7 +98,7 @@ Now, let us ensure that the message will get encrypted and decrypted correctly:
     If $p | x$, then the case is trivial. We are just subtracting two multiples of $p$. \\
     We can prove under similar logic that $q | x^{ed} - x$, so in the end, $pq | x^{ed} - x$. \\
 \end{ln-theorem}
-Chinese Remainder Theorem can also be used to provide a similar proof, where we construct a system of congruences and find $x\pmod{pq}$ to be the only viable solution. \\
+Chinese Remainder Theorem can also be used to provide a similar proof, where we construct a system of congruences undero modulo $p$ and $q$ exploiting $x^{ed} \equiv x$ under these modulos, and finally find $x\pmod{pq}$ to be the only viable solution by the uniqueness property of CRT. \\
 So, why is RSA secure? It is based on the assumption:
 \begin{quote}
     Given $N$, $e$, and $y \equiv x^e \pmod{N}$, there is no efficient algorithm for determining $x$.
@@ -120,3 +121,14 @@ But, to find large prime numbers, we can attempt to find efficient algorithms of
 \end{ln-theorem}
 For exponentiation, the exponentiation algorithm provided in Chapter 6 is actually good enough. \\
 So RSA is quite plausible for implementation and usage!
+
+\section{My Personal Regard on This Topic}
+Takeaway: Fermat's Little Theorem is goated. \\
+Otherwise, make sure you understand that in RSA Scheme...:
+\begin{bindenum}
+    \item The known values are $N$ and $e$, where $e$ is coprime with $(p - 1)(q - 1)$ and $N = pq$.
+    \item The reason your algorithm makes the eavesdropper mald is because $p$ and $q$ are hard to find.
+    \item If it works properly, $D(E(x)) \equiv x \pmod{N}$. You use the public key to encrypt and decrypt, it's the private key that depends on $(p - 1)$ and $(q - 1)$.
+    \item This algorithm can work if you find two or more prime factors to form $N$, and you'd just adjust the formula for $e$ and $d$ accordingly. But, if you just have a prime number $N$ as your public key, your private key is very findable because it's just a multiplicative inverse of a known number undero a known modulo.
+\end{bindenum}
+If you're interested in cryptography, the mathematics of making hackers mald, make sure to tune in for cryptography classes!

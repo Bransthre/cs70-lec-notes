@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.6.26)  25 SEP 2022 21:57
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.6.26)  28 SEP 2022 21:28
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1264,27 +1264,38 @@ LaTeX Font Info:    Trying to load font information for T1+pcr on input line 19.
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 ) [33
 
-] [34] [35]
-Underfull \hbox (badness 10000) in paragraph at lines 182--186
+] [34]
+Underfull \vbox (badness 5260) has occurred while \output is active []
+
+ [35]
+Underfull \hbox (badness 10000) in paragraph at lines 183--187
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 182--186
+Underfull \hbox (badness 10000) in paragraph at lines 183--187
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 182--186
+Underfull \hbox (badness 10000) in paragraph at lines 183--187
 
  []
 
 [36]
-Underfull \hbox (badness 10000) in paragraph at lines 228--253
+Underfull \hbox (badness 10000) in paragraph at lines 229--254
 
  []
 
-[37]
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [37]
+Underfull \hbox (badness 10000) in paragraph at lines 262--264
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 270--293
 
  []
@@ -1295,76 +1306,82 @@ Underfull \hbox (badness 10000) in paragraph at lines 328--330
  []
 
 
+Underfull \vbox (badness 1917) has occurred while \output is active []
+
+ [39]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [39] [40] [41]) [42] (./subnotes/ln06.tex
+ [40] [41] [42]) [43] (./subnotes/ln06.tex
 Chapter 6.
-[43
+[44
 
-] [44]
+] [45]
 Underfull \hbox (badness 10000) in paragraph at lines 91--93
 
  []
 
-[45]
+[46]
 Underfull \hbox (badness 10000) in paragraph at lines 153--158
 
  []
 
-[46] [47] [48]
-Underfull \hbox (badness 10000) in paragraph at lines 291--293
+[47] [48]
+Underfull \vbox (badness 1874) has occurred while \output is active []
 
- []
+ [49]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-
-Underfull \vbox (badness 2856) has occurred while \output is active []
-
- [49]) [50] (./subnotes/ln07.tex
+ [50] [51]
+Missing character: There is no 物 ("7269) in font ptmr8t!
+Missing character: There is no 不 ("4E0D) in font ptmr8t!
+Missing character: There is no 知 ("77E5) in font ptmr8t!
+Missing character: There is no 數 ("6578) in font ptmr8t!
+) [52] (./subnotes/ln07.tex
 Chapter 7.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [51
+ [53
 
-] [52]
-Underfull \hbox (badness 10000) in paragraph at lines 96--99
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 105--108
-
- []
-
-[53]
-Underfull \hbox (badness 10000) in paragraph at lines 118--119
+] [54]
+Underfull \hbox (badness 10000) in paragraph at lines 97--100
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 115--120
+Underfull \hbox (badness 10000) in paragraph at lines 106--109
 
  []
 
-) [54] (./subnotes/ln08.tex
+[55]
+Underfull \hbox (badness 10000) in paragraph at lines 119--120
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 116--121
+
+ []
+
+) [56] (./subnotes/ln08.tex
 Chapter 8.
-[55
+[57
 
-] [56] [57]) [58] (./subnotes/ln09.tex
+] [58] [59]) [60] (./subnotes/ln09.tex
 Chapter 9.
 
 Underfull \hbox (badness 10000) in paragraph at lines 35--38
 
  []
 
-[59
+[61
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 120--122
 
  []
 
-[60]
+[62]
 Underfull \hbox (badness 10000) in paragraph at lines 138--140
 
  []
@@ -1377,21 +1394,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 150--153
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [61]) [62] (./main.aux)
+ [63]) [64] (./main.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.55997pt have occurred.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 16A72A4676575CED180F95AB4339450A;8169.
+(rerunfilecheck)             Checksum: 6716CAAD4E9931D0F7599645254B53F6;9459.
  ) 
 Here is how much of TeX's memory you used:
- 63947 strings out of 475882
- 1615269 string characters out of 5806027
- 2266254 words of memory out of 5000000
- 84059 multiletter control sequences out of 15000+600000
+ 63955 strings out of 475882
+ 1615405 string characters out of 5806027
+ 2267121 words of memory out of 5000000
+ 84067 multiletter control sequences out of 15000+600000
  524879 words of font info for 128 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  114i,15n,145p,863b,2126s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (62 pages).
+Output written on main.pdf (64 pages).

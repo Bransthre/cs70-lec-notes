@@ -128,7 +128,7 @@ A function is, in its nature, the relationship of sets: it is a relationship of 
             \end{center}
         }
         \item {
-            \textbf{Bijective}: A function is Bijective if the function is both injective and surjective. In other words, each image (output) has exactly one pre-image (input).
+            \textbf{Bijective}: A function is Bijective if the function is both injective and surjective. In other words, each image (output) has exactly one pre-image (input) and vice versa.
         }
     \end{bindenum}
 \end{ln-define}
@@ -191,7 +191,7 @@ The Euclid's Algoirithm, which is more of a folk algorithm by ancient engineers,
     \textbf{Theorem}: Let $x \geq y > 0$, then $gcd(x, y) = gcd(y, x\pmod{y})$
     \tcblower
     Let us express $x = qy + r$, where $q \in \Z$ and $r = x\pmod{y}$. Note its an equal sign, not congruence. \\
-    If their greatest common divisor $gcd(x, y) = d$ divides $x$ and $y$, then it also divides $x$ and $qy$, thus also $r = x - qy = x\pmod{y}$. \\
+    If their greatest common divisor $gcd(x, y) = d$ divides $x$ and $y$, then it also divides $x$ and $qy$, thus also for $r = x - qy$. \\
     Therefore, $gcd(x, y) = gcd(y, x\pmod{y})$.
 \end{ln-theorem}
 The Euclid's Algorithm is the process to keep applying $gcd(x, y) = gcd(y, x\pmod{y})$ until the second argument becomes $0$. At termination, the first argument is the greatest common divisor of original inputs $x$ and $y$. \\
@@ -233,9 +233,11 @@ Let us now consider the inner workings of it: how the return for non-base-case f
         &= ay + b(x - \lfloor \frac{x}{y} \rfloor y) \\
         &= bx + (a - \lfloor \frac{x}{y} \rfloor)y \\
         A &= b \\
-        B &= a - \lfloor \frac{x}{y} \rfloor
+        B &= a - b \cdot \lfloor \frac{x}{y} \rfloor
     \end{align*}
 \end{ln-think}
+Or, instead of having to compute the weird arithmetics of new second coefficient, just alternate the secondary coordinate $b$ into the primary of the next traced case (as algorithm demonstrates), and autonomously find a value of new $b$ that works to satisfy $ax + by = d$. \\
+This usually works for exams because $d$ is usually $1$. If it is not and the situation is complicated, stick to the algorithm.
 
 \subsection{Brief Notes: Division via Inverse}
 We have learned that to find the multiplicative inverse of $x$ modulo $m$, we would just need to solve $b$ from the equation $1 = ak + bn$, where $k=max(x,m)$ and $n$ the other. \\
@@ -262,7 +264,7 @@ The Chinese Remainder Theorem is another craftsman algorithm developed by Sunzi 
     Let us follow from this fact and declare some variables:
     \[
         \begin{cases}
-            u \equiv m(m^-1\pmod(n)) \\
+            u \equiv m(m^{-1}\pmod{n}) \\
             v \equiv n(n^{-1}\pmod{m})
         \end{cases}
     \]
@@ -289,7 +291,7 @@ The Chinese Remainder Theorem is another craftsman algorithm developed by Sunzi 
 Such a solution can be argued unique:
 \begin{ln-think}{Might the solutions of CRT be unique?}{}
     Consider for the sake of contradiction a second distinct solution $y$ exists, then due to the modular properties, $x - y \equiv 0\pmod{m}$ and $x - y \equiv 0\pmod{n}$. \\
-    Since $gcd(m, n) = 1$, and $x - y$ is some multiple of $m, n$, and $x \neq y$, then either $|x - y| = 0mn$ or $|x - y| \geq mn$. The former implies $x = y$, while the latter suggests that one of $x$ and $y$ is not in $\{0, \dots, mn - 1\}$. \\
+    Since $gcd(m, n) = 1$, and $x - y$ is some multiple of $m, n$, and $x \neq y$, then either $|x - y| = 0mn$ or $|x - y| \geq mn$. The former implies $x = y$, while the latter suggests that one of $x$ and $y$ is not in $\{0, \dots, mn - 1\}$.
 \end{ln-think}
 And therefore, it's not exactly that the solution is unique. It's that distinct solutions must have a difference that is a multiple of $mn$. In other words, it potentially has infinite solutions. \\
 We have now figured that CRT helps to solve systems of congruences, and now we are able to solve systems of 2 congruences. What is left to us is to solve systems of more congruences. \\
@@ -311,6 +313,22 @@ And so, let us now move onto the more complex cases of CRT:
         \textit{-- Sunzi, The Art of War}
     \end{flushright}
 \end{ln-theorem}
+\begin{ln-think}{Prove the Existence of Solution for CRT}{}
+    The proof of solution existence follows a very simular framework to part (b). \\
+    Let us first abreviate an expression in terms of a function:
+    \[f(b) = \prod_{j = 0, j \neq b}^k n_j = \frac{N}{n_b}\]
+    Let there be values:
+    \[x_i = a_i f(i) \cdot {f(i)}_{n_i}^{-1}\]
+    Then, following the similar logic of part (b), we can dictate that the solution would be:
+    \[x = \sum_i x_i\]
+    As for why the abvoe works: \\
+    For each congruence under modulo $n_i$ we deal with, the only term left to interpretation due to not being a multiple of $n_i$ would be $x_i$; however, due to how the term $x_i$ is constructed via involving a number and its multiplicative inverse under $n_i$:
+    \[x_i \equiv a_i \pmod{n_i}\]
+    The uniqueness of this solution follows the fact that, for the sake of proof, let $y$ be a distinct solution to the system from $x$:
+    \[\forall n_i (x - y \equiv 0 \pmod{n_i})\]
+    This follows from the observation that they are both equivalent to a same value under any modulo $n_i$ to qualify as a solution. \\
+    But, the above claim would hint that $x - y \equiv 0 \pmod{N}$, stating that each solution is of distance $N$ from each other, and thus there would be a unique solution if under modulo $N$.
+\end{ln-think}
 Now, a linear algebra perspective:
 \begin{ln-think}{The set of solutions is a Vector Space}{}
     Here, each $b_i$ is congruent to $1\pmod{n_i}$ and $0\pmod{n_j}$ by the theorem, so a multiple of $b_i$ can be used to satisfy congreunce $\pmod{n_i}$ while not integering with other congruences of other modulo. \\
@@ -318,3 +336,17 @@ Now, a linear algebra perspective:
     This might be a convenient point of vectorizaton for compuation.
 \end{ln-think}
 The uniqueness condition is very similar: distinct solutions must have a distance that is a multiple of $N$ as defined in theorem.
+
+\section{Personal Regard on This Topic}
+Just like my friend who plays Smash Ultimate says when I first tried to play against a tournament player who plays an overpowered character:
+\begin{center}
+    My advice for you, is to have fun.
+\end{center}
+
+No, just kidding. Here are the advises I meant to put instead:
+\begin{bindenum}
+    \item Be aware of the timings at which you use $\equiv$ and $=$. These are different. If you are using $mod$ as an operator, note it clearly.
+    \item The proof for CRT is useful, and the reason why its solution works associates extremely closely to its proof. This is applicable for polynomials, surprisingly.
+    \item Extended Euclid Algorithm will save you in the next chapter.
+    \item If you are like most of the readers and this author might be, the original name of CRT in its native langauge is 物不知數 in case you want to yell some move names during your midterm at Pimentel 1 to cheer yourself up when using CRT.
+\end{bindenum}

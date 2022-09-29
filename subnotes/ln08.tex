@@ -93,3 +93,13 @@ Let us attempt to devise a secret sharing scheme such that, for the condition of
 So now, suppose there are $n$ officials indexed from $1$ to $n$, and the secret is a natural number $s$. Let $q$ be a prime number lrager than $n$ and $s$, let us work over the finite field of modulo $q$. \\
 Pick a random polynomial $P(x)$ of degree $k - 1$ such that $P(0) = s$, and provide $P(i)$ to each official indexed $i$. \\
 Now, since you need $k$ points to figure out the explicit expression of a $k - 1$ degree polynomial $P(x)$, you must need at least $k$ officials who hold one point of information to contribute.
+
+\section{Personal Regard on This Topic}
+The best way to remember that $n + 1$ pairs interpolate a $n$ degree polynomial is using your nose (if you have one; if you don't, I suggest you use other people's nose). \\
+Brandon. How? Are you out of your mind? \\
+Look at your nose, which has two points (or holes if you will?). These two points on your nose form a line, because we can interpolate a $1$-degree polynomial (a line) via two points on your nose. \\
+The reason why I chose nose is because I see noses everyday and that reminds me of Lagrange Interpolation.
+
+When asked to develop a secret-sharing mechanism via polynomial, you'd like to pay attention to how many pairs/roots to give to each individuals for interpolation. \\
+This can also associate to the notion of how much power someone has in a voting system to decrypt a secret to a specific party. \\
+For instance, if person $A$ has more pairs of the polynomial than person $B$ has, then person $A$ has a larger power in this voting system because he has more portions of the decryption key.
