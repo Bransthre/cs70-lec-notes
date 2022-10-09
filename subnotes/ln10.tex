@@ -155,18 +155,136 @@ Therefore, we are essentially sampling $k$ locations from $k + n - 1$ without re
     Generally, the number of ways to place $n$ balls into $k$ bins is:
     \[\binom{n + k - 1}{n} = \binom{n + k - 1}{k - 1}\]
 \end{ln-theorem}
+Let us also describe the intuition we have used in generating the balls and urns approach in producing a match between bitstrings and ball-urn allocations:
+\begin{ln-theorem}{Zeroth Rule of Counting}{}
+    If a set $A$ can be placed into a one-to-one correspondence with a set $B$ (in other words, find a bijection $f: A \rightarrow B$), then $|A| = |B|$.
+\end{ln-theorem}
 
 \section{Combinatorial Proofs}
-Section.
+In short, proofs on combinatorials. They are mostly identity proofs. Let us explore a few examples/categories from below sections:
 
 \subsection{Binomial Theorem}
-Subsection.
+\begin{ln-theorem}{Binomial Theorem}{}
+    \[\forall n \in \N ({(a + b)}^n = \sum_{k = 0}^n \binom{n}{k} a^k b^{n - k})\]
+\end{ln-theorem}
+
+The LHS is a product of $n$ terms $(a + b)$. \\
+Let these factors be labeled sets $f_1, \dots, f_n$ for generality. \\
+For multiplying factors $f_1$, $f_2$, a total of $4$ two-term combinations is made via matching each term of $f_1$ to each term of $f_2$:
+\[f_1 \times f_2 = \{(a_{f_1}, a_{f_2}), (a_{f_1}, b_{f_2}), (b_{f_1}, a_{f_2}), (b_{f_1}, b_{f_2})\}\]
+\[(a + b)^2 = a^2 + ab + ba + b^2\]
+Every term in such polynomial is in some form $a^k b^{n - k}$. It would be reasonable to see how this term contributes to the over sums of polynomial. \\
+We produce terms $a^k b^{n - k}$ when $k$ copies of $a$ and $n$ copies of $b$ are multiplied, and there are $\binom{n}{k}$ ways to form such terms. \\
+Therefore, for each index $k$ possible (which spans from $0$ to $n$, standing for the number of $a$ apparent in the monomial), the sum of such monomials is the product of its value and number of such pairing:
+\[\binom{n}{k} a^k b^{n - k}\]
+Sum this product over all possible $k$, we will get the value of ${(a + b)}^n$, which is the sum of all possible monomials (products) achieved:
+\[\sum_{k = 0}^n \binom{n}{k} a^k b^{n - k}\]
+
+The Binomial Theorem would then contribute to an interesting identity. Let us set $a = 1$, $b = -1$ in binomial theorem. Then:
+\begin{align*}
+    (-1 + 1)^n
+    &= \sum_{k = 0}^n \binom{n}{k} {(-1)}^k {(1)}^{n - k} \\
+    &= \sum_{k = 0}^n \binom{n}{k} {(-1)}^k = 0
+\end{align*}
+Zamn! Did you just use binomial theorem to prove that $-1 + 1 = 0$ to the $n^{th}$ power is still $0$? \\
+Yeah, we did. But the last line of the proof, which is the combinatorial identity we have produced, is arugably more valuable.
 
 \subsection{Combinatorial Identities}
-Subsection.
+Here are two interesting combinatorial identities to capitalize off in several proofs.
+
+For now, let's talk about the first of two:
+\begin{ln-define}{Hockey-Stick Identity}{}
+    The Hockey-Stick Identity states that:
+    \[\binom{n}{k + 1} = \sum_{i = n - 1}^k \binom{i}{k}\]
+\end{ln-define}
+The LHS of this identity is the number of ways to choose a $(k + 1)$-length subset from an $n$-element set $S$. \\
+For generality, let us denote $S$ such that:
+\[S = \{S_1, \cdots, S_n\},\ \ S_1 < \cdots < S_n\]
+If we let the lowest-value element of the subset to be $S_1$, then we will have $k$ elements to choose from the rest of $n - 1$ elements from $S$. Therefore, it contributes $\binom{n - 1}{k}$ to the total number of combinations. \\
+If we let the lowest-value element of the subset to be $S_i$, then we will have $k$ elements to choose from the rest of $n - i$ elements from $S$ (because $i$ elements of $S$ are smaller than or equal to the smallest element of subset). Therefore, it contributes $\binom{n - i}{k}$ to the total number of combinations. \\
+This sum will continue until we let the lowest-value element of subset to be $S_{n - k}$, where we would be left with $n - (n - k) = k$ elements to choose from: the bare minimum. \\
+Totaling all above contribution leads to the Hockey-Stick Identity:
+\[\binom{n}{k + 1} = \sum_{i = n - 1}^k \binom{i}{k}\]
+
+The second identity I'd like to introduce to you is:
+\begin{ln-define}{Sum of combinations from $n$ items}{}
+    \[\sum_{k = 0}^n \binom{n}{k} = 2^n\]
+\end{ln-define}
+This identity can be proved via setting $a = 1$, $b = 1$ from the binomial theorem:
+\begin{align*}
+    2^n &= (1 + 1)^n \\
+    &= \sum_{k = 0}^n \binom{n}{k} {1}^k {1}^{n - k} \\
+    &= \sum_{k = 0}^n \binom{n}{k} {1}^k = \sum_{k = 0}^n \binom{n}{k}
+\end{align*}
+To discuss this via interpretation, suppose we have a set $S$ with $n$ distinct elements. \\
+The LHS of this identity counts the number of ways of choosing an $i$-lengthed subset. \\
+The RHS, meanwhile, counts the total number of possible subsets (see the Chapter for Set Theory in this document). \\
+Therefore, the LHS and RHS of this identity indeed denote the same value!
 
 \subsection{Permutation and Derangements}
-Subsection.
+In combinatorics, we have a famous problem. Here it goes. \\
+Assume that we collect the namecard of $n$ people, and redistribute them into the $n$ people. On average, how many people recieve their own namecard?
+
+Let us look at this in a combinatorics perspective. \\
+Label the namecards as $1, 2, \cdots, n$ and let $\pi_i$ denote the namecard that is returned to the $i^{th}$ student. \\
+Then, the vector $\vec{\pi} = \begin{bmatrix} \pi_1 & \cdots & \pi_n \end{bmatrix}^T$: a permutation of the set $\{1, \cdots, n\}$. There are then $n!$ distinct permutations of $\{1, \dots, n\}$ since it is not a multiset. \\
+In this setting, the situation at which a person receives his own namecard is when $\pi_i = i$. \\
+Therefore, the number of people who receive their own namecard is the amount of index at which $\pi_i = i$. These points are called ``fixed points''.
+
+A permutation with no fixed points is called a \textbf{derangement}. There is a formula for the number of derangements provided a set of $n$ distinct elements:
+\begin{ln-theorem}{Number of Derangements}{}
+    \textbf{Theorem}: For an arbitrary positive integer $n \geq 3$, the number $D_n$ of derangements of $\{1, \dots, n\}$ satisfies:
+    \[D_n = (n - 1)(D_{n - 1} + D_{n - 2})\]
+    \tcblower
+    \textbf{Proof}: \\
+    In a derangement $(\pi_1, \cdots, \pi_n)$, suppose $\pi_n = j \in \{1, \cdots, n - 1\}$. Then, there are $n - 1$ choices for $j$. We also know that $j \neq n$ because this would then not produce a derangement. \\
+    Now, if $\pi_j = n$, then we recognize that $j$ and $n$ get swapped, and the number of possible derangements with the remaining $n - 2$ numbers is $D_{n - 2}$. \\
+    Or, if $\pi_j \neq n$, then $n$ satisfies the same constraint as $j$ (in not being able to be the value $j$). Therefore, we have $n - 1$ values left to form derangements with, which provides $D_{n - 1}$ possibilities. \\
+    This completes the derivation of the above formula.
+\end{ln-theorem}
+Notably, with the boundary conditions $D_1 = 0$ and $D_2 = 1$, we can then determine $D_n$ computationally via recursion and memoization. \\
+The derivation is not shown here, but the recursion would then yield that:
+\[D_n = n! \sum_{k = 0}^n \frac{{(-1)}^k}{k!}\]
 
 \section{The Principle of Inclusion-Exclusion}
-Section.
+Overcounting is a big problem in combinatorics, but here is a technique to prevent most of such situations. \\
+Let $A_1$ and $A_2$ be two subsets of the same finite set $A$ and we want to count the number of elements in $A_1 \cup A_2$. \\
+If $A_1$ and $A_2$ are disjoint, it is very lucky:
+\[|A_1 \cup A_2| = |A_1| + |A_2|\]
+If $A_1$ and $A_2$ are not disjoint, however, then we need to subtract the number of elements from their intersections:
+\[|A_1 \cup A_2| = |A_1| + |A_2| - |A_1 \cap A_2|\]
+This brings us to the generalization of this logic over an arbitrary number of subsets:
+\begin{ln-theorem}{Principle of Inclusion-Exclusion}{}
+    \textbf{Theorem}: Let $A_1, \cdots, A_n$ be arbitrary subsets of the same finite set $A$:
+    \[|A_1 \cup \cdots \cup A_n| = \sum_{k = 1}^n {(-1)}^{k - 1} \sum_{S \subseteq \{1, \cdots, n\}:|S| = k} |\cap_{i \in S}A_i|\]
+    \tcblower
+    \textbf{Proof}: \\
+    Note that if $a$, an element, is not included by the union of all subsets of $A$ considered in this scenario, then it is not possible for $a$ to be counted anyways. \\
+    For $a$ to be counted, it must belong to some subset $A_i$, such that $i \in \{1, \dots, m\}$. \\
+    For the sake of clarifying the proof, define an index set $M \subseteq \{1, \dots, n\}$ as:
+    \[M = \{i \in \{1, \dots, n\}:\ a \in A_i\}\]
+    applying the prior logic, $a \in A_i$ iff $i \in M$. Here, if the subset $S$ we find is not contained by $M$, then $a \notin \cap_{i \in S}A_i$. \\
+    Therefore, for $a$ to be counted, $a \in \cap_{i \in S}A_i$ for any non=empty subset $S \subseteq M$. The number of subsets that have counted $a$ on RHS is thus:
+    \[\sum_{k = 1}^n {(-1)}^{k - 1} \sum_{S \subseteq \{1, \cdots, n\}:|S| = k} 1 = \sum_{k = 0}^m \binom{m}{k} {(-1)}^{k - 1} = 1\]
+\end{ln-theorem}
+And applying this to the derangement problem:
+\begin{ln-quest}{Count Derangements}{}
+    Let $A_i$ denote the set of all permutations with $i$ being a fixed point. \\
+    The number of permutations with at least one fixed point is $|A_1 \cup \cdots \cup A_n|$. Therefore,
+    \[D_n = n! - |A_1 \cup \cdots \cup A_n|\]
+    Meanwhile, the cardinality of $A_i$ would be $(n - 1)!$ because it just has to permute $n - 1$ other elements in an arbitrary way. \\
+    The intersection of $A_i$ and $A_j$ would thus need to permute $n - 2$ arbitrary elements, and has cardinality $(n - 2)!$. \\
+    Let us follow the clue: for a subset $S \in \{1, \cdots, n\}$ such that $|S| = k$,
+    \[|\cap_{i \in S} A_i| = (n - k)!\]
+    The rest of algebra follows:
+    \begin{align*}
+        |A_1 \cup \cdots \cup A_n|
+        &= \sum_{k = 1}^n {(-1)}^{k - 1} \binom{n}{k} (n - k)! \\
+        &= \sum_{k = 1}^n {(-1)}^{k - 1} \frac{n!}{k!} \\
+        &= n! \sum_{k = 1}^n {(-1)}^{k - 1} \frac{1}{k!} \\
+        D_n
+        &= n! - |A_1 \cup \cdots \cup A_n| \\
+        &= n! (1 - \sum_{k = 1}^n {(-1)}^{k - 1} \frac{1}{k!}) \\
+        &= n! \sum_{k = 1}^n {(-1)}^{k} \frac{1}{k!}
+    \end{align*}
+\end{ln-quest}
