@@ -1,0 +1,117 @@
+\chapter{Random Variables: Distribution and Expectation}
+
+\section{Introduction to Random Variables}
+Experiments need measurements. Without measurements, the results of experiments may not be quantified. In a random experiment, our measurements would naturally be associated with the notion of probability.
+
+We can characterize the result of an experiment by a property of it. \\
+For example, in the random experiment of flipping 4 coins, let $h$ stand for the number of heads that appeared in one run of such experiment. Such value, while random, quantifies the result of an experiment. \\
+In this case, the probability of $h$ being a value in natural numbers from $0$ to $4$ can be calculated via binomial probability. \\
+The random outcome of this probabilistic experiment is called a \textbf{random variable}. We will come across a rigorous definition soon; for now, we will briefly introduce the properties of a random variable.
+
+As spoken before, each random variable can have a probability distribution over the set of possible values it can be. It is random, in the perspective that its value occurs randomly with probability. The property of randomness is practical in this regard: we can thus quantify the likelihood and average of an experiment's outcome via calculations along a known probability distribution.
+
+Then, from here on, let us discuss random variables in the context of some random experiment.
+\begin{ln-define}{Random Variable}{}
+    A random variable $X$ on a sample space $\Omega$ is a function $X:\Omega \rightarrow \R$ that assigns to each sample point $\omega \in \Omega$ a real number $X(\omega)$.
+\end{ln-define}
+But in that regard, we see that a random variable is in fact a function, mapping sample points onto some real number!
+
+\section{Probability Distribution}
+A probability space comes along two properties:
+\begin{bindenum}
+    \item The sample space $\Omega$ consisting of all possible outcomes of the experiment.
+    \item The probability of each of the sample points.
+\end{bindenum}
+We may find similar features in random variables.
+\begin{bindenum}
+    \item The set of possible values.
+    \item The probability that it is of some specific value.
+\end{bindenum}
+Why not, then, characterize the set of all outcomes for which a random variable takes on a specifiuc value, as an event (or alternatively, a partition of the sample space)?
+\[\{\omega \in \Omega: X(\omega) = a\}\]
+In this case, the probability by which the random variable is a specific value can be spoken of as the probability of an event. \\
+The collection of these probabilities is known as the \textbf{distribution} of the random variable $X$:
+\begin{ln-define}{Distribution}{}
+    The distribution of a discrete ranodm variable X is the collection of values:
+    \[\{(a, \P[X = a]) : a \in \mathcal{A}\}\]
+    where $\mathcal{A}$ denotes the set of all possible values taken by X.
+\end{ln-define}
+Any distribution, as the sum of probabilities of all events available, should thus have an area under curve of $1$.
+
+\subsection{Types of Distributions}
+There are several types of probability distributions that prove to be generally useful. We will go through some of these distributions below, and some in future lecture notes as we progress through CS70.
+\begin{ln-define}{Bernoulli Distribution}{}
+    A Bernoulli Distribution of a random variable that takes value in $\{0, 1\}$ (which makes the random variable binary, as well as making it an indicator variable). \\
+    The probability of an outcome is:
+    \[
+        \P[X = i] =
+        \begin{cases}
+            p, &\text{ if $i = 1$} \\
+            1 - p, &\text{ if $i = 0$}
+        \end{cases}
+    \]
+    This is essentially a histogram of two bars.
+\end{ln-define}
+
+\begin{ln-define}{Binomial Distribution}{}
+    The binomial distribution outlines the probability of a random experiment whose outcome is essentially binary. For example, coin flipping yields a binary result (heads or tails). \\
+    In this case, the probability by which $k$ results with probability $p$ occurs in a total of $n$ runs is, once again:
+    \[\binom{n}{k} p^k {(1 - p)}^{n - k}\]
+    The binomial distribution using a random variable to represent the unmber of results that occurs with probability $p$ would then be denoted as:
+    \[X \sim Bin(n, p)\]
+\end{ln-define}
+
+\begin{ln-define}{Hypergeometric Distribution}{}
+    Let the results of a random example be binary, but in a total of $N$ sample points, there are $A$ sample points of one specific result. \\
+    The probability at which we may acquire $k$ results of $A$ out of $n$ sample points sampled without replacement is slightly complicated, but can be generalized as:
+    \[\P[Y = k] = \binom{n}{k} \frac{\frac{B!}{(B - k)!} \frac{(N - B)!}{(N - B - (n - k))!}}{\frac{N!}{(N - n)!}} = \frac{\binom{B}{k} \binom{N - B}{n - k}}{\binom{N}{n}}\]
+    This forms what we call a hypergeometric distribution with parameters $N$, $B$, $n$, and we denote as such:
+    \[Y \sim Hypergeometric(N, B, n)\]
+\end{ln-define}
+
+\section{Multiple Random Variables and Independence}
+A sample space can also contain multiple random variables. For example, in the coinflip random experiment, I can also define random variables for: 
+\begin{bindenum}
+    \item The number of tails.
+    \item The number of consecutives.
+    \item The number of nonconsecutives.
+    \item The number of coins that landed on the United States of America as it is being tossed from the X Æ A-12 planet.
+\end{bindenum}
+That last item didn't cause a LaTeX compilation error. \\
+In any case, we see that some random variables above are independent of each other, while some are not. Meanwhile, we may also see that we can form distributions of multiple two discerete random variables:
+\begin{ln-define}{Joint Distribution}{}
+    The joint distribution for tow discrete ranodm variables $X$ and $Y$ is the collection of values:
+    \[\{((a, b), \P[X = a, Y = b]) : a \in \mathcal{A}, b \in \mathcal{B}\}\]
+    where $\mathcal{A}$ and $\mathcal{B}$ are respectively the set of all possible values for random variables $X$ and $Y$. \\
+    The joint distribution of random variables $X_1, \cdots, X_n$ is denoted as:
+    \[\P[X_1 = a_1, \cdots, X_n = a_n]\]
+\end{ln-define}
+We see that we may have potentially formed a two-dimensional histogram with joint distribution! Following that idea, we can thus see the distribution of one random variable when the other stays at a constant value.
+\begin{ln-define}{Marginal Distribution}{}
+    Readdressing the above idea: when given a joint distribution of RVs $X$ and $Y$, the distribution $\P[X = a]$ for $X$ is called the \textbf{marginal distribution} of $X$, found via summing over the values of $Y$:
+    \[\P[X = a] = \sum_{b \in \mathcal{B}} \P[X = a, Y = b]\]
+\end{ln-define}
+Furthermore, as foreshadowed, random variables can be dependent or independent upon each other:
+\begin{ln-define}{Independence of Random Variables}{}
+    Rnadom variables $X$ and $Y$ on the same probability space are independent of each other if:
+    \[\forall a,b (\P[X = a, Y = b] = \P[X = a] \P[Y = b])\]
+\end{ln-define}
+
+\section{Expectation}
+To calculate the center of a distribution, we can, instead of computing over every single sample point, calculate the expectation of a distribution:
+\begin{ln-define}{Expectation}{}
+    The exepctation of a discrete random variable $X$ is defined as:
+    $\E[X] = \sum_{a \in \mathcal{A}} a\P[X = a]$
+    or verbally, the sum over the product of all possible values taken by the random value and their respective probabilities of occurring.
+\end{ln-define}
+
+\subsection{Linearity of Expectation}
+Due to the nature of expectation as a weighted average, it has several linear properties. \\
+For one:
+\begin{ln-theorem}{Linearity of Expectation with Respect to RV}{}
+    For any two random variables $X$ and $Y$ on the same probability space,
+    \begin{align}
+        E[X + Y] &= \E[X] + \E[Y] \\
+        \E[cX] &= c \E[X]
+    \end{align}
+\end{ln-theorem}
