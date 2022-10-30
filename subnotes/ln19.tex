@@ -1,0 +1,160 @@
+\chapter{Geometric and Poisson Distributions}
+
+\section{Geometric Distribution}
+The geometric distribution frequently occurs in situations where we consider ``how long we have to wait'' for something to occur, such as ``how many run until error'', or ``how many rolls until SSR''.
+
+\subsection{Definition}
+The \textbf{geometric distribution} is then mathematically defined as below:
+\begin{ln-define}{Geometric Distribution}{}
+    A random variable $X$ such that:
+    \[\P[X = i] = {(1 - p)}^{i - 1} p, i \in \Z^+\]
+    is said to have a geometric distribution with parameter $p$, mathematically expressable as:
+    \[X \sim \text{Geometric}(p)\]
+\end{ln-define}
+Does such distribution sum to $1$? Allow us to verify:
+\begin{align*}
+    \sum_{i = 1}^{\infty} \P[X = i]
+    &= \sum_{i = 1}^{\infty} {(1 - p)}^{i - 1} p \\
+    &= p \sum_{i = 1}^{\infty} {(1 - p)}^{i - 1} \\
+    &= p \lim_{n \rightarrow \infty} \frac{1 - {(1 - p)}^{n}}{1 - (1 - p)} \\
+    &= p \frac{1}{1 - 1 + p} = 1
+\end{align*}
+
+The distribution of $X$ would thus be some curve that decreases by a factor of $(1 - p)$ at each step; in other words, an exponential decay. \\
+From this fact, we would know that the height of curve is dependent on $p$, and the speed at which the curve decrease depends on $(1 - p)$.
+
+\subsection{Mean and Variance of a Geometric RV}
+Let us first discuss the expectation of a geometric random variable. \\
+If directly computed, we would obtain some result like what follows:
+\[\E[X] = \sum_{i = 1}^\infty i\P[X = i] = p\sum_{i = 1}^\infty i{(1 - p)}^{i - 1}\]
+However, there is a way to simplify this above complication:
+\begin{ln-theorem}{Tail Sum Formula}{}
+    \textbf{Theorem}:
+    \[\E[X] = \sum_{i = 1}^\infty \P[X \geq i]\]
+    \tcblower
+    \textbf{Proof}:
+    \begin{align*}
+        \E[X] &= \sum_{i = 1}^\infty i\P[X = i] \\
+        &= p\sum_{i = 1}^\infty i{(1 - p)}^{i - 1} \\
+        &= 0 p_0 + 1 p_1 + 2 p_2 + \cdots \\
+        &= (p_1 + p_2 + \cdots) + (p_2 + \cdots) + \cdots \\
+        &= \P[X \geq 1] + \P[X \geq 2] + \cdots
+    \end{align*}
+\end{ln-theorem}
+What is the significance of this?
+\begin{ln-theorem}{The Expectation of a Geometric RV}{}
+    \begin{align*}
+        \P[X \geq i] &= (1 - p){(1 - p)}^{i - 1} + p{(1 - p)}^{i - 1} \\
+        &= {(1 - p)}^{i - 1} \\
+        \E[X] &= \sum_{i = 1}^\infty \P[X \geq i] \\
+        &= \sum_{i = 1}^\infty {(1 - p)}^{i - 1}
+        = \frac{1}{1 - (1 - p)} = \frac{1}{p}
+    \end{align*}
+\end{ln-theorem}
+Upon that, let's also discuss and derive such identity:
+\begin{ln-theorem}{Expectation of X(X - 1)}{}
+    \textbf{Theorem}:
+    \[\E[X(X - 1)] = \frac{2(1 - p)}{p^2}\]
+    \tcblower
+    \textbf{Proof}:
+    Preliminarily,
+    \begin{align*}
+        \E[X(X - 1)]
+        &= \sum_{i = 1}^\infty i(i - 1) \times \P[X = i] \\
+        &= \sum_{i = 1}^\infty i(i - 1) \times p{(1 - p)}^{i - 1} \\
+        &= p(1 - p) \sum_{i = 1}^\infty i(i - 1) {(1 - p)}^{i - 2}
+    \end{align*}
+    With some calculus and an identity we just learned,
+    \begin{align*}
+        \sum_{i = 1}^\infty {(1 - p)}^i &= \frac{1}{p} \\
+        \frac{d}{di} &= \sum_{i = 1}^\infty -i{(1 - p)}^{i - 1} \\
+        &= -\frac{1}{p^2} \\
+        \frac{d^2}{di^2} &= \sum_{i = 1}^\infty i(i - 1) {(1 - p)}^{i - 2} \\
+        &= \frac{2}{p^3}
+    \end{align*}
+    Using the result above:
+    \begin{align*}
+        \E[X(X - 1)]
+        &= p(1 - p) \sum_{i = 1}^\infty i(i - 1) {(1 - p)}^{i - 2} \\
+        &= p(1 - p) \frac{2}{p^3} \\
+        &= \frac{2(1 - p)}{p^2}
+    \end{align*}
+\end{ln-theorem}
+
+Using the linearity of expectation, we can elegantly calculate the variance of a geometric distribution:
+\begin{ln-theorem}{The Variance of a Geometric RV}{}
+    \textbf{Theorem}:
+    \[Var(X) = \frac{1 - p}{p^2}\]
+    \tcblower
+    \textbf{Proof}:
+    \begin{align*}
+        Var(X) &= \E[X^2] - {(\E[X])}^2 \\
+        &= \E[X^2 - X] + \E[X] - {(\E[X])}^2 \\
+        &= \frac{2(1 - p)}{p^2} + \frac{1}{p} - \frac{1}{p^2} \\
+        &= \frac{2 - 2p + p - 1}{p^2} = \frac{1 - p}{p^2}
+    \end{align*}
+\end{ln-theorem}
+
+\subsection{Memoryless}
+What? Geometric Distributions can have Alzeihmers? This is the first time I have ever seen someone who's not Alzeihmerus be memoryless! \\
+What? \\
+\begin{ln-define}{Memoryless}{}
+    In memoryless distributions, prior trials do not affect the number of additional trials needed. Mathematically:
+    \[\P[X > n + m | X > n] = \P[X > n]\]
+    For example, say we have already tossed the coin $m$ times, what is the probability that we need more than $n$ additional tosses before getting our first head?
+    \begin{align*}
+        \P[X > n + m | X > m]
+        &= \frac{\P[X > n + m]}{\P[X > m]} \\
+        &= \frac{{(1 - p)}^{n + m}}{{(1 - p)}^m} \\
+        &= {(1 - p)}^n = \P[X > n]
+    \end{align*}
+\end{ln-define}
+In this sense, ``memorylessness'' refers to how the distribution, when calculating a tail, will not remember the given condition ($X > m$) since it doesn't contribute to the end result of a tail even given that condition.
+
+\subsection{Example (Application)}
+What other greater application can CS70 be made on other than probabilistic problems, and more specifically, gacha games!? \\
+Let us look at the ``Coupon Collector Problem'':
+\begin{quote}
+    Let us attempt to collect a set of $n$ different cards. \\
+    We can get one card by performing one summon, each of the $n$ cards equivalently likely to appear from that summon. \\
+    How many summons do we have to do until we have collected at least one copy of every card?
+\end{quote}
+Let $S_n$ denote the number of summoning we need to perform to collect all $n$ cards, then the distribution of $S_n$ is difficult to compute directly. But, its expected value can be calculated via the gift of linearity. \\
+Let $X_i$ be a random variable rerpesenting the number of boxes needed while trying to get the $i^{th}$ new card, starting immediately after the most recent new card's obtain. \\
+Then,
+\[S_n = X_1 + X_2 + \cdots + X_n\]
+Therefore,
+\[\E[S_n] = \E[X_1 + X_2 + \cdots + X_n] = \E[X_1] + \E[X_2] + \cdots + \E[X_n]\]
+
+The expected value of $X_1$ would be $1$, since any first card is a new card. \\
+Now, how about $X_i$? \\
+Each time we perform a summoning, we will get an new card with probability $\frac{n - i}{n}$. We will continue performing summoning, which can be characterized as a coin flip of heads probability $p = \frac{n - i}{n}$ for simplicity. This makes $X_i$ the number of tosses until first head. \\
+There, 
+\[X_i \sim \text{Geometric}(\frac{n - i}{n})\]
+And consequentially,
+\[\E[X_i] = \frac{n}{n - i}\]
+
+Coming back to the original simplification of $\E[S_n]$, then:
+\[
+    \E[S_n] = \sum_{i = 1}^n \frac{n}{n - i} = n\sum_{i = 1}^n \frac{1}{i}
+\]
+This can be well approximated as
+\[
+    n\sum_{i = 1}^n \frac{1}{i} \simeq n(\ln{n} + \gamma_E)
+\]
+Where $\gamma_E=0.5772\dots$ is known as Euler's constant.
+
+\section{Poisson Distribution}
+Lorem Ipsum
+
+\subsection{Definition}
+Lorem Ipsum
+
+\subsection{Mean and Variance of a Poisson RV}
+Lorem Ipsum
+
+\subsection{Sum of Independent Poisson RV}
+Lorem Ipsum
+
+\subsection{Poisson and Binomial Distributions}
+Lorem Ipsum
