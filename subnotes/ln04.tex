@@ -33,19 +33,20 @@ In the context we work with, let us define the metric as:
     \item A matching is stable if there are no couples like above, called "rogue couples".
 \end{bindenum}
 First of all, we want to assess whether there could always be stable matchings, since if not, then the algorithm could still lead us astray from the combinations we want. \\
-Let us observe how the algorithm's list of choices develops. While each jobs begin with its first choice, their choice prime candidates could betray and reject them. Therefore, jobs have worse choices over time. However, candidates will reject any choices that they do not like among all they receive and "maybe", therefore only having better choices over time. \\
+Let us observe how the algorithm's list of choices develops. \\
+\begin{quote}
+    While each jobs begin with its first choice, their choice prime candidates could betray and reject them. Therefore, jobs have worse choices over time. However, candidates will reject any choices that they do not like among all they receive and "maybe", therefore only having better choices over time. \\
+\end{quote}
 This can be formalized into a lemma:
 \begin{ln-lemma}{Improvement of Choices in GS Algorithm}{}
     If job J makes an offer to candidate C, then on every subsequent day C has a job offer in hand which candidate C likes at least as much as J.
-\end{ln-lemma}
-Time to do proofs for this lemma:
-\begin{ln-think}{And Prove the Improvement Lemma above}{}
-    Let us perform induction on a day $i \geq k$
     \tcblower
+    \textbf{Proof}: \\
+    Let us perform induction on a day $i \geq k$
     \textbf{Base Case} ($i = k$): on day $k$, candidate receives at least one offer from job $J$. Since the candidate $C$ chooses whichever of the current favorite and offer from $J$ is better, in the case $J$ is not chosen, the offer $C$ holds is better than $J$, and in the case $J$ is chosen, $C$ has an offer as good as $J$ per se. \\
     \textbf{Induction Hypothesis}: Let us assume the lemma holds for some arbitrary $n \geq k$. \\
     \textbf{Inductive Step}: Let the current favorite offer of candidate $C$ be $B$, and the offer received today be from job $J$. Since $C$ must choose the better among $B$ and $J$, if $B$ is chosen, then $B$ is at least more favored and liked than $J$, while if $J$ is chosen, the offer that $C$ holds is as good as $J$. Considering both cases, the offer can only be as good as or better than $J$.
-\end{ln-think}
+\end{ln-lemma}
 Or, there is an alternative way to prove this lemma, utilizing another mathematical principle that makes its debut in this chapter.
 \begin{ln-think}{Proving the Improvement Lemma, Alternative}{}
     Before moving on, let us consider:
@@ -58,7 +59,9 @@ Or, there is an alternative way to prove this lemma, utilizing another mathemati
     We see from the above logic that the proposition $\neg (P(i) \implies P(i + 1))$ cannot hold for any values $i$. Therefore, by the law of excluded middle, $(P(i) \implies P(i + 1))$ will hold for any arbitrary value $i$. A Proof by Contraposition guides to the completion of a mathematical induction. \\
     The above proof is secured by the Well-Ordering Principle because the order of proof in induction that assumes the smaller natural number to be ordered before the larger natural number is required for both the hypothesis of some day $n$ being a first counterexample and the basic hypothesis of induction on proving the proposition to an incremented number.
 \end{ln-think}
-Now, we only need to know two more things. First of all, the propose-and-reject algorithm does halt, and furthermore, terminate with a matching. Second of all, the amtching produced by the algorithm is always stable, now that we have the improvement lemma to help proving this statement with.
+Now, we only need to know two more things: \\
+First of all, the propose-and-reject algorithm does halt, and furthermore, terminate with a matching. \\
+Second of all, the matching produced by the algorithm is always stable, which we prove via the improvement lemma:
 \begin{ln-think}{Does the GS Algorithm always terminate with a matching?}{}
     Let us suppose it does not, such that there is a job $J$ left unpaired when the algorithm terminates. That means the job $J$ has offered to and been rejected by all possible candidates. \\
     By the Improvement Lemma, this means each candidate must have had a better offer than what job $J$ provided. Therefore, there in fact exists $n$ jobs better than $J$, leaving us with a list of $n + 1$ jobs. However, we only assumed there to be $n$ jobs. \\
@@ -70,7 +73,7 @@ Now, we only need to know two more things. First of all, the propose-and-reject 
 Taking this to the next step, we verify the stability of each matching.
 \begin{ln-think}{The Stability of Matching by Termination}{}
     Let us consider an arbitrary couple $(J, C)$ in the final result of matching. \\
-    Let us suppose that this arbitrary job $J$ prefers some other arbitrary better candidate $C^*$ to $C$. However, $C^*$ is currently paired with some other job $K$, and by the Improvement Lemma, this must be because that $K$ is at least as favorable as $J$, making $C^*$ having fovored $K$ more than $J$. \\
+    Let us suppose that this arbitrary job $J$ prefers some other arbitrary better candidate $C^*$ to $C$. However, $C^*$ is currently paired with some other job $J*$, and by the Improvement Lemma, this must be because that $J*$ is at least as favorable as $J$, making $C^*$ having favored $K$ more than $J$. \\
     Job $J$ also wouldn't want to switch to a worse candidate, so the best it can have now is $C$. The job $J$ can therefore never be involved in a rogue couple. \\
     We have proved there cannot be any job $J$ involved in a rogue couple, such that for any candidate $J$ prefers better, that candidate doesn't want $J$ more.
     \begin{ln-theorem}{The Property of GS Algorithm}{}
@@ -93,7 +96,7 @@ And now, let us decide whether the matching output by our GS Algorithm is job-op
     Let there exist a day on which a job has its offer rejected by the optimal candidate, and the first day of this counter be on day $k$ (mind that we are again using the well-ordered principle here via having a "first counterexample"). \\
     Suppose on that day, $J$ was rejected by the optimal candidate $C^*$ in favor of an offer from $J^*$. Then, this couple $(J, C^*)$ should exist in some stable matching. Therefore, the matching would look something like:
     \[T = \{\dots, (J, C^*), \dots, (J^*, C'), \dots\}\]
-    First of all, if $C^*$ rejected $J$ in favor of $J^*$, then $C^*$ must have liked to work on $J^*$ more. Furthermore, $J^*$ is assumed to have made an offer to $C^*$, but accepts $C'$ in turn. This means $C^*$ is at least as good as $C'$, and that $J^*$ would've wanted to work with $C^*$ instead. \\
+    First of all, if $C^*$ rejected $J$ in favor of $J^*$, then $C^*$ must have liked to work on $J^*$ more. Furthermore, $J^*$ is assumed to have made an offer to $C^*$ at some day before, but finally accepts $C'$ in turn. This means $C^*$ is at least as good as $C'$, and that $J^*$ would've wanted to work with $C^*$ instead. \\
     We have came to see that $(J^*, C^*)$ is in fact a rogue couple, making $T$ an unstable match rather than a stable one as we assumed with the above logic. \\
     Therefore, via proof by contradiction, we found:
     \begin{ln-theorem}{The Optimality of GS Algorithm I}{}
@@ -116,6 +119,82 @@ as well as candidate-optimal:
 \end{ln-think}
 Notably, this algorithm can still be modified in finer details to provide a priori in preference from jobs, as well as converting the algorithm into possessing candidate-optimality instead.
 
+\section{Review Questions from Midterm}
+There are a couple of tricky questions I came across during practice, of which I will present some on this note for review purpose. \\
+\begin{bindenum}
+    \item[Q1] {
+        What is the max amount of job partaking in rogue couple(s) if we permute one job's ranking list of its candidates?
+    }
+    \item[A1] {
+        It would be $1$, since other jobs and candidates do not change their preferences, and this job would be the only job who starts to prefer some candidate more.
+    }
+\end{bindenum}
+\begin{bindenum}
+    \item[Q2] {
+        True or False: Any stable matching is either job-optimal or candidate-optimal
+    }
+    \item[A2] {
+        False. This statement would assume that at most $2$ matchings exist per stable matching instance, which is not true.
+    }
+\end{bindenum}
+\begin{bindenum}
+    \item[Q3] {
+        If a stable matching is optimal for a job j, it is pessimal for its partner c.
+    }
+    \item[A3] {
+        Let there be a stable matching:
+        \[T = \{\dots, (J, C), (J', C'), \dots\}\]
+        which is optimal for job $J$. \\
+        Here, let $J'$ be ranked lower than $J$ on the list of preferences. We will then find another matching where:
+        \[
+            T' = \{\dots, (J', C), (J, C^*), \dots\}
+        \]
+        where then $(J, C)$ becomes a rogue couple. \\
+        Therefore, $C$ cannot be matched to a worse job than $J$, whose pairing is defined optimal. In this case, the candidate $C$ is indeed receiving pessimal matching.
+    }
+\end{bindenum}
+On this chance, let me introduce you to an interesting stable matching instance:
+\begin{center}
+    \begin{tabular}{|c|ccc||c|ccc|}
+        A & 1 & 2 & 3 & 1 & C & A & B \\
+        B & 1 & 2 & 3 & 2 & B & C & A \\
+        C & 2 & 1 & 3 & 3 & - & - & -
+    \end{tabular}
+\end{center}
+Which is interesting because it completely resolves all following subquestion:
+\begin{bindenum}
+    \item[Q4] {
+        In the job-propose and candidate-reject algorithm:
+        \begin{enumerate}
+            \item There is always one job who is never rejected.
+            \item There is always one candidate who never rejects a job.
+            \item Let $(J, C)$ be a proposal made on the last day. If we delete J and C, running the propose-and-reject algorithm always produces the same matching for the remaining jobs and candidates.
+        \end{enumerate}
+    }
+    \item[A4] {
+        Let us consider the above stable matching instance:\\
+        \begin{enumerate}
+            \item{
+                Prove that jobs can get rejected via the above instance.
+            }
+            \item{
+                Prove that candidates can have to reject via the above instance.
+            }
+            \item{
+                Deleting job $B$ waives all collisions that was to come due to its similarity with job $A$, causing different matchings.
+            }
+        \end{enumerate}
+    }
+\end{bindenum}
+\begin{bindenum}
+    \item[Q5] {
+        Prove that the maximum number of rejections in an instance with n jobs and n candidates is at most ${(n−1)}^2$
+    }
+    \item[A5] {
+        One job can be rejected $n - 1$ times, while all other jobs can be rejected $n - 2$ times. This causes a sum of $(n - 1) + (n - 2)(n - 1) = {(n - 1)}^2$.
+    }
+\end{bindenum}
+
 \section{Personal Regard on This Topic}
 When doing proofs regarding stability, it is always advised to operate with imaginary entities. This almost always offers a more concrete insight to the proof of operation. \\
 This algorithm is an interesting topic that demonstrate the importance of mathematical induction, as well as showcases the discussion and analytics we may perform on an algorithm. \\
@@ -125,6 +204,13 @@ Personally, here are a few topics that I chose to highlight during revision:
     \item \textbf{Optimality}: Candidate-pessimal and job-optimal for our current settings. However, by switching the places of candidates and jobs, this optimality reverses.
     \item \textbf{Stability}: Definition is customizable across different short answer settings, but the commonality is there should not be rogue couples (matchings), where the second and first element of some different pair wants to be with each other instead.
     \item \textbf{Uniqueness of Stable Match}: Stable matches can be generated via other algorithms. This is just one of them. Therefore, there can exist more stable matchings than we knoW.
+\end{bindenum}
+Furthermore:
+\begin{bindenum}
+    \item No entities are guaranteed favorites as long as everyone gets rejected once.
+    \item At most $n^2 - n$ possible rogue pairs are possible.
+    \item If every entity has their least favorite corresponding entity, the stable matching is unstable.
+    \item Stable matching can exist under accidental rejections.
 \end{bindenum}
 Imaginary entities, or denoting entities, is VERY useful. It allows you to form arguments from constructions and produce a proof, which graphs, a mathematical object that we work with in the future, will require you to perform. \\
 Please use it wisely.

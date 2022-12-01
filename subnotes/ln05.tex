@@ -122,12 +122,16 @@ We traverse graphs, algorithmically most of the time. How do we mathematically c
 Let`s make a brief summary:
 \begin{ln-fig}{Walk vs Path vs Cycle vs Tour}{}
     \begin{center}
-        \begin{tabular}{|c|ccc|}
+        \begin{tabular}{c||c|c|c}
             Type & No Repeated Vertices & No repeated edges & Start is End \\
             \hline
+            \hline
             Walk & & & \\
+            \hline
             Path & $\bigcirc$ & $\bigcirc$ & \\
+            \hline
             Tour & & & $\bigcirc$ \\
+            \hline
             Cycle & except start and end & $\bigcirc$ & $\bigcirc$
         \end{tabular}
     \end{center}
@@ -136,7 +140,7 @@ Let`s make a brief summary:
 \subsection{Connectivity}
 Previously, we discussed the notion of isolated vertices. How do we, then, mathematically describe the connected-ness of a graph?
 \begin{ln-define}{Connectivity}{}
-    A graph is \textbf{connected} if there is a path between any two distinct vertices. \\
+    A graph is \textbf{connected} if there is a path between any two distinct vertices. This means isolated vertex is in fact a connected component. \\
     On the contrary is a \textbf{disconnected} graph.
 \end{ln-define}
 Let me demonstrate with some examples:
@@ -259,8 +263,15 @@ In this case, since the graph of Seven Bridge is not even-degreed, it cannot hav
 \section{Planarity, Euler`s Formula, Coloring}
 
 \subsection{Trees}
-Unfortunate. Regardless, let`s talk about trees. \\
-As mentioned in CS61B, a graph is a tree if it is connected and acyclic. \\
+Trees are defined as connected acyclic graphs, with some interesting properties upon observation:
+
+\begin{bindenum}
+    \item On a tree, any node can be set as a root.
+    \item Any degree-1 node on a tree would be called a ``leaf'' node.
+    \item A tree is in fact bipartite. We will talk about this later.
+    \item A tree is always planar. We will talk about this later.
+    \item Adding an edge to anywhere of a tree will make it cyclic.
+\end{bindenum}
 
 \subsection{Planar Graphs}
 What is a planar graph?
@@ -342,12 +353,14 @@ For a non-connected planar graph, the situation is slightly different.
 This implies that planar graphs are sparse, or, they cannot have too many edges. \\
 Therefore, specific graphs whose number of edges and vertices do not follow the above inequality can be seen as non-planar:
 \begin{ln-define}{Planarity}{}
-    For a connected planar graph, $e \leq 3v - 6$. \\
+    If a graph is a connected planar graph, $e \leq 3v - 6$. \\
     Mind that this does not serve as a planarity test, as such property is satisfied by $K_{3, 3}$ as well. \\
-    However, its contrapositiv can serve as a non=planarity test.
+    However, its contrapositive can serve as a non-planarity test.
 \end{ln-define}
 In that case, both $K_5$ and $K_{3,3}$ are non-planar. We can explore these graphs further: these are the only non-planar graphs, made precise by the mathematician Kuratowski (where the capital K came from).
-\begin{ln-theorem}{A graph is non-planar iff it contains $K_5$ or $K_{3,3}$}{}
+\begin{ln-theorem}{Kuratowski's Theorem}{}
+    A graph is non-planar iff it contains $K_5$ or $K_{3,3}$.
+    \tcblower
     Let us define contain as where the nodes in the graph $K_5$ or $K_{3,3}$ are identifiably connected as their corresponding graph rules via paths, such that no two of those paths share vertices. \\
     In otherwords, let the graphs noted in this theorem be a subgraph of the larger inspected graph. \\
     This mathematical result is sometimes also known as Kuratowski`s theorem, and its direction imply that if a graph contains one of these two non-planar graphs, itself must also be non-planar.
@@ -396,7 +409,11 @@ and why is Duality important at all? \\
 That's because it reduces area-coloring map into a planar graph. Since a map's faces ought to be distinguishable, its dual graph can serve as a planar graph for us to work with. \\
 Now let's talk about coloring. Essentially, two-coloring a graph is working with a bipartite graph, where one group of vertex has one specific color, the other group the other color. \\
 Or, we may proceed with a breadth-first algorithm that colors any uncolored neighbor with alternative colors. This will let us discover cycles of odd lengths in the event of failing to color.
+
 Notably, we have the four color theorem, which states that you may graph any map with four colors. This implies that any planar graph can be vertex-colored in four or more colors!
+
+Furthermore, there are in fact two types of coloring: vertex coloring and edge coloring. \\
+To color a graph by some component $X$ means all adjacent components of type $X$ must not have a same color.
 
 \section{Classes of Graphs}
 
@@ -462,7 +479,7 @@ Well, let's take a further investigation into its connectivity, so to make sure 
     \textit{Case 2: $|S_0| \geq 2^{k - 1}$} \\
     In this case, we cannot apply the induction hypothesis as wanted before on the $0$-subcube, but only on the $1$-subcube. But we can apply this onto $|V_0 - S_0|$ instead and infer the amount of edges between them is at least $2^k - |S_0|$. The current total of edges is calculated as $2^k - |S_0| + |S_1|$. \\
     The edges that cross between the $0$-subcubes and $1$-subcubes would be at least $|S_0| - |S_1|$ because there is an edge between every pair of vertices ($0x$, $1x$). Therefore, finally, the number of edges crossing is indeed \underline{at least} $2^k \geq |S|$ as desired. \\
-    (The $|S_0| - |S_1|$ was derived from the cardinality of complement from $\{x : 0x \in S_0\} - \{x : 1x \in S_1\}$).
+    (The $|S_0| - |S_1|$ was derived from the cardinality of complement from $\{x : \overline{0x} \in S_0\} - \{x : \overline{1x} \in S_1\}$).
 \end{ln-quest}
 
 \section{Personal Regard on This Topic}

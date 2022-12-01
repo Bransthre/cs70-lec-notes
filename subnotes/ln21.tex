@@ -1,0 +1,277 @@
+\chapter{Continuous Probabilty Distributions}
+
+\section{Introduction}
+Up until now we have focused on discrete sample spaces $\Omega$, where there are finite or countably infinite sample points to deal with. \\
+Discrete, as in the sample points themselves are discretely identifiable. However, discrete random variables cannot model everything in the world.
+Many real life quantities that we wish to model probabilsitically are in fact real-valued. For example, position of particle, as well as direction of travel.
+To aid our future efforts for probability-related studies, let's study continuous random variables.
+
+\section{Continuous Random Variables}
+Suppose we spin a wheel of fortune and record the position at which some needle points to, in relation to the position along a circumference of length $l$ (which means the position of needle on wheel of fortune is within the range $[0, l]$).
+In such case, that position is continuous. There are too many possible points to discret-ize this situation. But, to resolve this situation, we may as well consider the following scheme:
+\begin{quote}
+    Consider the probability at which needle falls between positions $[a, b]$ on all possible positions $[0, l]$. \\
+    Then, the probability of this situation would be:
+    \[
+        \P[x \in [a, b]] = \frac{b - a}{l}
+    \]
+    This above probability assumes that each position has a uniform probability of having the needle fall on it. If there are some positions whose probability of being pointed to is higher, then this entire derivation fo rprobability would've bveen different.
+\end{quote}
+This is how we may relate the concept of event from a discrete point of view to a continuous random variable situation: via its analogy as one section of circumference.
+
+Then, in a continuous concept, random variables $X$ no longer be probabilistically assessed as ``if $X$ is equal to some value'', since if $X$ is equal to some value on a continuous space, it would require us to calculate the probability that $X$ locates on exactly one point (probability that needle stops exactly on some point of the wheel), which is realistically $\frac{1}{\infty}$. \\
+Rather, a meaningful question for continuous random variables would be: what is the probability that $X$ is between some values $a$, $b$? And to answer this question, we would need to know the distribution of probability across each values between $a$ and $b$:
+\begin{ln-define}{Probability Density Function}{}
+    A probability density function for a real-valued random variable X is a function $f: \R \rightarrow \R$ satisfying the following requirements (of probability distributions!):
+    \begin{bindenum}
+        \item $f$ is non-negative: $\forall x \in \R, f(x) \geq 0$
+        \item The total integral of $f$ (Area under curve of distribution) is $1$. (All probabilities sum up to $1$).
+    \end{bindenum}
+    Then the distribution of $X$ may be provided as:
+    \[
+        \P[a \leq X \leq b] = \int_a^b f(x) dx
+    \]
+    for all $a < b$.
+\end{ln-define}
+Which, in other words, must satisfy that:
+\[
+    \P[-\infty \leq X \leq \infty] = \int_{-\infty}^{\infty} f(x) dx = 1
+\]
+In this case, the wheel of fortune analogy may receive a piecewise function for its PDF:
+\[
+    f(x) = 
+    \begin{cases}
+        0, &\text{ for $x < 0$} \\
+        \frac{1}{l}, &\text{ for $0 \leq x \leq l$} \\
+        0, &\text{ for $x > l$} \\
+    \end{cases}
+\]
+\textbf{But remember that PDF itself is not probability.} For example, the above function doesn't necessarily sum up to 1; its integral does, and that is the only thing that matters.
+
+\subsection{CDF}
+For some continuous RV $X$, we can discuss the cumulative distribution function of it, which is by nature just some shorthand expression defined as follows:
+\[
+    F(x) = \P[x \leq X] = \int_{-\infty}{x} f(z) dz
+\]
+But this grants us the opportunity to recognize a probability density function from cumulative distribution function via calculus:
+\[
+    f(x) = \dv{}{x} F(x)
+\]
+
+\subsection{Expectation and Variance}
+\begin{ln-define}{Expectation of Continuous RV}{}
+    The expectation of a continuous random variable $X$ with a PDF $f$ would then be:
+    \[
+        \E[X] = \int_a^b xf(x) dx
+    \]
+\end{ln-define}
+And in turn,
+\begin{ln-define}{Variance of Continuous RV}{}
+    The variance of a continuous random variable $X$ with a PDF $f$ would then be:
+    \[
+        Var(X) = \E[{(X - \E[X])}^2] = \int_a^b x^2 f(x) dx - {\bigg( \int_a^b xf(x) dx \bigg)}^2
+    \]
+\end{ln-define}
+
+\subsection{Joint Distribution}
+For some joint distribution considering plural random variables at the same time, the density function would have some slight modifications for rules:
+\begin{ln-define}{Joint Density}{}
+    A joint density function for two random variables $X$ and $Y$ is a function $f : \R^2 \rightarrow \R$ satisfying:
+    \begin{bindenum}
+        \item $f$ is nonnegative (as always, negative density doesn't makes sense).
+        \item The total integral of $f$ is $1$.
+    \end{bindenum}
+    The consequence of that second rule above would be:
+    \[
+        \int_{-\infty}{\infty} \int_{-\infty}{\infty} f(x, y) dx dy = 1
+    \]
+    Switching the order of $x$ and $y$ wouldn't matter. For more, consider Fubini's theorem.
+    \[
+        \P[a \leq X \leq b, c \leq Y \leq d] = \int_a^b \int_c^d f(x, y) dx dy
+    \]
+    Once again, by Fubini's Theorem, Switching the order of $x$ and $y$ wouldn't matter.
+\end{ln-define}
+
+\subsection{Independence of Continuous RVs}
+For two continuous random variables, their independence is demonstrated by the following rule:
+\begin{ln-define}{Independence of Continuous Random Variables}{}
+    Two continuous random variables $X$, $Y$ are independent if the events $a \leq X \leq b$ and $c \leq Y \leq d$ are independent for all $a \leq b$ and $c \leq d$, such that:
+    \[
+        \P[a \leq X \leq b, c \leq Y \leq d] = \P[a \leq X \leq b] \P[c \leq Y \leq d]
+    \]
+\end{ln-define}
+The definition has an implication on the joint density of independent continuous random variables:
+\begin{align*}
+    f(x, y) dx dy
+    &\simeq \P[x \leq X \leq x + dx, y \leq Y \leq y + dy] \\
+    &= \P[x \leq X \leq x + dx] \cdot \P[y \leq Y \leq y + dy] \\
+    &\simeq f_X(x) dx \times f_Y(y) dy \\
+    &= f_X(x) f_Y(y) dx dy
+\end{align*}
+Essentially, gives birth to the following theorem:
+\begin{ln-theorem}{Joint Density of Independent Continuous RVs}{}
+    The joint density of independent RVs $X$ and $Y$ is the product of marginal densities:
+    \[
+        \forall x, y \in \R, f(x, y) = f_X(x) f_Y(y)
+    \]
+    where marginal densities $f_N$ are the densities of some specific random variable $N$ in this joint distribution.
+\end{ln-theorem}
+
+\section{Exponential Distribution}
+Let us first define this distribution:
+\begin{ln-define}{Exponential Distribution}{}
+    For $\lambda > 0$, a continuous random variable $X$ with pdf:
+    \[
+        f(x) = 
+        \begin{cases}
+            \lambda e^{-\lambda x}, &\text{ if $x \geq 0$} \\
+            0, &\text{ otherwise}
+        \end{cases}
+    \]
+        is an exponential random variable with parameter $\lambda$, which we mathematically express as:
+        $X \sim Exp(\lambda)$
+\end{ln-define}
+This distribution is nonnegative, and sums up to $1$:
+\[
+    \int_{-\infty}^{\infty} f(x) dx = \int_0^{\infty} \lambda e^{-\lambda x} dx = -e^{-\lambda x} {\bigg|}_0^{\infty} = 1
+\]
+
+\subsection{Analyses of Exponential Distribution}
+The expected value can be computed using integration by parts:
+\begin{ln-define}{Expectation of Exponnetial Distribution}{}
+    \begin{align*}
+        \E[x] &= \int_{-\infty}^{\infty} x f(x) dx \\
+        &= \int_0^{\infty} \lambda x e^{-\lambda x} dx \\
+        &= -x e^{-\lambda x} {\bigg|}_0^{\infty} + \int_0^{\infty} e^{-\lambda x} dx \\
+        &= -\frac{e^{-\lambda x}}{\lambda} {\bigg|}_0^{\infty} = \frac{1}{\lambda}
+    \end{align*}
+    By that logic, the expected value of $\E[X^2]$ can be evaluated via similar tricks, such that:
+    \[\E[X^2] = \frac{2}{\lambda^2}\]
+\end{ln-define}
+The above analyses leads to the conclusion that:
+\[Var(X) = \E[X^2] - {\E[X]}^2 = \frac{2}{\lambda^2} - \frac{1}{\lambda^2} = \frac{1}{\lambda^2}\]
+
+Furthermore, exponential distribution serves as an analog of geometric distribution. \\
+For example, the exponential distribution would describe that:
+\[
+    \P[X > t] = \int_t^{\infty} \lambda e^{-\lambda x} dx = -e^{-\lambda x} {\bigg|}_t^{\infty} = e^{-\lambda t}
+\]
+Meanwhile, let us consider that $\lambda$ can be a fixed rate of success per unit time, such that in a geometric distribution, the rate of success per time is modeled as $p = \lambda \delta$ where $\delta$ resembels a small amount of time (small for discrete, near-zero for continuous). \\
+Then, mathematical conclusions point to the fact that geometric distributions $Geo(\lambda \delta)$ is about equal to the exponential distribution's regional probability marked as $e^-{\lambda x}$.
+
+\section{Normal Distribution}
+Another continuous distribution prevalent in many applications is known as normal, or Gauss distribution. \\
+This distribution uses two parameters, $\mu$ and $\sigma^2$, which respectively are the mean (expectation) and variance of the distribution. \\
+And,
+\begin{ln-define}{Normal Distribution}{}
+    For any $\mu \in \R, \sigma > 0$, a continuous random variable $X$ with PDF:
+    \[
+        f(x) = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{-\frac{{(x - \mu)}^2}{2\sigma^2}}
+    \]
+    is called a normal random variable with parameters $\mu$ and $\sigma^2$, and mathematically expressed:
+    \[
+        X \sim N(\mu, \sigma^2)
+    \]
+    When $\mu = 0, \sigma = 1$, such random variable is particularly noted as ``standard normal distribution''
+\end{ln-define}
+Here is an interesting manipulation that can prove helpful:
+\begin{ln-theorem}{Manipulations towards Standard Normal Distribution}{}
+    \textbf{Theorem}: If $X \sim N(\mu, \sigma^2)$, then $Y = \frac{X - \mu}{\sigma} \sim N(0, 1)$
+    \tcblower
+    \textbf{Proof}: \\
+    \[
+        \P[a \leq Y \leq b] = \P[\sigma a + \mu \leq X \leq \sigma b + \mu] = \frac{1}{\sqrt{2\pi\sigma^2}} \int_{\sigma a + \mu}^{\sigma b + \mu} e^{-\frac{{(x - \mu)}^2}{2\sigma^2}} dx
+    \]
+    Perform a change of variable here, where $Y = \frac{X - \mu}{\sigma}$. Then,
+    \[
+        \frac{1}{\sqrt{2\pi\sigma^2}} \int_{\sigma a + \mu}^{\sigma b + \mu} e^{-\frac{{(x - \mu)}^2}{2\sigma^2}} dx = \frac{1}{\sqrt{2\pi\sigma^2}} \int_a^b e^{-\frac{y^2}{2}} dy
+    \]
+\end{ln-theorem}
+
+\subsection{Analyses of Normal Distribution}
+Let us prove that the expectation and variance of a normal distribution is indeed as noted by its parameters.
+\begin{ln-theorem}{Expectation of Normal Distribution}{}
+    We will be exploiting the linearity of expectation values here, by first computing the expectation of $N(0, 1)$, then performing a change of variable as noted in the previous theorem. \\
+    So, first, for $X \sim N(0, 1)$:
+    \begin{align*}
+        \E[X] = \int_{-\infty}^{\infty} x f(x) dx \\
+        &= \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} x e^{-\frac{x^2}{2}} dx \\
+        &= \frac{1}{\sqrt{2\pi}} (\int_{-\infty}^{0} x e^{-\frac{x^2}{2}} dx + \int_{0}^{\infty} x e^{-\frac{x^2}{2}} dx) = 0
+    \end{align*}
+    Performing the change of variable:
+    \[X = \frac{Y - \mu}{\sigma}\]
+    Such that $X$ is the standard version of $Y$, we may then deduce that:
+    \[
+        \E[X] = \frac{\E[Y] - \mu}{\sigma} = 0
+    \]
+    Meaning that:
+    \[\E[Y] = \sigma\E[X] + \mu = \mu\]
+\end{ln-theorem}
+
+\begin{ln-theorem}{Variance of Normal Distribution}{}
+    The variance of standard normal distribution would then also be computable via intergration by parts:
+    \begin{align*}
+        Var(X) = \E[X^2] - {\E[X]}^2 &= \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} x^2 e^{-\frac{x^2}{2}} dx \\
+        &= \frac{1}{\sqrt{2\pi}} (-x e^{-\frac{x^2}{2}}) {\bigg|}_{-\infty}^{\infty} + \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} e^{-\frac{x^2}{2}} dx \\
+        &= \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} e^{-\frac{x^2}{2}} dx = 1
+    \end{align*}
+    The last line of that derivation was an interesting extra content offered from my semester of MATH 53. Essentially, it relies on a change of variable into the polar coordinates. \\
+    Using the change of variable between $X$ and $Y$, then:
+    \[
+        Var(X) = Var(\frac{Y - \mu}{\sigma}) = 1
+    \]
+    Therefore:
+    \[
+        Var(Y - \mu) = Var(Y) = \sigma^2
+    \]
+\end{ln-theorem}
+
+Let us discuss the superpositioning properties for independent normal random variables then. First of all:
+\begin{ln-theorem}{Sum of Indpeendent Standard Normal Random Variables}{}
+    \textbf{Theorem}: Let $X \sim N(0, 1)$ and $Y \sim N(0, 1)$ be independent standard normal random variables, and suppose $a, b \in \R$ are constants, then $Z = aX + bY \sim N(0, a^2 + b^2)$.
+    \tcblower
+    \textbf{Proof}: \\
+    To beign with, $X$ and $Y$ are independent, so the joint density of it can be found as:
+    \[
+        f(x, y) = f(x)f(y) = \frac{1}{2\pi}e^{-\frac{x^2 + y^2}{2}}
+    \]
+    Such is rotationally symmetric around the origin, where $f(x, y)$ depends on the distance a point is from the origin. \\
+    And upon that, recognize the fact that any rotation of this density function about the origin along the vertical axis would not change how the distribution is, as it is rotationally symmetrical. \\
+    THerefore, given some value $t \in \R$, we can first recognize that:
+    \[\P[Z \leq t] = \P[aX + bY \leq t] = \P[(X, Y) \in \text{halfplane containing all points $ax + by \leq t$}]\]
+    Meanwhile, notice that this halfplane, now with a diagonal boundary, can be rotated to have a vertical boundary. Let's call this rotation:
+    \[T(A) = {(x, y) | x \leq \frac{t}{\sqrt{a^2 + b^2}}}\]
+    Which thus indicates by the unchanging property of density function's rotational symmetry along z-axis, that:
+    \[
+        \P[Z \leq t] = \P[(X, Y) \in A] = \P[(X, Y) \in T(A)] = \P[X \leq \frac{t}{\sqrt{a^2 + b^2}}] = \P[X\sqrt{a^2 + b^2} \leq t]
+    \]
+    The normal distribution $\sqrt{a^2 + b^2}X$, a rotation of $Z$, has normal distribution with mean $0$ and variance $a^2 + b^2$. Therefore, the normal distribution $Z = aX + bY$ should have the same parameters.
+\end{ln-theorem}
+
+The theorem now guides us to a more general statement:
+\begin{ln-theorem}{Addition of Normal Random Variables}{}
+    \textbf{Theorem}: Let $X \sim N(\mu_X, \sigma_X^2)$ and $Y \sim N(\mu_Y, \sigma_Y^2)$ be independent normal random variables. \\
+    Then, the random variable $Z = aX + bY$ for real coefficients $a, b$ is also normally distributed as $Z \sim N(a\mu_X + b\mu_Y, a^2 \sigma_X^2 + b^2 \sigma_Y^2)$.
+    \tcblower
+    \textbf{Proof}: \\
+    Generate standard normal random variables $Z_1 = \frac{X - \mu_X}{\sigma_X}$ and $Z_2 = \frac{Y - \mu_Y}{\sigma_Y}$. \\
+    Then, we may use the previous theorem to perform the following derivation:
+    \begin{align*}
+        Z = aX + bY &= a(\mu_X + \sigma_X Z_1) + b(\mu_Y + \sigma_Y Z_2) \\
+        &= (a\mu_X + b\mu_Y) + (a\sigma_X Z_1 + b\sigma_y Z_2)
+    \end{align*}
+    We know the distribution by theorem that:
+    \[(\sigma_X Z_1 + \sigma_y Z_2) \sim N(0, {(a \sigma_X)}^2 + {(b\sigma_Y)}^2)\]
+    Therefore:
+    \[Z = N(a\mu_X + b\mu_Y, a^2 \sigma_X^2 + b^2 \sigma_Y^2)\]
+\end{ln-theorem}
+
+\section{Central Limit Theorem}
+\begin{ln-theorem}{Central Limit Theorem}{}
+    Let $X_1, \dots, X_n$ be a sequence of IID random variables with common finite expectation $\E[X_i] = \mu$ and finite variances $Var(X_i) = \sigma_i^2$. \\
+    Then the distribution of $\frac{S_n - n\mu}{\sigma \sqrt{n}}$ converges to $N(0, 1)$ as $n \rightarrow \infty$. \\
+    Therefore, as $n \rightarrow \infty$:
+    \[
+        \P[\frac{S_n - n\mu}{\sigma \sqrt{n}} \leq c] \rightarrow \frac{1}{2\pi} \int_{-\infty}^c e^{-\frac{x^2}{2}} dx
+    \]
+\end{ln-theorem}

@@ -1,0 +1,114 @@
+\chapter{Concentration Inequalities and the Laws of Large Numbers}
+
+\section{Introduction}
+How do we estimate the bias of a binary random experiment like coin-flipping? \\
+Such a quantity for a random experiment of $n$ trials can be expressed as $\hat{p} = \frac{1}{n} S_n$, where $S_n$ is the number of success in a binary experiment. \\
+But, is this a good estimate of the bias? \\
+Well, let $p$ denote the true bias of the coin, which is unknown, and we are offered that $\E[S_n] = np$, we see that the estimator $\hat{p}$ works to align with $p$. \\
+The implication?
+\begin{quote}
+    This means when $n$ is sufficiently large, the estimator of bias is close to the true value of bias.
+\end{quote}
+We will discuss this rule again later.
+
+But, how large should $n$ be, so to provide an upper bound to the error between the estimator and bias itself. \\
+Haha, no shot. Or else I wouldn't be malding over gacha games and hack with mathematics. Ultimately, the estimator itself is also a random variable. \\
+But rather than trying to guarantee that the error of estimation has some upperbound, we can demand it to have an upper bound with some confidence $1 - \delta$, therefore:
+\[\P[|\hat{p} - p| \leq \epsilon] \geq 1 - \delta\]
+To guarantee and so, we require that:
+\[n \geq \frac{1}{4 \epsilon^2 \delta}\]
+We will also discuss this later within the section of \textit{Chebyshev's Inequality}.
+
+\section{Markov's Inequality}
+Let us discuss the upper bound of error for experiments on nonnegative random variables:
+\begin{ln-theorem}{Markov's Inequality}{}
+    For a nonnegative random variable $X$ with finite mean, for any positive constant $c$:
+    \[
+        \P[X \geq c] \leq \frac{\E[X]}{c}
+    \]
+    \tcblower
+    \textbf{Proof}: \\
+    Let $\mathcal{A}$ denote the range of values that random variable $X$ is in. Then:
+    \begin{align*}
+        \E[X]
+        &= \sum_{a \in \mathcal{A}} a \times \P[X = a] \\
+        &\geq \sum_{a \geq c} a \times \P[X = a] \\
+        &\geq \sum_{c} c \times \P[X = a] \\
+        &= c \sum_{c} \times \P[X = a] \\
+        &= c \P[X \geq c]
+    \end{align*}
+\end{ln-theorem}
+Here, say we let $c = 2 \E[X]$, then we see that at most half of the individuals can reach such constant $c$ ($c$ is heuristics? scoring? maybe both). \\
+We can further generalize Markov's Inequality onto random variables based on absolute values:
+\begin{ln-theorem}{Generalized Markov's Inequality}{}
+    Let $Y$ be an arbitrary random variable with finite mean. Then, for any positive constants $c$ and $r$,
+    \[
+        \P[|Y| \geq c] \leq \frac{\E[{|Y|}^r]}{c^r}
+    \]
+    \tcblower
+    \textbf{Proof}: \\
+    For $c > 0$, $r > 0$, let $I$ be an indicator function:
+    \[
+        {|Y|}^r \geq {|Y|}^r I{|Y| \geq c} \geq c^r I{|Y| \geq c}
+    \]
+    Taking expectations of both sides then offers that:
+    \[
+        \E[{|Y|}^r] \geq c^r \E[I{|Y| \geq c}] = c^r \P[I{|Y| \geq c}]
+    \]
+\end{ln-theorem}
+Markov's inequality concerns the center of its probability distribution: $\mu = \E[X]$, as the fulcrum of the distribution's mass. \\
+To let the mass on left of and right of $\mu$ be equivalent, up until some point at the right $k \mu$, the mass must be $0$, while to keep balance, the mass at the left must than be $(k - 1)$ times of the mass at the right. \\
+This forms a known phenomenon called ``Markov's Bound'' with $\alpha = k \mu$, where beyond the point $k \mu$ there should be no more nonzero probability.
+
+\begin{ln-quest}{Coin Tosses and Markov}{}
+    Consider fair coin toss, and let $X$ denote the number of heads observed. \\
+    What is the probability of observing more than $\frac{3}{4} n$ heads? Let's apply Markov inequality to obtain an upper bound on $\P[X \geq \frac{3}{4} n]$, and since $\E[X] = \frac{1}{2} n$:
+    \[
+        \P[X \geq \frac{3}{4} n] \leq \frac{\E[X]}{c} = \frac{2}{3}
+    \]
+\end{ln-quest}
+
+\section{Chebyshev's Inequality}
+\begin{ln-theorem}{Chebyshev's Inequality}{}
+    For a random variable $X$ with finite expectation $\E[X] = \mu$, for any positive constant $c$:
+    \[
+        \P[|X - \mu| \geq c] \leq \frac{Var(X)}{c^2}
+    \]
+    \tcblower
+    \textbf{Proof}:
+    Let $Y = {(X - \mu)}^2$, then we discover that $\E[Y] = Var(X)$. \\
+    Meanwhile, this presents us that we are looking for the probability where $Y \geq c^2$, which we may apply Markov's Inequality from, to derive the following result:
+    \[
+        \P[|X - \mu| \geq c] = \P[Y \geq c^2] \leq \frac{\E[Y]}{c^2} = \frac{Var(X)}{c^2}
+    \]
+\end{ln-theorem}
+In fact, since variance is $\sigma^2$, we may understand the Chebyshve's inequality as the following Corollary:
+\begin{quote}
+    For any random variable $X$ with finite expectation $\mu$ and finite standard deviation $\sigma$:
+    \[\P[|X - \mu| \geq k \sigma] \leq \frac{\sigma^2}{k^2 \sigma^2} = \frac{1}{k^2}\]
+\end{quote}
+
+\section{The Law of Large Numbers}
+\begin{ln-theorem}{Law of Large Numbers}{}
+    Let $X_1, \cdots, X_n$ be a sequence of Independent and Identically Distributed random variables with common finite expectation $\E[X_i] = \mu$ for all $i$, then their partial sum: $S_n = \sum_{i = 1}^n X_i$:
+    \[
+        \lim_{n \rightarrow \infty} \P[|\frac{1}{n} S_n - \mu| < \epsilon] = 1
+    \]
+    for any positive constant $\epsilon$.
+    \tcblower
+    \textbf{Proof}:
+    Let $Var(X_i) = \sigma_2$ be the common variance of random variables, we assume that $\sigma^2$ is finite. \\
+    Then, we can obtain from known means and variances that:
+    \[
+        \E[\frac{1}{n} S_n] = \mu
+    \]
+    \[
+        Var(\frac{1}{n} S_n) = \frac{1}{n^2} Var(S_n) = \frac{1}{n^2} \sum_{i = 1}^n Var(X_i) = \frac{\sigma^2}{n}
+    \]
+    Therefore, by Chebyshev's inequality, we have:
+    \[
+        \P[|\frac{1}{n} S_n - \mu| \geq \epsilon \leq \frac{\frac{\sigma^2}{n}}{\epsilon^2} = \frac{\sigma^2}{n\epsilon^2}]
+    \]
+    Which we can see that the limit of such value approaches $0$ when $n$ approaches $\infty$. \\
+    Therefore, its complement would approach $0$ when $n$ approaches $\infty$.
+\end{ln-theorem}

@@ -3,7 +3,8 @@ In this chapter, we provide a brief review of fundamental mathematical notations
 This involves set notation, set properties, as well as convenient mathematical notations that aid to simplify, abbreviate, as well as clarify the different conditions and clauses that we used to literally write out in mathematical statements.
 
 \section{Set Theory}
-This chapter describes the fundamental properties of mathematical objects called Sets. Sets are widely applied throughout and beyond the subfields of mathematics, whose origins and characteristics shared across those applications are described by the mathematical definition of sets.
+This chapter describes the fundamental properties of mathematical objects called sets. \\
+Sets are widely applied throughout and beyond the subfields of mathematics, whose origins and characteristics shared across those applications are described by the mathematical definition of sets.
 
 \subsection{Fundamental Properties of Sets}
 As you may have guessed, in set theory, we mainly discuss a mathematical object called "set".
@@ -21,8 +22,8 @@ The symbol representing membership in a set works as follows:
 There are several more properties to sets:
 \begin{bindenum}
     \item The size of a set is defined as the number of elements in it. This property of set is called \textbf{cardinality}. The cardinality of a set $A$ can be mathematically denoted as $|A|$.
-    \item The equality of a set is held when two sets have exactly same elements; order and repetition does not matter, albeit in computers, many implementations of sets do not allow repetition. 
-    \item Sets whose cardinality are 0, or in other words empty sets, are denoted as ${}$ as well as $\emptyset$. \\
+    \item The equality of a set is held when two sets have exactly same elements; order and repetition does not matter, albeit in computers, many implementations of sets already do not allow repetition. We call a set whose elements can be repeated a ``multiset''.
+    \item Sets whose cardinality are 0, also known as empty sets, are denoted as $\{\}$ as well as $\emptyset$. \\
 \end{bindenum}
 To denote a set of mathematical objects that all belong to some other set but suffices some property, we may utilize a notation called \textbf{set-builder notation}:
 \begin{ln-symbol}{Set-Builder Notation}{}
@@ -32,7 +33,7 @@ To denote a set of mathematical objects that all belong to some other set but su
     The colon above can be replaced by a vertical bar. Since we will be using vertical bars for other purposes in later chapters, a colon is perhaps the least abusive notation to play with. \\
     But, to conform the formatting of official lecture notes, let us continue with vertical bars. \\
     For example, the list of all rational numbers can be written as:
-    \[\Q = \bigg\{ \frac{p}{q} | p,q \in \R, q \neq 0 \bigg\}\]
+    \[\Q = \bigg\{ \frac{p}{q} \bigg| p,q \in \R,\ q \neq 0 \bigg\}\]
 \end{ln-symbol}
 
 \subsection{Relationships between Sets}
@@ -62,7 +63,7 @@ While we compare sets based on their members, we can also "add", create sets bas
 \begin{ln-define}{Union}{}
     The union of set $A$ and $B$, written as $A \cup B$, is the set of all elements contained in either $A$ or $B$. \\
     In set builder notation, it pronounces very similarly with the notation for intersections:
-    \[A \cap B = \{x | x \in A \lor x \in B\}\]
+    \[A \cup B = \{x | x \in A \lor x \in B\}\]
 \end{ln-define}
 Regarding the way empty sets work in the above arithmetic, for an arbitrary set $A$:
 \begin{bindenum}
@@ -88,11 +89,11 @@ And the last arithmetic is the \textbf{``multiplication of sets'': Cartesian Pro
 And last but not least, we have mathematical operations that generate a set of sets (nested) based on other sets:
 \begin{ln-define}{Power Set}{}
     The power set of $S$ can be written as:
-    \[\mathbb{P} (S) = \{P | P \subseteq S\}\]
+    \[\wp (S) = \{P | P \subseteq S\}\]
     as one of its various denotations, the one on lecture note using a Weierstrass P. \\
     The power set of a set is the set of all of its possible subsets.
 \end{ln-define}
-In addition, if the cardinality of $S$ in the above definition is $|S| = k$, then we can state that $|\mathbb{P} (S)| = 2^k$.
+In addition, if the cardinality of $S$ in the above definition is $|S| = k$, then we can state that $|\mathbb{P} (S)| = 2^k$. This will be an explored notion as we discuss a discrete math topic ``Counting'' in near future.
 
 \section{Mathematical Notation}
 Here we describe and explore mathematical notations that will abbreviate equations, statements, as well as facilitate us to view mathematical expressions in different perspectives. Mathematical notations introduced in this section will be very frequently employed in coming courseworks.

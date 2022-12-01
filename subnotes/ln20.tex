@@ -1,0 +1,102 @@
+\chapter{Prediction!}
+
+\section{Introduction to Prediction}
+Prediction? Machine Learning? Uh... I think so? \\
+Next thing you know, I'm reincarnated as a Machine Learning Hypebeast. I estimated the price of your house based on your mom's age, demographics, and your IP address (and the geographic data it encompasses). \\
+However, here's the problem. I overestimated your property. The result that quantifies such an inaccurate property value is known as the \textbf{loss}, or, the error.
+
+When dealing with prediction, we attempt to minimize error over each entry of a prediction. \\
+In this case, we will characterize the errors of prediction with Mean Sqaured Error:
+\[
+    \E[{(X - x)}^2] = \E[X^2] - 2 \E[X] \E[x] + {\E[x]}^2 = \E[X^2] - 2\E[X]x + x^2
+\]
+This is essentially minimizing a parabola $Ax^2 + Bx + C$, from the above equation, where the minimum is at
+\[x = \E[X]\]
+An important observation is the minimum value of MSE of this estimator is exactly the variance of $X$:
+\[Var(X) = \E[{(X - \E[X])}^2]\]
+To summarize, the best MSE estimator for $X$ is $\E[X]$, whose MSE is $Var(X)$.
+
+\section{Joint Distributions, Conditional Expectation}
+Let's offer a recap of joint distributions:
+\begin{ln-define}{Joint Distribution}{}
+    The joint distribution for two discrete random variables $X$ and $Y$ is the collection of values:
+    \[\{((a, b), \P[X = a, Y = b]) : a \in \mathcal{A}, b \in \mathcal{B}\}\]
+    where $\mathcal{A}$ is the set of all possible values taken by $X$, and $\mathcal{B}$ is the set of all possible values taken by $Y$.
+\end{ln-define}
+By such property:
+\[\P[X = a] = \sum_{b \in \mathcal{B}} \P[X = a, Y = b]\]
+The conditional probability of $X = x$ given $Y = y$ would thus also be:
+\[\P[X = x | Y = y] = \frac{\P[X = x, Y = y]}{\P[Y = y]}\]
+The conditional expectation of $X$ given $Y = y$ is defined naturally as follows:
+\[\E[X | Y = y] = \sum_{x \in \mathcal{A}} x \P[X = x | Y = y]\]
+
+\section{And Moving onto Iterated Expectation and Wald's Identity}
+Let us discuss this:
+\begin{ln-theorem}{Law of Iterated Expectations}{}
+    \[
+        \E[X] = \E[\E[X | Y]] = \sum_{y \in \mathcal{B}} \E[X | Y = y] \P[Y = y]
+    \]
+\end{ln-theorem}
+
+So, let the random variable $Y = X_1 + \cdots + X_n$ be some sum of other random variables that are IID, then we can utilize the above property and conclude:
+\begin{ln-theorem}{Wald's Identity}{}
+    \begin{align*}
+        \E[Y] &= \E[\E[Y | N]] \\
+        &= \sum_n \E[Y | N = n] \P[N = n] \\
+        &= \sum_n n \E[X_1] \P[N = n] \\
+        &= \E[X_1] \sum_n n\P[N = n] = \E[X_1] \E[N]
+    \end{align*}
+\end{ln-theorem}
+
+This can be useful for modelling the total time to serve customers in a time interval, where we model arrivals with Poisson distribution. \\
+We can thus have a Poisson random variable, $N \sim Poisson(\lambda)$, that determines the number of customers and each $X_i$ is an indicator variable that corresponds to time needed to serve customer $i$.
+
+\section{Minimal Mean Square Error?}
+What estimate should we use for a random variable $Y$ to minimize mean squared error if one does not have a predictor variable's value $X$ in hand? \\
+In the context of identifying an estimator $y$ upon a known predictor variable $x$, then we know that the estimator for $Y$, $y$, minimizes:
+\[\E[{(Y - y)}^2 | X = x]\]
+We can therefore iterate this computation through all possible $x$, where the value is minimized. This means we take the expected value over a joint distribution. \\
+Therefore, we can follow the above reasoning to acquire some estimator that minimizes the mean squared error throughout the entire sample space:
+\[
+    \E_{W, H}[{(W - \E[W | H])}^2]
+\]
+
+\section{Linear Regression}
+Let's say we will try to predict $y$ with a linear function $\mathcal{L}(x)$, characterized by some slope $m$ and intercept $b$ of a linear equation. \\
+The mean squared error, in this case, $\E[{(Y - \mathcal{L}(x))} ^ 2]$, should be minimized. \\
+Let us first consider the random variables:
+\[\overline{X} = X - \E[X], \overline{Y} = Y - \E[Y]\]
+In this case, we will note one value of the random variable $\overline{X}$ as $\overline{x}$. \\
+To estimate $\overline{Y}$, which is zero-mean now for convenience, with $x$, we will consider a function:
+\[\overline{f}(x) = m \overline{x} + b\]
+Once again, consider that we are attempting to minimize with $b = 0$:
+\[\E_{X, Y}[{(\overline{Y} - m \overline{X})}^2] = \E[\overline{Y}^2] - 2 \E[\overline{X} \overline{Y}]m + \E[\overline{X}^2]m^2\]
+The quadratic function structure of above equation suggests that, to minimize this error, the slope would be:
+\[m = -\frac{-2\E[\overline{X} \overline{Y}]}{2 \E[\overline{X}^2]} = \frac{\E[\overline{X} \overline{Y}]}{\E[\overline{X}^2]}\]
+However, $b \neq 0$ yields a more interesting case:
+\[
+    \E[\overline{Y}]^2 - 2(m \E[\overline{X} \overline{Y}] + b \E[\overline{Y}]) + (m^2 \E[\overline{X}]^2 + 2mb\E[\overline{X}] + b^2)
+\]
+Which thus lead to:
+\[
+    2\E[\overline{Y}] + 2m\E[\overline{X}] + 2b = 0
+\]
+Where we see that, since the random variables are purposedly zero-meaned, $b = 0$. Lets GOOOOOOOOOOOOOOOO!
+So this in fact means that the $b = 0$. Which provides a linear function:
+\[
+    \mathcal{L}(X) = \frac{Cov(X, Y)}{Var(X)}(X - \E[X]) + \E[Y]
+\]
+Let us expand this too:
+\[
+    \mathcal{L}(X) = \frac{Cov(X, Y)}{Var(X)}X + \E[Y] - \frac{Cov(X, Y)}{Var(X)}\E[X]
+\]
+This becomes the optimal regression line equation, as outlined in DATA C100! \\
+Furthermore, simplifying our mean squared error applying the solution that $b = 0$, we can see the following derivation process:
+\begin{align*}
+    \E[\overline{Y} ^ 2] - 2m\E[\overline{X} \overline{Y}] + m^2 \E[X^2] \\
+    \E[\overline{Y} ^ 2] - \frac{{Cov(\overline{X}, \overline{Y})} ^ 2}{Var(\overline{X})} \\
+    1 - {(Corr(\overline{X}, \overline{Y}))} ^ 2
+\end{align*}
+
+\section{Other Modifications: Statistics, Other Errors, Multivariate Regression}
+Lorem Ipsum

@@ -85,30 +85,35 @@ Sometimes we also come across words that seem to connect two propositions in a t
 An \textbf{iff} relationship is also standardly pronounced as \textbf{if and only if}, which is mathematically expressed as $P \iff Q$. This "iff" holds if both $P \implies Q$ and $Q \implies P$ are true. Consequentially, and as encountered in previous coursework, such as EECS 16A, the proof of an "iff" statement is at its nature the proof of two smaller statements.
 
 \subsection{Implications from Implications}
-An implication can have logically equivalent statements that are based on it. This means that for an implication $A$ and a logically equivalent implication $B$ based on $A$, if $A$ is true, then so is $B$ expected to. \\
-There can also be implications that are based on $A$ yet doesn't necessarily hold true when $A$ does. After all, implications are, in nature, propositions. \\
-
 For an implication $P \implies Q$, we may define two other implications out of it:
 \begin{bindenum}
-    \item \textbf{Contrapositive}: $\neg Q \implies \neg P$, which is logically equivalent to $P \implies Q$.
+    \item \textbf{Contrapositive}: $\neg Q \implies \neg P$, which is logically equivalent to $P \implies Q$. At its implication: if a statement $P$'s contrapositive is true, so should the statement $P$ per se.
     \item \textbf{Converse}: $Q \implies P$, which does not always hold true. In some cases, converse statements can hold true, but usually accompanies some extra conditions. Some examples can be observed in the contents of MATH 53.
 \end{bindenum}
 
-When two propositions are logically equivalent, we may mathematically denote it with the $\equiv$ symbol. An example of usage would be stating an implication the logical equivalent of its contrapositive, in the forms:
+When two propositions are logically equivalent, we may mathematically denote it with the $\equiv$ symbol. \\
+An example of usage would be stating an implication the logical equivalent of its contrapositive, in the forms:
 \[(P \implies Q) \equiv (\neg Q \implies \neg P)\]
 An application of this is a new approach of performing proofs. To prove a prompt that states a theorem as an implication $P \implies Q$, by proving its contrapositive, which is in some cases easier than proving the prompt directly, we can manage to indirectly prove the prompt. \\
-This application will be introduced in the next chapter as "proof by contrapositive".
+This application will be introduced in the next chapter as ``proof by contrapositive''.
 
 \section{Quantifiers}
 
 \subsection{Use of Quantifiers}
 In the previous chapter, we introduced the usage of quantifiers as an abbreviation and selector of elements in sets to which a condition holds, in the format of:
 \[\text{<quantifier selecting clause> <second clause containing condition to hold for selected values>}\]
-The second clause is effectively a proposition, which the entire sentence containing the first and second clause is also effectively a proposition.
+The second clause is effectively a proposition, while the entire sentence containing the first and second clause is also effectively a proposition.
 
 There is a more sophisticated way to express the first clauses of these forms of propositions. \\
-The first clause has a quantifier, and throughout a "universe" we are working with (abstractly, a wide variety of mathematical objects following some conventions), the statement is quantified (holding true) for a selected range of objects in this universe. \\
+The first clause has a quantifier, and throughout a ``universe'' we are working with (abstractly, a wide variety of mathematical objects following some conventions), the statement is quantified (holding true) for a selected range of objects in this universe. \\
 So syntactically, the quantifier serves to involve this range of quantification for our proposition.
+
+Let me expound on this abstraction of ``universe'' further. Say we attempt to qualify a proposition on all natural numbers, such as:
+\[
+    \forall x \in \N, x \in \Q
+\]
+Then, the total set of objects I'm working through is the set of all natural numbers, and is therefore the \textbf{``universe'': a collection of all objects to be qualified in this proposition}.
+In that sense, universe is a set.
 
 In a finite universe, there is also another way of conceptualizing the quantifiers we know:
 \begin{ln-think}{Propositional Logic in Quantifiers}{}
@@ -139,6 +144,35 @@ To express more complicated propositions, we must expand beyond the previous fir
     With the above translating process, this statement states that: there is an object $y$ that belongs to $\Z$, the set of all integers, such that for all objects $x$ that belongs to $\Z$ such that $x$ is smaller than $y$. \\
     In other words, it assumes the existence of one largest integer, which does not exist!
 \end{ln-think}
+
+Then, let us look at an example from the Fall 2022 Midterm 1:
+\begin{ln-practice}{Reading Complicated Quantifier Statements}{}
+    Which logical expression(s) below correspond to the predicate that $p$ is prime? \\
+    \begin{bindenum}
+        \item[a.] $(\forall b \in \N) \big( (b \leq 1) \lor \neg(\exists a \in \N)(a \neq 0 \land ab \neq p) \big)$
+        \item[b.] $\neg\big( (\exists a, b \in \N) ((a \geq 2) \land (a < p) \land (p = ab)) \big)$
+    \end{bindenum}
+    \tcblower
+    For the expression (a), it states that:
+    \begin{quote}
+        For all natural numbers $b$, either $b \leq 1$ or there does not exist a natural number $a$ such that $a$ is nonzero and $ab \neq p$. \\
+    \end{quote}
+    Therefore, for any positive integer $b$ larger than $2$, there does not exist another positive integer $a$ such that $ab \neq p$. \\
+    However, let's consider the possibility $p = 2$, which is prime, then for an integer $b = 2$, there exists $a = 1$ such that $ab = 2$. \\
+    Therefore, the trueness of expression (a) does not indicate that $p$ is prime. \\
+
+    Now, consider expression (b), which instead states that:
+    \begin{quote}
+        It is not such that there exists two natural numbers $a$, $b$ where simulatneously, $a \geq 2$, $a < p$, and $p = ab$.
+    \end{quote}
+    To simplify the above quote, there does not exist a pair of natural numbers such that when one of them is a natural number $2 \leq a < p$, the other number multiplied by this number is $p$. \\
+    Since $a < p$, to achieve $ab = p$, it is impossible that $b = 1$. This successfully circumvents the limitation encountered in expression (a), qualifying expression (b) as the correct solution. This expression does successfully describe the definition of prime number $p$:
+    \begin{quote}
+        The only pair of natural number whose product is prime $p$ is $(1, p)$
+    \end{quote}
+    By demonstrating that there exist no pair of natural number whose product is $p$ if one of the element is exclusively between $1$ and $p$.
+\end{ln-practice}
+This is an interesting discussion, as the question presented above has in fact been regraded!
 
 \section{Negation}
 \subsection{Meaning of Negation}
@@ -200,9 +234,12 @@ Mathematical propositions that come with limits, or quantifying clauses, for som
 
 If we combine propositions that hold for same conditions but with different quantified limits, we managed to combine the limits together and form some tighter statement providing a proposition with tighter limitations.
 
-\section{Personal Regard on This Topic}
+\section{Personal Thoughts on This Topic}
 Propositional logic is one aspect of the universal mathematical language that our community will continue to work, especially in fields as artificial intelligence, where many propositions need to hold for some operation(s) to be optimizied and conducted correctly. So, we will indeed come across complicated propositions. \\
 The most intuitive way to deal with it is practice translating them into English, and figure how to structurally present them the best in our process!
 
 For now, we are still in the ``Let's have a taste of discrete math'' stage, and we will have to study just two or three more topics to look at more specific mathematical objects. However, the skills we build here are worthwhile, so make sure to stick around and motivate yourself to read more propositions! \\
-My friend, for instance, tried to familiarize himself with propositional logic by playing tabletop games. That might be something you're interested in doing during spare time?
+Propositions are essentially methods to address ``the rules of a game'' in mathematics; in other words, propositions are rules of mathematics that support its framework. It defines mathematics. \\
+This brings upon an interesting question. What if a proposition is not provable? Does this mean that mathematics is in fact not a complete enough system, such that something cannot be determined as right or wrong by mathematics? Is mathematics ``incomplete'' then? \\
+
+As you see, propositions indeed bring creative and destructive consequences for mathematics.

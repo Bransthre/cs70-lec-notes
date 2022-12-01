@@ -58,7 +58,7 @@ Now, let us explore the encryption and decryption functions:
 \subsection{The Supporting Pillars: Theorems}
 Let us first introduce a significant theorem of modular arithmetics:
 \begin{ln-theorem}{Fermat's Little Theorem}{}
-    \textbf{Theorem}: For any prime $p$ and any $a \in \{1, 2, \dots, p - 1\}$, $a^{p - 1} \equiv 1\pmod{p}$.
+    \textbf{Theorem}: For any prime $p$ and any $a \in \{1, 2, \dots, p - 1\}$ (as long as $a$ is not a multiple of $p$; in other words, coprime with the prime $p$), $a^{p - 1} \equiv 1\pmod{p}$.
     \tcblower
     Let $S$ denote the set of possible results from mod $p$. \\
     Provided that $p$ and $a$ are coprime, $gcd(p,a) = 1$. \\
@@ -81,7 +81,7 @@ As a side note, the value ${(p - 1)!}_{p}^{-1}$ exists because $p$ is prime and 
 Now, let us ensure that the message will get encrypted and decrypted correctly:
 \begin{ln-theorem}{Correctness of Encryption and Decryption}{}
     \textbf{Theorem}: Under the above definitions of the encryption and decryption functions $E$ and $D$,
-    \[\forall x \in \{0, 1, \dots, N - 1\} (D(E(x)) \equiv x\pmod(N))\]
+    \[\forall x \in \{0, 1, \dots, N - 1\} (D(E(x)) \equiv x\pmod{N})\]
     \tcblower
     Mathematically expressing the prompt:
     \[\forall x \in \{0, 1, \dots, N - 1\} (D(E(x)) \equiv {(x^e)}^d \equiv x\pmod{N})\]
@@ -92,11 +92,14 @@ Now, let us ensure that the message will get encrypted and decrypted correctly:
     If $x$ is not a multiple of $p$, then since $p$ is prime, by Fermat's Little Theorem:
     \begin{align*}
         x^{p - 1} &\equiv 1\pmod{p} \\
+        {x^{p - 1}}^{k(q - 1)} &\equiv 1^{k(q - 1)}\pmod{p} \\
         x^{k(p - 1)(q - 1)} - 1 &\equiv 0\pmod{p} \\
         p &| x^{k(p - 1)(q - 1)} - 1
     \end{align*}
     If $p | x$, then the case is trivial. We are just subtracting two multiples of $p$. \\
     We can prove under similar logic that $q | x^{ed} - x$, so in the end, $pq | x^{ed} - x$. \\
+    Consequentially:
+    \[x^{ed} \equiv x\pmod{pq}\]
 \end{ln-theorem}
 Chinese Remainder Theorem can also be used to provide a similar proof, where we construct a system of congruences undero modulo $p$ and $q$ exploiting $x^{ed} \equiv x$ under these modulos, and finally find $x\pmod{pq}$ to be the only viable solution by the uniqueness property of CRT. \\
 So, why is RSA secure? It is based on the assumption:

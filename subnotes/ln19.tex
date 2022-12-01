@@ -145,16 +145,83 @@ This can be well approximated as
 Where $\gamma_E=0.5772\dots$ is known as Euler's constant.
 
 \section{Poisson Distribution}
-Lorem Ipsum
 
 \subsection{Definition}
-Lorem Ipsum
+To start off this discussion, let us first define its subject:
+\begin{ln-define}{Poisson Distribution}{}
+    A random variable X for which:
+    \[\P[X = i] = \frac{\lambda^i}{i!} e^{-\lambda}, i \in \Z^+\]
+    is said to have the Poisson distribution with paramerter $\lambda$. \\
+    We may mathematically abbreviate such as:
+    \[X \sim Poisson(\lambda)\]
+\end{ln-define}
+Let us, once again, verify the definition of distribution by testing whether it sums up to $1$:
+\begin{align*}
+    \sum_{i = 0}^\infty \frac{\lambda^i}{i!} e^{-\lambda}
+    &= e^{-\lambda} \sum_{i = 0}^\infty \frac{\lambda^i}{i!} \\
+    e^{-x} &= 1 + x + \frac{x^2}{2!} + \cdots \\
+    \sum_{i = 0}^\infty \frac{\lambda^i}{i!} e^{-\lambda}
+    &= e^{-\lambda} e^{\lambda} = 1
+\end{align*}
 
-\subsection{Mean and Variance of a Poisson RV}
-Lorem Ipsum
+\subsection{Properties of Poisson RV}
+For both expectation and variance, we can discover a very elegant identity. \\
+\begin{ln-theorem}{Expectation of Poisson RV}{}
+    \begin{align*}
+        \E[X]
+        &= \sum_{i = 0}^\infty i \P[X = i] \\
+        &= \sum_{i = 0}^\infty i \frac{\lambda^i}{i!} e^{-\lambda} \\
+        &= e^{-\lambda} \sum_{i = 1}^\infty \frac{\lambda^i}{(i - 1)!} \\
+        &= e^{-\lambda} \lambda \sum_{i = 1}^\infty \frac{lambda^{i - 1}}{(i - 1)!} \\
+        &= e^{-\lambda} \lambda e^{\lambda} = \lambda
+    \end{align*}
+\end{ln-theorem}
+And as for variance:
+\begin{ln-theorem}{Variance of Poisson RV}{}
+    \begin{align*}
+        \E[X(X - 1)]
+        &= \sum_{i = 0}^\infty i(i - 1) \P[X = i] \\
+        &= \sum_{i = 0}^\infty i(i - 1) \frac{\lambda^i}{i!} e^{-\lambda} \\
+        &= \lambda^2 e^{-\lambda} \sum_{i = 2}^\infty \frac{lambda^{i - 2}}{(i - 2)!} \\
+        &= \lambda^2 e^{-\lambda} e^{\lambda} = \lambda^2 \\
+        Var(X) &= \E[X^2] - {(\E[X])}^2 \\
+        &= \E[X(X - 1)] + \E[X] - {(\E[X])}^2 \\
+        &= \lambda^2 + \lambda - \lambda^2 = \lambda
+    \end{align*}
+\end{ln-theorem}
 
-\subsection{Sum of Independent Poisson RV}
-Lorem Ipsum
+\begin{ln-theorem}{Superposition of Poisson Distribution}{}
+    \textbf{Theorem}: Let $X \sim Poisson(\lambda)$ and $Y \sim Poisson(\mu)$ \underline{be independent of each other}, then $X + Y \sim Poisson(\lambda + \mu)$.
+    \tcblower
+    \textbf{Proof}:
+    \begin{align*}
+        \P[X + Y = k]
+        &= \sum_{j = 0}^k \P[X = j, Y = k - j] \\
+        &= \sum_{j = 0}^k \P[X = j] \P[Y = k - j] \\
+        &= \sum_{j = 0}^k \frac{\lambda^j}{j!} e^{-\lambda} \frac{\mu^{k - j}}{(k - j)!} e^{-\mu} \\
+        &= e^{-(\lambda + \mu)} \sum_{j = 0}^k \frac{\lambda^j \mu^{k - j}}{j!(k - j)!} \\
+        &= e^{-(\lambda + \mu)} \frac{{(\lambda + \mu)}^k}{k!}
+    \end{align*}
+\end{ln-theorem}
 
-\subsection{Poisson and Binomial Distributions}
-Lorem Ipsum
+\begin{ln-theorem}{Poisson as a Limit of Binomial}{}
+    \textbf{Theorem}: Let $X \sim Binomial(n, \frac{\lambda}{n})$ where $\lambda > 0$ is constant, then
+    \[\forall i \in \N, \lim_{n \rightarrow \infty}\P[X = i] = \frac{\lambda^i}{i!}e^{-\lambda}\]
+    \tcblower
+    \textbf{Proof}:
+    First, let's do some algebraic simplification.
+    \begin{align*}
+        \P[X = i]
+        &= \binom{n}{i} {(\frac{\lambda}{n})}^i {(1 - \frac{\lambda}{n})}^{n - i} \\
+        &= \frac{\lambda^i}{i!} \cdot \frac{n!}{(n - i)! n^i} \cdot {(1 - \frac{\lambda}{n})}^{n} \cdot {(1 - \frac{\lambda}{n})}^{-i}
+    \end{align*}
+    Here,
+    \[\frac{n!}{(n - i)! n^i} = \frac{n (n - 1) (n - 2) \cdots (n - i + 1)}{n^i}\]
+    This value approaches $1$ as $n$ approaches $\infty$. \\
+    Meanwhile, from calculus, we may determine that:
+    \[\lim_{n \rightarrow \infty} {(1 - \frac{\lambda}{n})}^n = e^{-\lambda}\]
+    And last but not least, since $i$ is a fixed variable,
+    \[\lim_{n \rightarrow \infty} {(1 - \frac{\lambda}{n})}^{-i} = 1\]
+    Therefore, multiplying these limits together, we obtain that:
+    \[\lim_{n \rightarrow \infty} \P[X = i] = \frac{\lambda^i}{i!}e^{-\lambda}\]
+\end{ln-theorem}

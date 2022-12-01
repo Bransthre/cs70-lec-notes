@@ -1,0 +1,109 @@
+\chapter{Variance}
+
+\section{Functions of Random Variables}
+A random variable on a space can be a sum of other random variables. In this case, we see one random variable being a function of some other random variables. So, what other functional relationship might exist outside this?
+
+Formally, let $X$ be a random variable on a sample space $\Omega$ with probability distribution $\P_X$, then for a function $f(\cdot)$ on the range of $X$, $f(X)$ is a random variable $Y$ on the same sample space where $Y(\omega) = f(X(\omega)), \omega \in \Omega$. \\
+In terms of sample spaces, the event $Y = y$ is essentially the event $X \in f^{-1}(y)$, where we take $f^{-1}(y) = \{x | f(x) = y\}$. \\
+With this view, the distribution of $Y$ can thus be derived from the distribution of $X$ as:
+\[\P_Y [Y = y] = \sum_{x:f(x) = y}\P_X [X = x]\]
+The expectation of such variable $Y$ thus becomes:
+\[\E[Y] = \sum_y y \P_Y [Y = y] = \sum_x f(x) \P_X [X = x]\]
+Which therefore translates into:
+\begin{ln-theorem}{Law of the Unconscious Statistician}{}
+    \[\E[f(X)] = \sum_x f(x) \P_X [X = x]\]
+    For example:
+    \[\E[X^2] = \sum_x x^2 \P_X [X = x]\]
+\end{ln-theorem}
+
+\section{Introducing and Defining Variance}
+Now that we have certified a way to express what is the centroid of a distribution, we may concern with a new subject: what is the deviation of points in a distribution from its centroid, and how may we quantify the overall deviation of a distribution?
+
+Let us consider a simple context. \\
+You are being pursued by Oski. \\
+In this case, you may flip a coin to decide whether you move from your current location forward 1 step (by flipping a head), which we'll call the origin, or move backward 1 step. \\
+To avoid being caught by Oski and captured into the terrifyin sanctuary of CS61D, Discrete Memematics and Probably Theory, you must figure first what is the expectation of your distance from the origin. \\
+Let us call the number of steps you take at last $S$, a random variable, as a sum of other random variables $X_i$ that record the number of steps you perform at the $i^{th}$ flip:
+\[\E[S] = \E[X_1 + \cdots + X_n] = \E[X_1] + \cdots + \E[X_n] = n \times (\frac{1}{2} \times 1 + \frac{1}{2} \times -1) = 0\]
+LMAO, have fun being caught by Oski.
+
+But here arises a different question. What is the expected distance of the player from the origin? What is the expected value of $|S|$? \\
+Since the absolute value is difficult to work with, alternatively, let us consider what is the expected value of $S^2$. \\
+But the essential quality we derive for is, in fact, $\E[{(S - \mu)}^2]$, which captures not just the value of distance from origin but its deviation from the centroid of distribution! \\
+In this case, we may derive the expectation of $S^2$ as follows:
+\begin{align*}
+    \E[S^2] &= \E[{(X_1 + \cdots + X_n)}^2] \\
+    &= \E[\sum_{i = 1}^n X_i^2 + 2 \sum_{i < j} X_i X_j] \\
+    &= \sum_{i = 1}^n \E[X_i^2] + 2 \sum_{i < j} \E[X_i X_j] \\
+    \P[X_i X_j = 1] &= \frac{1}{2} \text{ (either both heads or both tails)} \\
+    \P[X_i X_j = -1] &= \frac{1}{2} \text{ (one head one tail)} \\
+    \forall i, j &\E[X_i X_j] = 0 \\
+    \E[S^2] &= \sum_{i = 1}^n \E[X_i^2] = n
+\end{align*}
+
+Let us now introduce a proper name for this quality:
+\begin{ln-define}{Variance}{}
+    For a random variable $X$ with expectation $\E[X] = \mu$, the variance of $X$ is defined as:
+    \[Var(X) = \E[{(X - \mu)}^2]\]
+    And the square root $\sigma(X) := \sqrt{Var(X)}$ is called the standard deviation of $X$.
+\end{ln-define}
+
+We can, in fact, develop an easier expression for variance:
+\begin{ln-theorem}{Formula of Variance}{}
+    \begin{align*}
+        Var(X) &= \E[{(X - \mu)}^2] \\
+        &= \E[X^2 - 2\mu X + \mu^2] \\
+        &= \E[X^2] - 2\mu \E[X] + \mu^2 \\
+        &= \E[X^2]- 2\mu^2 + \mu^2 = \E[X^2]- \mu^2 = \E[X^2] - {(\E[X])}^2
+    \end{align*}
+\end{ln-theorem}
+
+Furthermore, the property of variance provides that:
+\[Var(cX) = c^2 Var(X)\]
+
+\section{Sum of Independent Random Variables}
+If a random variable $X$ is the sum of independent random variables:
+\[X = X_1 + \cdots + X_n\]
+then its variance is the sum of variances of individual random variables. \\
+In particular, for independent random variables $X_1, \cdots, X_n$:
+\[Var(X_1 + \cdots + X_n) = \sum_{i = 1}^n Var(X_i)\]
+
+Let us explore a similar rule on the product of independent random variables:
+\begin{ln-theorem}{Expectation of Product of Random Variables}{}
+    For independent random variables $X$, $Y$:
+    \begin{align*}
+        \E[XY] &= \sum_a \sum_b ab \P[X = a, Y = b] \\
+        &= \sum_a \sum_b ab \P[X = a] \P[Y = b] \\
+        &= \sum_a a \P[X = a] \times \sum_b b \P[Y = b] = \E[X] \E[Y]
+    \end{align*}
+\end{ln-theorem}
+\begin{ln-theorem}{Variance of Sum of Independent Random Variables}{}
+    For independenct random variables $X$, $Y$:
+    \begin{align*}
+        Var(X + Y)
+        &= \E[{(X + Y)}^2] - {(\E[X + Y])}^2
+        &= \E[X^2] + \E[Y^2] - \E[2XY] - {(\E[X + Y])}^2 \\
+        &= (\E[X^2] - {\E[X]}^2) + (\E[Y^2] - {\E[Y]}^2) + 2(\E[XY] - \E[X]\E[Y]) \\
+        &= Var(X) + Var(Y) + 2(\E[XY] - \E[X]\E[Y]) = Var(X) + Var(Y)
+    \end{align*}
+\end{ln-theorem}
+
+\section{Covariance and Correlation}
+The expression we see for the above proof, $\E[XY] - \E[X]\E[Y]$, is a measure of association between variables $X$ and $Y$:
+\begin{ln-define}{Covariance}{}
+    Covariance of random variables $X$ and $Y$, denoted as $Cov(X, Y)$, is defined as:
+    \[Cov(X, Y) = \E[(X - \mu_X)(Y - \mu_Y)] = \E[XY] - \E[X]\E[Y]\]
+    Here are some interesting properties:
+    \begin{bindenum}
+        \item If $X$ and $Y$ are independent, then $Cov(X, Y) = 0$. However, teh converse is not true.
+        \item $Cov(X, X) = Var(X)$.
+        \item Covariance is bilinear, which means: \[Cov(\sum_{i = 1}^n a_i X_i, \sum_{j = 1}^m b_i y_i) = \sum_{i = 1}^n \sum_{j = 1}^m a_i b_j Cov(X_i Y_j)\]
+    \end{bindenum}
+\end{ln-define}
+To measure the correlation of random variables, whose standard deviations are both nonzero, we may use a different statistics:
+\begin{ln-define}{Correlation}{}
+    Suppose $X$ and $Y$ are random variables with $\sigma(X) > 0$ and $\sigma(Y) > 0$, then the correlation of $X$ and $Y$ is defined as:
+    \[Corr(X, Y) = \frac{Cov(X, Y)}{\sigma(X) \sigma(Y)}\]
+    And this value must be such that:
+    \[-1 \leq Corr(X, Y) \leq 1\]
+\end{ln-define}
