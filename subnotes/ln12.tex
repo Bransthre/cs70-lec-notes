@@ -1,7 +1,7 @@
 \chapter{Computability}
 
 \section{The Liar's Paradox}
-Propositions are, once again, either true or false. For example, the proposition:
+Have you ever played the hit game Among Us? If not, here is a fundamental rule of the game Among Us:
 \begin{quote}
     Let $A$ be the set of players in an Among Us game, then there exists one player in $A$ such that the player is an impostor.
 \end{quote}
@@ -9,45 +9,53 @@ But here is a problematic proposition:
 \begin{quote}
     An impostor says: ``All impostors are liars.''
 \end{quote}
-Why do we have so many among us jokes? And also, how exactly is this statement probelmatic? \\
+Why do we have so many Among Us jokes? That I do not know, and memes are the DNA of souls so it's only natural to use memes in mathematical contexts. \\
+But the key inquiry we'd like to make is: how exactly is this statement probelmatic?
+
 Well, if the statement is true, then all impostors are liars. However, since this sentence is said by an impostor, it is false, and all impostors are in fact not liars. But if impostors are not liars, then this statement is true. \\
 The logical loop goes on due to the self-referencing nature of this sentence.
 
-Suppose we view another case of this. \\
+A same inquiry is reflected on this famous proposition in discrete mathematics: \\
 \begin{quote}
     In the village with just one barber, some men shave themselves or go to that barber. \\
     The barber proclaims: I shall shave all and only those men who do not shave themselves. \\
     Does the barber shave himself?
 \end{quote}
-Does the barber shave himself? \\
 If a barber's statement is true, then he shaves only those who do not shave themselves. He would shave himself if he does not shave himself. If he does not shave himself, however, he does shave himself. \\
-Such is the wonder of liar's paradox: you cannot get any effective results from interpreting these statements.
+Such is the wonder of \textbf{liar's paradox}: you cannot get any effective results from interpreting these statements due to their self-referencing and contradictory nature.
 
 \section{Self Replicating Programs}
 Let us view self-reference as a computational concept: can we use self-reference to design a program that outputs itself? \\
 Let us consider how we can do this if we write the program in psuedocode, where thus we get:
 \begin{verbatim}
-    print the following sentence twice, the second time in quotes:
-        "print the following sentence twice, the second time in quotes:"
+    print the following sentence twice, the second time in quotes and indented:
+        "print the following sentence twice, the second time in quotes and indented:"
 \end{verbatim}
-If we execute this instruction above, then we will get the output be exactly what we executed. This self-replicating program is known as a quine (which you might have encountered in COMPSCI 61A, if lucky). \\
+If we execute this instruction above, then we will get the output be exactly what we executed. This self-replicating program is known as a quine (which you might have encountered in COMPSCI 61A as an extra credit). \\
 To construct such a quine in general, we can use:
 \begin{ln-theorem}{Recursion Theorem}{}
     Given any program $P(x, y)$, we can always convert it into another program $Q(x)$ such that $Q(x) = P(x, Q)$. \\
     $Q$ behaves exactly as $P$ would if its second input is the decsription of program $Q$. \\
     Therefore, $Q$ has access to its own decsription, and is essentially a self-aware version of $P$.
 \end{ln-theorem}
+The Recursion Theorem will eventually lend great strength to our efforts in proving and disproving existence of some program.
 
 \section{The Halting Problem}
-Now we see self-reference working in computation (albeit still not in human logic), let's then come to ask: is there anything a computer cannot do? \\
-Yes. In 1936, Alan Turing managed to show that there is no program that cannot answer for itself: ``does your execution lead to an infinite loop?'' \\
-The proof has two ingredients: self-reference and how inseparable programs and data are to each other. Before inspecting the proof, let's inspect the problem more closely. \\
+Now we see self-reference working in computation (albeit still not in human logic), let's then come to ask: is there anything a computer cannot do?
+
+Yes. \\
+In 1936, Alan Turing managed to show that there is no program that can answer for itself:
+\begin{quote}
+    ``does your execution lead to an infinite loop?''
+\end{quote}
+The proof has two ingredients: self-reference, and how inseparable programs and data are to each other. But before inspecting the proof, let's inspect and understand the problem more.
+
 Let us write a program that behaves as follows:
 \begin{center}
     \verb+TestHalt(P,x)+ = $
     \begin{cases}
-        ``yes'', &if program P halts on input x \\
-        ``no'', &if program P loops on input x
+        \text{``yes''}, &\text{if program P halts on input x} \\
+        \text{``no''}, &\text{if program P loops on input x}
     \end{cases} $
 \end{center}
 And now, let us access the proof:
@@ -57,52 +65,65 @@ And now, let us access the proof:
     \textbf{Proof}: For the sake of contradiction, let us construct the following program:
     \begin{verbatim}
         Turing (P)
-            if TestHalt(P, P) is ``yes'' then loop forever
-            else halt
+            if TestHalt(P, P) is ``yes'':
+                loop forever
+            else:
+                halt
     \end{verbatim}
-    Let us then look at the behavior of \verb+Turing(Turing)+, which either halts or not. \\
-    If it halts, then it must be that \verb+TestHalt(Turing, Turing)+ returned ``no''. However, that means this program must have looped. \\
-    If it does not halt, then it loops on forever, due to it should've halted on the provided input.
-    In both cases, we arrive at a contradiction, so the program \verb+TestHalt+ must've been wrong and impossible to be entirely right!
+    Let us then look at the behavior of \verb+Turing(Turing)+, which either halts or not.
+    \begin{bindenum}
+        \item If it halts, then it must be that \verb+TestHalt(Turing, Turing)+ returned ``no'', which means \verb+Turing+ loops on \verb+Turing+.
+        \item If it does not halt, then it loops on forever, which implies that \verb+Turing+ should've halted on \verb+Turing+.
+    \end{bindenum}
+    In both cases, we find a contradiction. The program \verb+TestHalt+ must've been dysfunctional.
 \end{ln-theorem}
-I know that you are curious about what proof technique we used for this. Well, it is once again a diagonalization argument, as every computer program is just finite-length strings over alphanumeric characters. Therefore, we can count the set of all programs. \\
+
+The above proof is actually a diagonalization argument:
 \begin{ln-theorem}{Continued, The Uncomputability of Halting Problem}{}
     \textbf{Proof}: \\
-    Let us then construct a table of program enumeration vs program enumeration ($P_i$). In this case, for the ${(i, j)}^{th}$ entry in the table is $H$ if $P_i$ halts on $P_j$ (halts when $P_j$ is an input), and $L$ if otherwise (which means it loops). \\
-    Suppose the program $P_n = Turing$ exists, but it cannot be enumerated due to a proof by case: \\
-    If the $(n, n)$ entry is $H$, then $P_n$ halts on $P_n$ and \verb+Turing+ will thus loop forever. \\
-    If the $(n, n)$ entry is $L$, then \verb+Turing+ halts on $P_n$ instead, but contradicts the original assumption. \\
-
-    Since \verb+Turing+ is a simple modification of \verb+TestHalt+, if \verb+Turing+ does not get enumerated, neither can \verb+TestHalt+.
+    Let us then construct a table of program enumeration vs program enumeration ($P_i$ vs. $P_i$). \\
+    On this table, the ${(i, j)}^{th}$ entry in the table is $H$ if $P_i$ halts on $P_j$ (halts when $P_j$ is an input), and $L$ if otherwise (which means it loops). \\
+    Supposedly, the program $P_n = Turing$ exists. Yet, it cannot be enumerated, as outlined with the following proof by case:
+    \begin{bindenum}
+        \item If the $(n, n)$ entry is $H$, then $P_n$ halts on $P_n$ and \verb+Turing+ will thus loop forever.
+        \item If the $(n, n)$ entry is $L$, then \verb+Turing+ halts on $P_n$ instead, but contradicts the original assumption.
+    \end{bindenum}
+    which the logic follows the prior proof performed. \\
+    
+    Then, since \verb+Turing+ is a simple modification of \verb+TestHalt+, if \verb+Turing+ does not get enumerated, neither can \verb+TestHalt+.
 \end{ln-theorem}
 Therefore, the Halting problem is unsolvable.
 
 \subsection{Easy Halting Problem}
 Brandon. Who in the right mind would feed a program back to the original program? \\
-To that answer, I respond \textit{``computer scientists''}, which you are one, for the record of this fact. \\
-But, computer scientsts in turn proposed a new, more practical problem according to your concerns, complaints, insights:
-\begin{ln-theorem}{The Uncomputability of Halting Problem}{}
-    \textbf{Theorem}: There does not exist a program that can decide whether any given program $P$ will halt on $0$.
+To that answer, I respond \textit{``computer scientists''}, which you are one, for the record of this fact.
+
+But, computer scientsts still proposed a new, more practical problem according to your concerns, complaints, insights:
+\begin{ln-theorem}{The Uncomputability of Easy Halting Problem}{}
+    \textbf{Theorem}: The Easy Halting Problem states that:
+    \begin{center}
+        There does not exist a program that can decide whether any given program $P$ will halt on $0$.
+    \end{center}
     \tcblower
     \textbf{Proof}: Let there be a program \verb+TestEasyHalt+ that resolves this problem (for the sake of contradiction):
     \begin{center}
-        \verb+TestHalt(P,x)+ = $
+        \verb+TestEasyHalt(P,x)+ = $
         \begin{cases}
-            ``yes'', &if program P halts on input 0 \\
-            ``no'', &if program P loops on input 0
+            \text{``yes''}, &\text{if program P halts on input 0} \\
+            \text{``no''}, &\text{if program P loops on input 0}
         \end{cases} $
     \end{center}
-    Then we can use this as a subroutine to build the following algorithm:
+    Then following the Recursion Theorem, we can use this as a subroutine to build the following algorithm:
     \begin{verbatim}
         Halt(P, x)
-            construct P' such that when inputted 0, it returns P(x)
+            def P'(x):
+                if x == 0:
+                    return P(x)
             return TestEasyHalt(P')
     \end{verbatim}
-    Well, $P'(0)$ would only halt iff $P(x)$ does, so if such a program \verb+TestEasyHalt+ exists, then \verb+Halt+ effectively solves the Halting Problem, which is impossible to solve! \\
+    Well, $P'(0)$ would only halt iff $P(x)$ does, so if such a program \verb+TestEasyHalt+ exists, then \verb+Halt+ effectively solves the Halting Problem because it can tell whether an arbitrary $P$ holds or not on an arbitrary $x$. However, we learned that the Halting Problem is impossible to solve! \\
     Therefore, there cannot be such a program \verb+Halt+, and thus cannot be a program \verb+TestEasyHalt+.
 \end{ln-theorem}
-This proof utilizes a technique called ``reduction'', where we reduced a problem into another problem in the hope that the smaller problem leads to the solution of the larger problem. You have done this more or less when coding, writing mathematics, or in general just coping about the thoughts of programming in your head. \\
-But, this implies that the second problem is as difficult as the first, since you need the second problem's solution to resolve the first problem.
 
 \section{Godel's Incompleteness Theorem}
 In 1900, David Hilbert posed two questions about the foundation of logic in mathematics:
@@ -110,17 +131,17 @@ In 1900, David Hilbert posed two questions about the foundation of logic in math
     \item Is arithmetic consistent?
     \item Is arithmetic complete?
 \end{bindenum}
-In return, humanity now has an existential crisis. Let me elaborate. \\
-To understand the problems he posted, we should remember that mathematics is a formal system built on axioms and rules of inferences, hence all the theorems we have relied on. \\
-Axioms are the cornerstones of mathematics.
+Such questions made interesting contributions to many things in the world, one being mathematics, and the other being an overall existential crisis across the human species and Pythagoreanists.
+
+To understand the problems he posted, we should remember that mathematics is a formal system built on axioms and rules of inferences, hence all the theorems we have relied on. Axioms are the cornerstones of mathematics.
 
 So, the first question above asks whether it is possible to prove a proposition $P$ and its negation $\neg P$ (which we attempted to not do in the Law of Excluded Middle). The case in which this is proven will cause arithmetic to be inconsistent; otherwise, consistent. \\
-But, if arithmetics is inconsistent, many currently wrong statements can later be proven right. \\
+If arithmetics is inconsistent, many currently wrong statements can later be proven right. \\
 The second question asks whether every true statement in arithmetic can be mathematically proved.
 
 Let's talk about history. There was indeed an unproven theorem (Fermat's Last Theorem) until around 1990s. \\
 Meanwhile, as these questions were proposed in 1928 as ``Entscheidungsproblem'', which we hope the answer is `yes' to, they were immediately proven ``no'' by Godel in 1930. \\
-This proof exploited the deep connection between proofs and arithmetics, as well as proofs and computation. We will, in the following sections, discuss the sketch and essence of Godel's Proof.
+This proof exploited the deep connection between proofs and arithmetics, as well as proofs and computation. We will, in the following sections, discuss the sketch and essence of Godel's Proof on the incompleteness of mathematics.
 
 \subsection{Sketch of Godel's Proof}
 Suppose we have a formal system $F$ and assume it is sufficiently expressive that we can use it to express all of arithmetic. Suppose we can write the following statement:
@@ -136,15 +157,12 @@ Two things can happen:
         Case 2: $S(F)$ is not provable, which means $S(F)$ is true, and $F$ is therefore already incomplete.
     }
 \end{bindenum}
-We would then need to construct such a statement $S(F)$, which is the reduction of the larger problem for proving mathematics wrong. Once again, that is as difficult as the original larger problem.
+To prove that mathematics is incomplete, we would just need to construct such a statement $S(F)$, which is the reduction of the larger problem for proving mathematics wrong.
 
 \subsection{Proof via Halting Problem}
 Suppose arithmetic is both consistent and complete, we will now use this statement to perform a proof by contradiction. \\
 Let the proposition $S_{P,x}$ depict ``Program P halts on input x'', and we can thus phrase it as an arithmetic:
-\begin{center}
-    \[\exists z (\text{z encodes a valid halting exception sequence of P on input x})\]
-\end{center}
+\[\exists z (\text{z encodes a valid halting exception sequence of P on input x})\]
 Now let us assume that arithmetic is both consistent and complete. This means the above statement, which represents the halting problem, can be proven either true or false due to the completeness of arithmetics. \\
 However, this then in turn implies the halting problem is prove-able via searching through every single possible proof enumerable (which is countably many). The problem, however, is that the Halting Problem is uncomputable, not allowing such a program for searching proofs to exist. \\
-Therefore, the initial assumption is false. \\
-Henceforth, arithmetics is inconsistent and incomplete. The mathematics you have learned along the way is potentially all wrong.
+Therefore, the initial assumption is false. Arithmetics is inconsistent and incomplete.

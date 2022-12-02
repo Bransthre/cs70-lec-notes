@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.6.26)  1 DEC 2022 23:57
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.6.26)  2 DEC 2022 10:42
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1468,35 +1468,43 @@ Underfull \vbox (badness 2165) has occurred while \output is active []
  [80] [81]) [82] (./subnotes/ln12.tex
 Chapter 12.
 
-Underfull \hbox (badness 10000) in paragraph at lines 16--17
+Underfull \hbox (badness 10000) in paragraph at lines 18--19
 
+ []
+
+
+Overfull \hbox (4.24501pt too wide) in paragraph at lines 31--31
+[]    \T1/pcr/m/n/10 print the following sentence twice, the second time in quotes and indented: 
+ []
+
+
+Overfull \hbox (40.24501pt too wide) in paragraph at lines 32--32
+[]        \T1/pcr/m/n/10 "print the following sentence twice, the second time in quotes and indented:"[] 
  []
 
 [83
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 70--75
+Underfull \hbox (badness 10000) in paragraph at lines 91--92
 
  []
 
+[84]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Underfull \hbox (badness 10000) in paragraph at lines 68--77
-
- []
-
-[84] [85]) [86] (./subnotes/ln13.tex
+ [85]) [86] (./subnotes/ln13.tex
 Chapter 13.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [87
 
-] [88]
-Underfull \hbox (badness 10000) in paragraph at lines 73--75
+] [88] [89]
+Underfull \hbox (badness 10000) in paragraph at lines 128--130
 
  []
 
-[89]) [90] (./subnotes/ln14.tex
+) [90] (./subnotes/ln14.tex
 Chapter 14.
 [91
 
@@ -1588,13 +1596,13 @@ LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.55997pt have occurred.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 4941089078252845F9F9B9A7ED79884A;21008.
+(rerunfilecheck)             Checksum: AC125B90EAABDE3A65674F7011E00322;21004.
  ) 
 Here is how much of TeX's memory you used:
- 65008 strings out of 475882
- 1632017 string characters out of 5806027
- 2274854 words of memory out of 5000000
- 85083 multiletter control sequences out of 15000+600000
+ 65011 strings out of 475882
+ 1632068 string characters out of 5806027
+ 2275854 words of memory out of 5000000
+ 85086 multiletter control sequences out of 15000+600000
  524879 words of font info for 128 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  114i,16n,145p,863b,2126s stack positions out of 10000i,1000n,20000p,200000b,200000s
