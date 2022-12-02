@@ -100,7 +100,7 @@
 \contentsline {section}{\numberline {9.3}General Errors}{66}{section.9.3}%
 \contentsline {section}{\numberline {9.4}Personal Regard on This Topic}{68}{section.9.4}%
 \contentsline {chapter}{\numberline {10}Counting}{69}{chapter.10}%
-\contentsline {section}{\numberline {10.1}Counting be like}{69}{section.10.1}%
+\contentsline {section}{\numberline {10.1}Sampling without Replacement}{69}{section.10.1}%
 \contentsline {subsection}{\numberline {10.1.1}Counting Sequences}{69}{subsection.10.1.1}%
 \contentsline {subsection}{\numberline {10.1.2}Counting Sets}{70}{subsection.10.1.2}%
 \contentsline {section}{\numberline {10.2}Sampling with Replacement}{71}{section.10.2}%
@@ -111,13 +111,14 @@
 \contentsline {subsection}{\numberline {10.3.2}Combinatorial Identities}{73}{subsection.10.3.2}%
 \contentsline {subsection}{\numberline {10.3.3}Permutation and Derangements}{74}{subsection.10.3.3}%
 \contentsline {section}{\numberline {10.4}The Principle of Inclusion-Exclusion}{75}{section.10.4}%
+\contentsline {section}{\numberline {10.5}Personal Regards on this Topic}{76}{section.10.5}%
 \contentsline {chapter}{\numberline {11}Countability}{77}{chapter.11}%
 \contentsline {section}{\numberline {11.1}More on Bijections}{77}{section.11.1}%
 \contentsline {subsection}{\numberline {11.1.1}Cardinality and Bijection}{78}{subsection.11.1.1}%
 \contentsline {section}{\numberline {11.2}Countability}{79}{section.11.2}%
 \contentsline {section}{\numberline {11.3}Cantor's Diagonalization}{80}{section.11.3}%
 \contentsline {section}{\numberline {11.4}Cantor's Set}{81}{section.11.4}%
-\contentsline {section}{\numberline {11.5}Power Sets: Higher Order Infinity}{81}{section.11.5}%
+\contentsline {section}{\numberline {11.5}Power Sets: Higher Order Infinity}{82}{section.11.5}%
 \contentsline {chapter}{\numberline {12}Computability}{83}{chapter.12}%
 \contentsline {section}{\numberline {12.1}The Liar's Paradox}{83}{section.12.1}%
 \contentsline {section}{\numberline {12.2}Self Replicating Programs}{83}{section.12.2}%

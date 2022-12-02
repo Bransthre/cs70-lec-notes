@@ -95,10 +95,10 @@ Pick a random polynomial $P(x)$ of degree $k - 1$ such that $P(0) = s$, and prov
 Now, since you need $k$ points to figure out the explicit expression of a $k - 1$ degree polynomial $P(x)$, you must need at least $k$ officials who hold one point of information to contribute.
 
 \section{Personal Regard on This Topic}
-The best way to remember that $n + 1$ pairs interpolate a $n$ degree polynomial is using your nose (if you have one; if you don't, I suggest you use other people's nose). \\
-Brandon. How? Are you out of your mind? \\
-Look at your nose, which has two points (or holes if you will?). These two points on your nose form a line, because we can interpolate a $1$-degree polynomial (a line) via two points on your nose. \\
-The reason why I chose nose is because I see noses everyday and that reminds me of Lagrange Interpolation.
+The Lagrange interpolation method is, once again, not the only method of interpolation. However, it is important to note the mechanical aspects of it, such as converting fractions into integers using multiplicative inverse under some modular finite field (GF). \\
+Sometime, you will also encounter questions that do not have a GF. In that case, the question might be a bit more quirky, a bit difficult to solve for the constraints it does not have. Still, polynomial's close experience during high school should aid you on the way. \\
+
+Please always also remember that, a degree $d$ polynomial is interpolable from $d + 1$ points, not otherwise. For example, two points form a line, and three points form a quadratic curve, while one point forms one horizontal line. \\
 
 When asked to develop a secret-sharing mechanism via polynomial, you'd like to pay attention to how many pairs/roots to give to each individuals for interpolation. \\
 This can also associate to the notion of how much power someone has in a voting system to decrypt a secret to a specific party. \\

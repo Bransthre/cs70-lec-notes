@@ -1,29 +1,28 @@
 \chapter{Counting}
 
-\section{Counting be like}
-But Brandon, I hear your thoughts again. \\
-Why in the holy Spaghetti Monster Shall we learn how to count?
-
 The ``counting'' we address here in a discrete mathematical sense is not about counting from number to number in an arithmetic sequence. It's about estimating the number of possibilities. \\
-For instance, consider a deck of 40 cards. What is the probability from which you draw all 5 parts of the inexorable Exodia? What is the total number of cases about the combination of 5 cards you draw from your deck, and from there within, what are all possible cases of drawing five cards of some same category (number 8, club, diamond...)? \\
+Consider a deck of 40 cards. What is the probability from which you draw all 5 parts of the inexorable Exodia? What is the total number of cases about the combination of 5 cards you draw from your deck, and from there within, what are all possible cases of drawing five cards of some same category (number 8, club, diamond...)? \\
 Most importantly, what is the probability of it? \\
 The techniques we employ to estimate and learn the total number of possible cases according to some conditions is known as \textbf{counting}. \\
 In this chapter, let us begin from counting in simpler circumstances, like counting sequences.
 
+\section{Sampling without Replacement}
 \subsection{Counting Sequences}
 Let there be a set $S = \{1, 2, \cdots, n\}$. \\
 We may pick $k \leq n$ elements from this set $S$, one at a time, while removing what we have sampled (selected) from $S$. This is known as \textbf{sampling without replacement}: once we select something from a set, it is removed from the set. \\
 When counting the number of different ways to do this, either order matters, or order doesn't. In the case that order does matter, we are counting ordered sequences.
 
-The most daily-life example would be Poker (without money, that's the relevant part .-.). \\
-When we deal a card, that card dissappears is sampled from, as well as removed the deck. Meanwhile, when the sequence is ordered, the sequence of dealing card A then card B is different from the sequence of dealing card B then card A. \\
+The most daily-life example would be Poker. \\
+When we deal a card, that card dissappears is removed from the deck. The card is being sampled without replacement of it back into the card.
+Meanwhile, when the sequence is ordered, the sequence of dealing card A then card B is different from the sequence of dealing card B then card A: in a sequence, order matters. \\
 Therefore, at the first card, we have 52 disctinct possibilities for the card we now deal. \\
 The second card, however, depends on the first card, since it cannot coincide with the first card. Your hand cannot have two exactly same card. That is cheating, and COMPSCI 70 does not condone cheating. \\
 This means the second card has 51 possible choices, whichever card we picked from the first. Notice again that albeit the number of possibilities is the same, the second card you can get comes from a different set of cards depending on your first card.
 
 Therefore, the total amount of possibilities for drawing 5 cards from a 52-card poker deck is in fact:
 \[52 \times (52 - 1) \times (52 - 2) \times (52 - 3) \times (52 - 4)\]
-This brings us to the \textbf{First Rule of Counting}:
+
+This brings us to discuss the \textbf{First Rule of Counting}:
 \begin{ln-axiom}{The First Rule of Counting}{}
     If an object can be made by a sucession of $k$ choices, where there are $n_i$ ways to make the $i^{th}$ choice, then the total number of distinct objects that can be made in this way is:
     \[\pi_{i = 1}^k n_i\]
@@ -81,20 +80,14 @@ This means we just have to find the number of bins (distinct sets), which is ess
 This quantity, $\frac{n!}{(n - k)!k!}$, stands for the number of $k$-element subsets from an n-element set $S$, the result of our counting. The alternative but more popular expression of this is $\binom{n}{k}$:
 \begin{ln-theorem}{Second Rule of Counting}{}
     Assume an object is made by a succession of choices, and the order in which the choices are made does not matter. \\
-    Let $A$ be the set of ordered objects, $B$ the set of unordered objects. If there exists an $m-to-1$ function $f: A \rightarrow B$, then we can count the number of ordered objects and divide by $m$ to obtain the number of unordered objects.
+    Let $A$ be the set of ordered objects, $B$ the set of unordered objects. If there exists an m-to-1 function $f: A \rightarrow B$, then we can count the number of ordered objects and divide by $m$ to obtain the number of unordered objects.
 \end{ln-theorem}
 So in the hand-counting context of this subsection, we had a $5!$-to-$1$ function from set of all ordered sequences to set of all distinct hands (which are the unordered sequences we count for).
 
 \section{Sampling with Replacement}
-Sampling with replacement is another different scenario of sampling we'd like to consider. \\
-Perhaps the most daily-life example would be gacha games, where in each trial players have a constant probability of obtaining a specific in-game item. \\
-To avoid counterarguments: if your game doesn't have constant probability and is also not sampling without replacement, it's a third type of scenario where we have a separate probability model and is not simplistic enough for the scope of this section. I don't know, you may have played the wrong game. \\
-But perhaps, a slightly more relatable example would have been tossing coins. In each coin toss, the only two possible results are heads and tails. You can sample a head, but cannot remove the possibility of rolling a head from the total possible consequences of tossing a coin. Therefore, this is sampling with replacement. \\
-I also don't want to talk about instances where your coin does not land on head or tails. As COMPSCI 70 emphasize, we do not condone cheating.
-
 What are the mathematical properties of sampling with replacement? \\
-Well, since no elements are removed from $S$, the number of possible choices across each selection will be constant, provided that the numebr of elements in $S$ is always constant and does not decrease. \\
-Since we have $n$ choices in each trial, across $k$ selections in the process of creating a $k$-length sequence, 
+Since no elements are removed from $S$, the number of possible choices across each selection will be constant, provided that the numebr of elements in $S$ is always constant and does not decrease. \\
+And, since we have $n$ choices in each trial, across $k$ selections in the process of creating a $k$-length sequence, 
 \[n_1 = n_2 = \cdots = n_k = n\]
 Therefore, the total number of possible ordered $k$-length sequences from an $n$-element set $S$ under sample with replacement is $n^k$.
 
@@ -152,33 +145,44 @@ The length of our binary string, provided $n$ elements and $k$ bins, is $n + k -
 A position corresponds to one specific value: once it is used, you may not reuse the position for another value and the position will be removed from the set of all possible options. The ordering also does not matter. \\
 Therefore, we are essentially sampling $k$ locations from $k + n - 1$ without replacement where order does not matter, which provides the total number of multisets as:
 \begin{ln-theorem}{Balls and Urns}{}
-    Generally, the number of ways to place $n$ balls into $k$ bins is:
+    Generally, the number of ways to place $n$ indistinguishable balls into $k$ distinguishable bins is:
     \[\binom{n + k - 1}{n} = \binom{n + k - 1}{k - 1}\]
 \end{ln-theorem}
 Let us also describe the intuition we have used in generating the balls and urns approach in producing a match between bitstrings and ball-urn allocations:
 \begin{ln-theorem}{Zeroth Rule of Counting}{}
     If a set $A$ can be placed into a one-to-one correspondence with a set $B$ (in other words, find a bijection $f: A \rightarrow B$), then $|A| = |B|$.
 \end{ln-theorem}
+Upon which, let's attempt an elaboration on the knowledge of balls and urns:
+\begin{ln-think}{Balls and Urns with No Empty Urns}{}
+    Q: How many ways are there to put $n$ balls into $k$ urns such that there are no empty urns?
+    \tcblower
+    This is a variant of the balls and urns derivation, where instead of using $1$ to notate the boundary of bins, we use $01$ instead to ensure all bins on the left of some boundary receive at least one ball. Meanwhile, a character $0$ is put as the rightmost bit of the ball-urn representing bitstring. \\
+    Now, how long is this bitstring, if we consider bits to be represented by $0$ and $01$ (instead of $1$)? \\
+    We will realize that while $n - (k - 1)$ bits would be $0$, $k - 1$ bits would be $01$. Furthermore, we are only permitted $n - 1$ positions to freely choose on the insertion of $0$ (since $k - 1$ of $0$s are used in bin boundaries, and another 1 is put as the rightmost bit of the bitstring). \\
+    Therefore, the number of ways balls and urns operate with no empty bins would be:
+    \[\binom{n - 1}{k - 1}\]
+\end{ln-think}
 
 \section{Combinatorial Proofs}
 In short, proofs on combinatorials. They are mostly identity proofs. Let us explore a few examples/categories from below sections:
 
 \subsection{Binomial Theorem}
 \begin{ln-theorem}{Binomial Theorem}{}
-    \[\forall n \in \N ({(a + b)}^n = \sum_{k = 0}^n \binom{n}{k} a^k b^{n - k})\]
+    \[\forall n \in \N, {(a + b)}^n = \sum_{k = 0}^n \binom{n}{k} a^k b^{n - k}\]
+    \tcblower
+    \textbf{Proof}: \\
+    The LHS is a product of $n$ terms $(a + b)$. \\
+    Let these factors be labeled sets $f_1, \dots, f_n$ for generality. \\
+    For multiplying factors $f_1$, $f_2$, a total of $4$ two-term combinations is made via matching each term of $f_1$ to each term of $f_2$:
+    \[f_1 \times f_2 = \{(a_{f_1}, a_{f_2}), (a_{f_1}, b_{f_2}), (b_{f_1}, a_{f_2}), (b_{f_1}, b_{f_2})\}\]
+    \[(a + b)^2 = a^2 + ab + ba + b^2\]
+    Every term in such polynomial is in some form $a^k b^{n - k}$. It would be reasonable to see how this term contributes to the over sums of polynomial. \\
+    We produce terms $a^k b^{n - k}$ when $k$ copies of $a$ and $n$ copies of $b$ are multiplied, and there are $\binom{n}{k}$ ways to form such terms. \\
+    Therefore, for each index $k$ possible (which spans from $0$ to $n$, standing for the number of $a$ apparent in the monomial), the sum of such monomials is the product of its value and number of such pairing:
+    \[\binom{n}{k} a^k b^{n - k}\]
+    Sum this product over all possible $k$, we will get the value of ${(a + b)}^n$, which is the sum of all possible monomials (products) achieved:
+    \[\sum_{k = 0}^n \binom{n}{k} a^k b^{n - k}\]
 \end{ln-theorem}
-
-The LHS is a product of $n$ terms $(a + b)$. \\
-Let these factors be labeled sets $f_1, \dots, f_n$ for generality. \\
-For multiplying factors $f_1$, $f_2$, a total of $4$ two-term combinations is made via matching each term of $f_1$ to each term of $f_2$:
-\[f_1 \times f_2 = \{(a_{f_1}, a_{f_2}), (a_{f_1}, b_{f_2}), (b_{f_1}, a_{f_2}), (b_{f_1}, b_{f_2})\}\]
-\[(a + b)^2 = a^2 + ab + ba + b^2\]
-Every term in such polynomial is in some form $a^k b^{n - k}$. It would be reasonable to see how this term contributes to the over sums of polynomial. \\
-We produce terms $a^k b^{n - k}$ when $k$ copies of $a$ and $n$ copies of $b$ are multiplied, and there are $\binom{n}{k}$ ways to form such terms. \\
-Therefore, for each index $k$ possible (which spans from $0$ to $n$, standing for the number of $a$ apparent in the monomial), the sum of such monomials is the product of its value and number of such pairing:
-\[\binom{n}{k} a^k b^{n - k}\]
-Sum this product over all possible $k$, we will get the value of ${(a + b)}^n$, which is the sum of all possible monomials (products) achieved:
-\[\sum_{k = 0}^n \binom{n}{k} a^k b^{n - k}\]
 
 The Binomial Theorem would then contribute to an interesting identity. Let us set $a = 1$, $b = -1$ in binomial theorem. Then:
 \begin{align*}
@@ -186,43 +190,48 @@ The Binomial Theorem would then contribute to an interesting identity. Let us se
     &= \sum_{k = 0}^n \binom{n}{k} {(-1)}^k {(1)}^{n - k} \\
     &= \sum_{k = 0}^n \binom{n}{k} {(-1)}^k = 0
 \end{align*}
-Zamn! Did you just use binomial theorem to prove that $-1 + 1 = 0$ to the $n^{th}$ power is still $0$? \\
+Huh, what! Did you just use binomial theorem to prove that $-1 + 1 = 0$ to the $n^{th}$ power is still $0$? \\
 Yeah, we did. But the last line of the proof, which is the combinatorial identity we have produced, is arugably more valuable.
 
 \subsection{Combinatorial Identities}
 Here are two interesting combinatorial identities to capitalize off in several proofs.
 
 For now, let's talk about the first of two:
-\begin{ln-define}{Hockey-Stick Identity}{}
+\begin{ln-theorem}{Hockey-Stick Identity}{}
     The Hockey-Stick Identity states that:
-    \[\binom{n}{k + 1} = \sum_{i = n - 1}^k \binom{i}{k}\]
-\end{ln-define}
-The LHS of this identity is the number of ways to choose a $(k + 1)$-length subset from an $n$-element set $S$. \\
-For generality, let us denote $S$ such that:
-\[S = \{S_1, \cdots, S_n\},\ \ S_1 < \cdots < S_n\]
-If we let the lowest-value element of the subset to be $S_1$, then we will have $k$ elements to choose from the rest of $n - 1$ elements from $S$. Therefore, it contributes $\binom{n - 1}{k}$ to the total number of combinations. \\
-If we let the lowest-value element of the subset to be $S_i$, then we will have $k$ elements to choose from the rest of $n - i$ elements from $S$ (because $i$ elements of $S$ are smaller than or equal to the smallest element of subset). Therefore, it contributes $\binom{n - i}{k}$ to the total number of combinations. \\
-This sum will continue until we let the lowest-value element of subset to be $S_{n - k}$, where we would be left with $n - (n - k) = k$ elements to choose from: the bare minimum. \\
-Totaling all above contribution leads to the Hockey-Stick Identity:
-\[\binom{n}{k + 1} = \sum_{i = n - 1}^k \binom{i}{k}\]
+    \[\binom{n}{k + 1} = \sum_{i = k}^{n - 1} \binom{i}{k}\]
+    \tcblower
+    \textbf{Combinatorial Proof}:
+    The LHS of this identity is the number of ways to choose a $(k + 1)$-length subset from an $n$-element set $S$. \\
+    For generality, let us denote $S$ such that:
+    \[S = \{S_1, \cdots, S_n\},\ \ S_1 < \cdots < S_n\]
+    Make the following observation on how we can produce subsets:
+    \begin{bindenum}
+        \item If we let the lowest-value element of the subset to be $S_1$, then we will have $k$ elements to choose from the rest of $n - 1$ elements from $S$. Therefore, it contributes $\binom{n - 1}{k}$ to the total number of combinations.
+        \item If we let the lowest-value element of the subset to be $S_i$, then we will have $k$ elements to choose from the rest of $n - i$ elements from $S$ (because $i$ elements of $S$ are smaller than or equal to the smallest element of subset). Therefore, it contributes $\binom{n - i}{k}$ to the total number of combinations.
+    \end{bindenum}
+    This sum will continue until we let the lowest-value element of subset to be $S_{n - k}$, where we would be left with $n - (n - k) = k$ elements to choose from: the bare minimum. \\
+    Totaling all above contribution leads to the Hockey-Stick Identity.
+\end{ln-theorem}
 
 The second identity I'd like to introduce to you is:
-\begin{ln-define}{Sum of combinations from $n$ items}{}
+\begin{ln-theorem}{Sum of combinations from $n$ items}{}
     \[\sum_{k = 0}^n \binom{n}{k} = 2^n\]
-\end{ln-define}
-This identity can be proved via setting $a = 1$, $b = 1$ from the binomial theorem:
-\begin{align*}
-    2^n &= (1 + 1)^n \\
-    &= \sum_{k = 0}^n \binom{n}{k} {1}^k {1}^{n - k} \\
-    &= \sum_{k = 0}^n \binom{n}{k} {1}^k = \sum_{k = 0}^n \binom{n}{k}
-\end{align*}
-To discuss this via interpretation, suppose we have a set $S$ with $n$ distinct elements. \\
-The LHS of this identity counts the number of ways of choosing an $i$-lengthed subset. \\
-The RHS, meanwhile, counts the total number of possible subsets (see the Chapter for Set Theory in this document). \\
-Therefore, the LHS and RHS of this identity indeed denote the same value!
+    \tcblower
+    This identity can be proved via setting $a = 1$, $b = 1$ from the binomial theorem:
+    \begin{align*}
+        2^n &= (1 + 1)^n \\
+        &= \sum_{k = 0}^n \binom{n}{k} {1}^k {1}^{n - k} \\
+        &= \sum_{k = 0}^n \binom{n}{k} {1}^k = \sum_{k = 0}^n \binom{n}{k}
+    \end{align*}
+    To discuss this via combinatorial proof (which is via interpretation of both sides of equation), suppose we have a set $S$ with $n$ distinct elements. \\
+    The LHS of this identity counts the number of ways of choosing an $i$-lengthed subset. \\
+    The RHS, meanwhile, counts the total number of possible subsets (see the Chapter for Set Theory in this document). \\
+    Therefore, the LHS and RHS of this identity indeed denote the same value!
+\end{ln-theorem}
+
 
 \subsection{Permutation and Derangements}
-In combinatorics, we have a famous problem. Here it goes. \\
 Assume that we collect the namecard of $n$ people, and redistribute them into the $n$ people. On average, how many people recieve their own namecard?
 
 Let us look at this in a combinatorics perspective. \\
@@ -231,7 +240,8 @@ Then, the vector $\vec{\pi} = \begin{bmatrix} \pi_1 & \cdots & \pi_n \end{bmatri
 In this setting, the situation at which a person receives his own namecard is when $\pi_i = i$. \\
 Therefore, the number of people who receive their own namecard is the amount of index at which $\pi_i = i$. These points are called ``fixed points''.
 
-A permutation with no fixed points is called a \textbf{derangement}. There is a formula for the number of derangements provided a set of $n$ distinct elements:
+A permutation with no fixed points is called a \textbf{derangement}. \\
+There is a formula for the number of derangements provided a set of $n$ distinct elements:
 \begin{ln-theorem}{Number of Derangements}{}
     \textbf{Theorem}: For an arbitrary positive integer $n \geq 3$, the number $D_n$ of derangements of $\{1, \dots, n\}$ satisfies:
     \[D_n = (n - 1)(D_{n - 1} + D_{n - 2})\]
@@ -242,7 +252,7 @@ A permutation with no fixed points is called a \textbf{derangement}. There is a 
     Or, if $\pi_j \neq n$, then $n$ satisfies the same constraint as $j$ (in not being able to be the value $j$). Therefore, we have $n - 1$ values left to form derangements with, which provides $D_{n - 1}$ possibilities. \\
     This completes the derivation of the above formula.
 \end{ln-theorem}
-Notably, with the boundary conditions $D_1 = 0$ and $D_2 = 1$, we can then determine $D_n$ computationally via recursion and memoization. \\
+Notably, with the boundary conditions $D_1 = 0$ and $D_2 = 1$, we can then determine $D_n$ computationally via recursion and rather efficiently with the use of memoization. \\
 The derivation is not shown here, but the recursion would then yield that:
 \[D_n = n! \sum_{k = 0}^n \frac{{(-1)}^k}{k!}\]
 
@@ -264,7 +274,8 @@ This brings us to the generalization of this logic over an arbitrary number of s
     For the sake of clarifying the proof, define an index set $M \subseteq \{1, \dots, n\}$ as:
     \[M = \{i \in \{1, \dots, n\}:\ a \in A_i\}\]
     applying the prior logic, $a \in A_i$ iff $i \in M$. Here, if the subset $S$ we find is not contained by $M$, then $a \notin \cap_{i \in S}A_i$. \\
-    Therefore, for $a$ to be counted, $a \in \cap_{i \in S}A_i$ for any non=empty subset $S \subseteq M$. The number of subsets that have counted $a$ on RHS is thus:
+    Therefore, for $a$ to be counted, $a \in \cap_{i \in S}A_i$ for any non-empty subset $S \subseteq M$. \\
+    The number of subsets that have counted $a$ on RHS is thus:
     \[\sum_{k = 1}^n {(-1)}^{k - 1} \sum_{S \subseteq \{1, \cdots, n\}:|S| = k} 1 = \sum_{k = 0}^m \binom{m}{k} {(-1)}^{k - 1} = 1\]
 \end{ln-theorem}
 And applying this to the derangement problem:
@@ -285,6 +296,16 @@ And applying this to the derangement problem:
         D_n
         &= n! - |A_1 \cup \cdots \cup A_n| \\
         &= n! (1 - \sum_{k = 1}^n {(-1)}^{k - 1} \frac{1}{k!}) \\
-        &= n! \sum_{k = 1}^n {(-1)}^{k} \frac{1}{k!}
+        &= n! \sum_{k = 1}^n \frac{{(-1)}^{k}}{k!}
     \end{align*}
 \end{ln-quest}
+
+\section{Personal Regards on this Topic}
+The biggest takeaways from this chapter would be the ability to answer the following questions:
+\begin{bindenum}
+    \item In the counting problem I work at, does order matter?
+    \item In the counting problem I work at, is sampling with or without replacement?
+    \item How do I perform combinatorial proofs by creating stories (interpretation of combinatorial expression) for both sides of the equations?
+    \item How do I setup counting problems and see what object do I exactly need to count?
+\end{bindenum}
+And combinatorial identities can prove useful if you bring them along on cheat sheets; as you see, combinatorial arguments of this chapter have hugely relied on the power of many combinatorial identities.
