@@ -278,6 +278,9 @@ This brings us to the generalization of this logic over an arbitrary number of s
     The number of subsets that have counted $a$ on RHS is thus:
     \[\sum_{k = 1}^n {(-1)}^{k - 1} \sum_{S \subseteq \{1, \cdots, n\}:|S| = k} 1 = \sum_{k = 0}^m \binom{m}{k} {(-1)}^{k - 1} = 1\]
 \end{ln-theorem}
+On the perspective of some venn diagram of events, inclusion-exclusion principle serves to calculate the net area of venn diagram by repeating the process of subtracting overlapped regions and adding back over-subtracted regions. \\
+It is notable that, however, inclusion-exclusion used in probabilistic contexts provide diminishing marginal utility due to computational cost, and usually perform a good enough job at the third iteration of adding/subtracting areas.
+
 And applying this to the derangement problem:
 \begin{ln-quest}{Count Derangements}{}
     Let $A_i$ denote the set of all permutations with $i$ being a fixed point. \\

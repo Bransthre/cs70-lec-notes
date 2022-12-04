@@ -1,9 +1,8 @@
 \chapter{Conditional Probability, Independence, Combination of Events}
-Chapter Description.
 
 \section{Conditional Probability}
 Sometimes, the sample space available to us at the moment depends on the events that has occurred before it. \\
-For example, if we have sampled without replacement, the probability of getting a particular sample point would change due to the change in sample space. \\
+For example, if we have sampled without replacement, the probability of getting a particular outcome in some random experiment would change due to the change in sample space. \\
 Mathematicians have organized a uniform way to describe such phenomenon where the probability of an event changes based on the event that transpires before it:
 \begin{ln-define}{Conditional Probability}{}
     Let $A$ denote the event which we'd like to know the probability of. \\
@@ -97,7 +96,7 @@ Let's explore another method of performing the above computation.
 Turns out our prior efforts have already been found by prior mathematicians, who then named them as follows:
 \begin{ln-define}[sidebyside]{Bayes Rule and Total Probability Rule}{}
     \textbf{Bayes Rule}:
-    \[\P[B|A] = \frac{\P[A \cap B]}{\P[A]}\]
+    \[\P[B|A] = \frac{\P[A \cap B]}{\P[A]} = \frac{\P[A|B] \P[B]}{\P[A]}\]
     \tcblower
     \textbf{Total Probability Rule}:
     \[\P[B] = \P[B|A] \P[A] + \P[B|\overline{A}] (1 - \P[A])\]
@@ -178,10 +177,16 @@ Therefore, it is worthy to discuss the probability theories of combination of ev
 \subsection{Independent Events}
 Let us first define the term ``independent events'':
 \begin{ln-define}{Independent Event}{}
-    Two events $A$, $B$ in the same probability space are independent if $\P[A \cap B] = \P[A] \times \P[B]$.
+    Two events $A$, $B$ in the same probability space are independent if $\P[A \cap B] = \P[A] \times \P[B]$. \\
+    In turn, the following three conditions all show independence of $A$ and $B$:
+    \begin{bindenum}
+        \item $\P[A \cap B] = \P[A] \times \P[B]$
+        \item $\P[A|B] = \P[A]$
+        \item $\P[B|A] = \P[B]$
+    \end{bindenum}
 \end{ln-define}
-Independence, verbosely, would then mean that the probability of event $A$ is not influenced by whether or not $B$ occurs. Therefore, under such context, $\P[A|B] = \P[A]$. \\
-Let us discuss independent events on some wider scale:
+
+Then, let us discuss independent events on some wider scale:
 \begin{ln-define}{Mutual Independence}{}
     Events $A_1, \cdots, A_n$ are said to be mutually independent if for every subset $I \subseteq \{1, \cdots, n\}$ with cardinality greater than $1$:
     \[\P[\cap_{i \in I} A_i] = \prod_{i \in I} \P[A_i]\]
@@ -214,7 +219,7 @@ The tricky part about calculating for the union of events is that: if we directl
 However, we have learned a principle that helps us to eliminate overcountings when counting over unions of sets: Inclusion-Exclusion.
 \begin{ln-define}{Inclusion-Exclusion Principle in Probability}{}
     For events $A_1, \cdots, A_n$ in some probability space, where $n \geq 2$:
-    \[\P[A_1 \cup \cdots \cup A_n] = \sum_{k = 1}^n ({(-1)}^{k - 1} \sum_{S \subseteq \{1, \cdots, n\}, |S| = K} \P[\cap_{i \in S} A_i])\]
+    \[\P[A_1 \cup \cdots \cup A_n] = \sum_{k = 1}^n \bigg({(-1)}^{k - 1} \sum_{S \subseteq \{1, \cdots, n\}, |S| = K} \P[\cap_{i \in S} A_i] \bigg)\]
     We see that this reflects to the original inclusion-exclusion principle:
     \[|A_1 \cup \cdots \cup A_n| = \sum_{k = 1}^n {(-1)}^{k - 1} \sum_{S \subseteq \{1, \cdots, n\}:|S| = k} |\cap_{i \in S}A_i|\]
 \end{ln-define}

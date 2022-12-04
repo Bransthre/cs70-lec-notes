@@ -3,7 +3,6 @@
 \section{Geometric Distribution}
 The geometric distribution frequently occurs in situations where we consider ``how long we have to wait'' for something to occur, such as ``how many run until error'', or ``how many rolls until SSR''.
 
-\subsection{Definition}
 The \textbf{geometric distribution} is then mathematically defined as below:
 \begin{ln-define}{Geometric Distribution}{}
     A random variable $X$ such that:
@@ -11,6 +10,12 @@ The \textbf{geometric distribution} is then mathematically defined as below:
     is said to have a geometric distribution with parameter $p$, mathematically expressable as:
     \[X \sim \text{Geometric}(p)\]
 \end{ln-define}
+This composition of the distribution seems reasonable! \\
+Say, the probability at which you get an ultra rare item from a game is 0.8\%. Then, the probability at which you get this item at the $k^{th}$ attempt (ecah attempt is one attempt at the $0.8\%$ probability, as implied), is:
+\[\P[X = k] = (1 - 0.008)^{k - 1} 0.008\]
+as the geometric distribution implies.
+
+All proabbilities calculated here are products of powers of nonnegative numbers; thus, will never produce negative probabilities. In that case, we only need the one-total property to hold true for this distribution to appear mathematically sound. \\
 Does such distribution sum to $1$? Allow us to verify:
 \begin{align*}
     \sum_{i = 1}^{\infty} \P[X = i]
@@ -20,8 +25,8 @@ Does such distribution sum to $1$? Allow us to verify:
     &= p \frac{1}{1 - 1 + p} = 1
 \end{align*}
 
-The distribution of $X$ would thus be some curve that decreases by a factor of $(1 - p)$ at each step; in other words, an exponential decay. \\
-From this fact, we would know that the height of curve is dependent on $p$, and the speed at which the curve decrease depends on $(1 - p)$.
+The distribution of $X$ would thus be some curve that decreases by a factor of $(1 - p)$ at each step; in other words, an exponential decay. We will see that it is, in fact, an analog to what we will later introduce as the exponential distribution, in the last chapters of these notes. \\
+And from this above fact, we would know that the amplitude of a geometric distribution's curve is dependent on $p$, while the speed at which the curve's height descend across $x$ depends on $(1 - p)$.
 
 \subsection{Mean and Variance of a Geometric RV}
 Let us first discuss the expectation of a geometric random variable. \\
@@ -67,9 +72,9 @@ Upon that, let's also discuss and derive such identity:
     With some calculus and an identity we just learned,
     \begin{align*}
         \sum_{i = 1}^\infty {(1 - p)}^i &= \frac{1}{p} \\
-        \frac{d}{di} &= \sum_{i = 1}^\infty -i{(1 - p)}^{i - 1} \\
+        \frac{d}{dp} \bigg( \frac{1}{p} \bigg) &= \sum_{i = 1}^\infty -i{(1 - p)}^{i - 1} \\
         &= -\frac{1}{p^2} \\
-        \frac{d^2}{di^2} &= \sum_{i = 1}^\infty i(i - 1) {(1 - p)}^{i - 2} \\
+        \frac{d^2}{di^2} \bigg( \frac{1}{p} \bigg) &= \sum_{i = 1}^\infty i(i - 1) {(1 - p)}^{i - 2} \\
         &= \frac{2}{p^3}
     \end{align*}
     Using the result above:
@@ -95,12 +100,10 @@ Using the linearity of expectation, we can elegantly calculate the variance of a
     \end{align*}
 \end{ln-theorem}
 
-\subsection{Memoryless}
-What? Geometric Distributions can have Alzeihmers? This is the first time I have ever seen someone who's not Alzeihmerus be memoryless! \\
-What? \\
+In addition, geometric distributions have a property called ``memoryless'':
 \begin{ln-define}{Memoryless}{}
     In memoryless distributions, prior trials do not affect the number of additional trials needed. Mathematically:
-    \[\P[X > n + m | X > n] = \P[X > n]\]
+    \[\P[X > n + m | X > m] = \P[X > n]\]
     For example, say we have already tossed the coin $m$ times, what is the probability that we need more than $n$ additional tosses before getting our first head?
     \begin{align*}
         \P[X > n + m | X > m]
@@ -110,6 +113,24 @@ What? \\
     \end{align*}
 \end{ln-define}
 In this sense, ``memorylessness'' refers to how the distribution, when calculating a tail, will not remember the given condition ($X > m$) since it doesn't contribute to the end result of a tail even given that condition.
+
+Furthermore, let us perform an interesting mathematical derivation as follows:
+\begin{ln-practice}{The Distribution of $\min(X, Y)$}{}
+    \textbf{Question}: What is the distribution of $\min(X, Y)$, provided \textit{\textbf{independent}} random variables $X \sim Geometric(p)$ and $Y \sim Geometric(q)$?
+    \tcblower
+    \textbf{Solution}:
+    Here, let us attempt to find the probability at which $\min(X, Y) = k$:
+    \begin{align*}
+        \P[\min(X, Y) = k]
+        &= \P[X = k, Y \geq k] + \P[Y = k, X > k] \\
+        &= \P[X = k \cap Y \geq k] + \P[Y = k \cap X > k] \\
+        &= {(1 - p)}^{k - 1} p {(1 - q)}^k + {(1 - q)}^{k - 1} q {(1 - p)}^{k - 1} \\
+        &= {(1 - p)}^{k - 1}{(1 - q)}^{k - 1} (p(1 - q) + q) = Geometric((1 - p)(1 - q))
+    \end{align*}
+    Furthermore, because
+    \[X + Y = \min(X, Y) + \max(X, Y)\]
+    We can use the distributions of $X \sim Geometric(p)$, $Y \sim Geometric(q)$, and $\min(X, Y) \sim Geometric((1 - p)(1 - q))$ to infer about $\max(X, Y)$ as a random variable.
+\end{ln-practice}
 
 \subsection{Example (Application)}
 What other greater application can CS70 be made on other than probabilistic problems, and more specifically, gacha games!? \\
@@ -145,9 +166,6 @@ This can be well approximated as
 Where $\gamma_E=0.5772\dots$ is known as Euler's constant.
 
 \section{Poisson Distribution}
-
-\subsection{Definition}
-To start off this discussion, let us first define its subject:
 \begin{ln-define}{Poisson Distribution}{}
     A random variable X for which:
     \[\P[X = i] = \frac{\lambda^i}{i!} e^{-\lambda}, i \in \Z^+\]
@@ -155,12 +173,15 @@ To start off this discussion, let us first define its subject:
     We may mathematically abbreviate such as:
     \[X \sim Poisson(\lambda)\]
 \end{ln-define}
-Let us, once again, verify the definition of distribution by testing whether it sums up to $1$:
+This distrbution is used to estimate the number of times an event happens (notated by the random variable $X \sim Poisson(\lambda)$) assuming the average rate at which something occurs is $\lambda$, where such parameter may be in any division of measurement unit (say clicks per second, but also clicks per minute). \\
+Therefore, while the objective of Poisson is very distinct, it is also a distribution to be carefully utilized along the contexts of a problem.
+
+Let us, once again, verify this distribution by testing whether it sums up to $1$:
 \begin{align*}
     \sum_{i = 0}^\infty \frac{\lambda^i}{i!} e^{-\lambda}
     &= e^{-\lambda} \sum_{i = 0}^\infty \frac{\lambda^i}{i!} \\
-    e^{-x} &= 1 + x + \frac{x^2}{2!} + \cdots \\
-    \sum_{i = 0}^\infty \frac{\lambda^i}{i!} e^{-\lambda}
+    e^{x} &= 1 + x + \frac{x^2}{2!} + \cdots \\
+    e^{-\lambda} \sum_{i = 0}^\infty \frac{\lambda^i}{i!}
     &= e^{-\lambda} e^{\lambda} = 1
 \end{align*}
 
@@ -172,7 +193,7 @@ For both expectation and variance, we can discover a very elegant identity. \\
         &= \sum_{i = 0}^\infty i \P[X = i] \\
         &= \sum_{i = 0}^\infty i \frac{\lambda^i}{i!} e^{-\lambda} \\
         &= e^{-\lambda} \sum_{i = 1}^\infty \frac{\lambda^i}{(i - 1)!} \\
-        &= e^{-\lambda} \lambda \sum_{i = 1}^\infty \frac{lambda^{i - 1}}{(i - 1)!} \\
+        &= e^{-\lambda} \lambda \sum_{i = 1}^\infty \frac{\lambda^{i - 1}}{(i - 1)!} \\
         &= e^{-\lambda} \lambda e^{\lambda} = \lambda
     \end{align*}
 \end{ln-theorem}
@@ -182,7 +203,7 @@ And as for variance:
         \E[X(X - 1)]
         &= \sum_{i = 0}^\infty i(i - 1) \P[X = i] \\
         &= \sum_{i = 0}^\infty i(i - 1) \frac{\lambda^i}{i!} e^{-\lambda} \\
-        &= \lambda^2 e^{-\lambda} \sum_{i = 2}^\infty \frac{lambda^{i - 2}}{(i - 2)!} \\
+        &= \lambda^2 e^{-\lambda} \sum_{i = 2}^\infty \frac{\lambda^{i - 2}}{(i - 2)!} \\
         &= \lambda^2 e^{-\lambda} e^{\lambda} = \lambda^2 \\
         Var(X) &= \E[X^2] - {(\E[X])}^2 \\
         &= \E[X(X - 1)] + \E[X] - {(\E[X])}^2 \\
@@ -204,6 +225,9 @@ And as for variance:
     \end{align*}
 \end{ln-theorem}
 
+\subsection{Binomial Distribution and Poisson Distribution}
+You may have discovered that binomial distribution and poisson distributions are very similarly used: to estimate the number of times some event occur, provided some metric of occurrence frequency. \\
+In fact, this similarity reflects on a mathematical dimension as well:
 \begin{ln-theorem}{Poisson as a Limit of Binomial}{}
     \textbf{Theorem}: Let $X \sim Binomial(n, \frac{\lambda}{n})$ where $\lambda > 0$ is constant, then
     \[\forall i \in \N, \lim_{n \rightarrow \infty}\P[X = i] = \frac{\lambda^i}{i!}e^{-\lambda}\]

@@ -1,6 +1,5 @@
 \chapter{Prediction!}
 
-\section{Introduction to Prediction}
 Prediction? Machine Learning? Uh... I think so? \\
 Next thing you know, I'm reincarnated as a Machine Learning Hypebeast. I estimated the price of your house based on your mom's age, demographics, and your IP address (and the geographic data it encompasses). \\
 However, here's the problem. I overestimated your property. The result that quantifies such an inaccurate property value is known as the \textbf{loss}, or, the error.
@@ -20,25 +19,25 @@ To summarize, the best MSE estimator for $X$ is $\E[X]$, whose MSE is $Var(X)$.
 Let's offer a recap of joint distributions:
 \begin{ln-define}{Joint Distribution}{}
     The joint distribution for two discrete random variables $X$ and $Y$ is the collection of values:
-    \[\{((a, b), \P[X = a, Y = b]) : a \in \mathcal{A}, b \in \mathcal{B}\}\]
+    \[\bigg\{ \bigg((a, b), \P[X = a, Y = b] \bigg) : a \in \mathcal{A}, b \in \mathcal{B} \bigg\}\]
     where $\mathcal{A}$ is the set of all possible values taken by $X$, and $\mathcal{B}$ is the set of all possible values taken by $Y$.
 \end{ln-define}
 By such property:
 \[\P[X = a] = \sum_{b \in \mathcal{B}} \P[X = a, Y = b]\]
 The conditional probability of $X = x$ given $Y = y$ would thus also be:
 \[\P[X = x | Y = y] = \frac{\P[X = x, Y = y]}{\P[Y = y]}\]
-The conditional expectation of $X$ given $Y = y$ is defined naturally as follows:
+The conditional expectation of $X$ given $Y = y$ is defined naturally as follows, where we average along an edge (a margin, an axis) of the distribution's variables:
 \[\E[X | Y = y] = \sum_{x \in \mathcal{A}} x \P[X = x | Y = y]\]
 
-\section{And Moving onto Iterated Expectation and Wald's Identity}
-Let us discuss this:
+\section{Iterated Expectation and Wald's Identity}
 \begin{ln-theorem}{Law of Iterated Expectations}{}
     \[
-        \E[X] = \E[\E[X | Y]] = \sum_{y \in \mathcal{B}} \E[X | Y = y] \P[Y = y]
+        \E[X] = \sum_{y \in \mathcal{B}} \E[X | Y = y] \P[Y = y] = \E[\E[X | Y]]
     \]
 \end{ln-theorem}
 
-So, let the random variable $Y = X_1 + \cdots + X_n$ be some sum of other random variables that are IID, then we can utilize the above property and conclude:
+So, let the random variable $Y = X_1 + \cdots + X_N$ be some sum of other random variables that are IID, and $N$ (the number of IID RVs) is also itself a random variable. \\
+Then, to compute the expectation of $Y = \sum_{i = 1}^n X_i$ where each of $X_i$ is independent to $N$, we derive the following identity:
 \begin{ln-theorem}{Wald's Identity}{}
     \begin{align*}
         \E[Y] &= \E[\E[Y | N]] \\
@@ -81,8 +80,8 @@ Which thus lead to:
 \[
     2\E[\overline{Y}] + 2m\E[\overline{X}] + 2b = 0
 \]
-Where we see that, since the random variables are purposedly zero-meaned, $b = 0$. Lets GOOOOOOOOOOOOOOOO!
-So this in fact means that the $b = 0$. Which provides a linear function:
+Where we see that, since the random variables are purposedly zero-meaned, $b = 0$. \\
+So indeed $b = 0$, which in turn provides a linear function:
 \[
     \mathcal{L}(X) = \frac{Cov(X, Y)}{Var(X)}(X - \E[X]) + \E[Y]
 \]
@@ -97,6 +96,3 @@ Furthermore, simplifying our mean squared error applying the solution that $b = 
     \E[\overline{Y} ^ 2] - \frac{{Cov(\overline{X}, \overline{Y})} ^ 2}{Var(\overline{X})} \\
     1 - {(Corr(\overline{X}, \overline{Y}))} ^ 2
 \end{align*}
-
-\section{Other Modifications: Statistics, Other Errors, Multivariate Regression}
-Lorem Ipsum

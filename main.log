@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.6.26)  2 DEC 2022 10:42
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.6.26)  4 DEC 2022 11:50
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1453,19 +1453,22 @@ Chapter 10.
 ] [70] [71] [72] [73]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [74] [75]) [76] (./subnotes/ln11.tex
-Chapter 11.
-[77
+ [74] [75]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-] [78]
+ [76]) [77] (./subnotes/ln11.tex
+Chapter 11.
+[78
+
+] [79]
 Underfull \hbox (badness 10000) in paragraph at lines 152--153
 
  []
 
-[79]
+[80]
 Underfull \vbox (badness 2165) has occurred while \output is active []
 
- [80] [81]) [82] (./subnotes/ln12.tex
+ [81] [82]) [83] (./subnotes/ln12.tex
 Chapter 12.
 
 Underfull \hbox (badness 10000) in paragraph at lines 18--19
@@ -1482,129 +1485,106 @@ Overfull \hbox (40.24501pt too wide) in paragraph at lines 32--32
 []        \T1/pcr/m/n/10 "print the following sentence twice, the second time in quotes and indented:"[] 
  []
 
-[83
+[84
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 91--92
 
  []
 
-[84]
+[85]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [85]) [86] (./subnotes/ln13.tex
+ [86]) [87] (./subnotes/ln13.tex
 Chapter 13.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [87
+ [88
 
-] [88] [89]
+] [89] [90]
 Underfull \hbox (badness 10000) in paragraph at lines 128--130
 
  []
 
-) [90] (./subnotes/ln14.tex
+) [91] (./subnotes/ln14.tex
 Chapter 14.
-[91
 
-] [92]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [93] [94] [95]
-Underfull \vbox (badness 4217) has occurred while \output is active []
+ [92
 
- [96]) [97] (./subnotes/ln15.tex
+] [93]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [94] [95] [96] [97]) [98] (./subnotes/ln15.tex
 Chapter 15.
 
 Underfull \vbox (badness 3635) has occurred while \output is active []
 
- [98
+ [99
 
-] [99] [100]) [101] (./subnotes/ln16.tex
+] [100] [101]) [102] (./subnotes/ln16.tex
 Chapter 16.
-[102
+[103
 
-] [103]
-Overfull \hbox (44.74213pt too wide) detected at line 88
-[]
- []
-
-[104]) [105] (./subnotes/ln17.tex
+] [104] [105]) [106] (./subnotes/ln17.tex
 Chapter 17.
-
-Underfull \vbox (badness 1540) has occurred while \output is active []
-
- [106
-
-] [107]) [108] (./subnotes/ln19.tex
-Chapter 18.
-
-Underfull \vbox (badness 3492) has occurred while \output is active []
-
- [109
+[107
 
 ]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [110]
-Underfull \hbox (badness 10000) in paragraph at lines 99--111
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
 
  []
 
+[108] [109]) [110] (./subnotes/ln19.tex
+Chapter 18.
+[111
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [111] [112]
-Underfull \hbox (badness 10000) in paragraph at lines 168--178
+] [112] [113] [114]
+Underfull \hbox (badness 10000) in paragraph at lines 189--199
 
  []
 
+[115]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Underfull \vbox (badness 3417) has occurred while \output is active []
-
- [113] [114]) [115] (./subnotes/ln20.tex
+ [116]) [117] (./subnotes/ln20.tex
 Chapter 19.
-[116
+[118
 
-] [117]
-Overfull \hbox (1.61458pt too wide) in paragraph at lines 83--86
-\T1/ptm/m/n/10 Where we see that, since the ran-dom vari-ables are pur-pos-edly zero-meaned, $\OML/ztmcm/m/it/10 b \OT1/ztmcm/m/n/10 = 0$\T1/ptm/m/n/10 . Lets GOOOOOOOOOOOOOOOO!
- []
-
-) [118] (./subnotes/ln21.tex
+] [119]) [120] (./subnotes/ln21.tex
 Chapter 20.
-[119
 
-] [120]
-Underfull \vbox (badness 1484) has occurred while \output is active []
+Underfull \vbox (badness 4518) has occurred while \output is active []
 
- [121] [122]
+ [121
+
+] [122] [123] [124]
 Underfull \hbox (badness 10000) in paragraph at lines 181--182
 
  []
 
-[123]
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [124]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \hbox (badness 10000) in paragraph at lines 193--195
 
- [125]) [126] (./main.aux)
+ []
+
+[125] [126] [127]) [128] (./main.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.55997pt have occurred.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: AC125B90EAABDE3A65674F7011E00322;21004.
+(rerunfilecheck)             Checksum: 57CF8228DDD3D67930129578E5A1F16F;20177.
  ) 
 Here is how much of TeX's memory you used:
- 65011 strings out of 475882
- 1632068 string characters out of 5806027
- 2275854 words of memory out of 5000000
- 85086 multiletter control sequences out of 15000+600000
- 524879 words of font info for 128 fonts, out of 8000000 for 9000
+ 65018 strings out of 475882
+ 1632174 string characters out of 5806027
+ 2274854 words of memory out of 5000000
+ 85092 multiletter control sequences out of 15000+600000
+ 526551 words of font info for 129 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  114i,16n,145p,863b,2126s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (126 pages).
+Output written on main.pdf (128 pages).

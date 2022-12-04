@@ -81,7 +81,7 @@ Let us explore a similar rule on the product of independent random variables:
     For independenct random variables $X$, $Y$:
     \begin{align*}
         Var(X + Y)
-        &= \E[{(X + Y)}^2] - {(\E[X + Y])}^2
+        &= \E[{(X + Y)}^2] - {(\E[X + Y])}^2 \\
         &= \E[X^2] + \E[Y^2] - \E[2XY] - {(\E[X + Y])}^2 \\
         &= (\E[X^2] - {\E[X]}^2) + (\E[Y^2] - {\E[Y]}^2) + 2(\E[XY] - \E[X]\E[Y]) \\
         &= Var(X) + Var(Y) + 2(\E[XY] - \E[X]\E[Y]) = Var(X) + Var(Y)
@@ -107,3 +107,4 @@ To measure the correlation of random variables, whose standard deviations are bo
     And this value must be such that:
     \[-1 \leq Corr(X, Y) \leq 1\]
 \end{ln-define}
+It is worthy to note that while all independent random variables have zero covariance, zero-covariance itself does not imply independence.
