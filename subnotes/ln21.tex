@@ -296,12 +296,13 @@ The theorem now guides us to a more general statement:
 
 \section{Central Limit Theorem}
 \begin{ln-theorem}{Central Limit Theorem}{}
-    Let $X_1, \dots, X_n$ be a sequence of IID random variables with common finite expectation $\E[X_i] = \mu$ and finite variances $Var(X_i) = \sigma_i^2$. \\
+    Let $X_1, \dots, X_n$ be a sequence of IID random variables with common finite expectation $\E[X_i] = \mu$ and finite variances $Var(X_i) = \sigma_i^2$. $S_n$ is the sum $\sigma_i X_i$.\\
     Then the distribution of $\frac{S_n - n\mu}{\sigma \sqrt{n}}$ converges to $N(0, 1)$ as $n \rightarrow \infty$. \\
     Therefore, as $n \rightarrow \infty$:
     \[
         \P[\frac{S_n - n\mu}{\sigma \sqrt{n}} \leq c] \rightarrow \frac{1}{2\pi} \int_{-\infty}^c e^{-\frac{x^2}{2}} dx
     \]
-    Such that the above distribution converges onto a standard normal distribution. \\
-    By that context, the distribution of observed average of $n$ observations on some random experiment will be a normal distribution centered at the true value (population mean in statistical context) of that random variable's expectation.
+    Which would in fact be the distribution of sample mean. \\
+    Then, the Central Limit Theorem mathematically promise such that the above distribution converges onto a standard normal distribution. \\
+    By that context, the distribution of observed average of $n$ observations on some random experiment will be a normal distribution centered at the true value (population mean in statistical context) of that random variable's expectation ($\mu$), with standard deviation $\frac{\sigma}{\sqrt{n}}$.
 \end{ln-theorem}

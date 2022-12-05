@@ -173,8 +173,9 @@ Where $\gamma_E=0.5772\dots$ is known as Euler's constant.
     We may mathematically abbreviate such as:
     \[X \sim Poisson(\lambda)\]
 \end{ln-define}
-This distrbution is used to estimate the number of times an event happens (notated by the random variable $X \sim Poisson(\lambda)$) assuming the average rate at which something occurs is $\lambda$, where such parameter may be in any division of measurement unit (say clicks per second, but also clicks per minute). \\
-Therefore, while the objective of Poisson is very distinct, it is also a distribution to be carefully utilized along the contexts of a problem.
+This distrbution is used to estimate the number of times an event happens (notated by the random variable $X \sim Poisson(\lambda)$) assuming the average number of occurrence in some periodic unit is $\lambda$, where such parameter may be in any division of measurement unit (say clicks occuring per second, but also clicks occuring per minute). \\
+Therefore, while the objective of Poisson is very distinct, it is also a distribution to be carefully utilized along the contexts of a problem. Specifically, depending on the problem's description of length of period (10 seconds? 10 minutes?) on which we model the Poisson distribution, we might need to multiply some given average rate of occurrence with the length of period to obtain the parameter $\lambda$ (once again, stands for average number of occurrence).
+Essentially, then, $\lambda$ is the mean of some distribution!
 
 Let us, once again, verify this distribution by testing whether it sums up to $1$:
 \begin{align*}
