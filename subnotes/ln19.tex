@@ -125,11 +125,11 @@ Furthermore, let us perform an interesting mathematical derivation as follows:
         &= \P[X = k, Y \geq k] + \P[Y = k, X > k] \\
         &= \P[X = k \cap Y \geq k] + \P[Y = k \cap X > k] \\
         &= {(1 - p)}^{k - 1} p {(1 - q)}^k + {(1 - q)}^{k - 1} q {(1 - p)}^{k - 1} \\
-        &= {(1 - p)}^{k - 1}{(1 - q)}^{k - 1} (p(1 - q) + q) = Geometric((1 - p)(1 - q))
+        &= {(1 - p)}^{k - 1}{(1 - q)}^{k - 1} (p(1 - q) + q) = Geometric(1 - (1 - p)(1 - q))
     \end{align*}
     Furthermore, because
     \[X + Y = \min(X, Y) + \max(X, Y)\]
-    We can use the distributions of $X \sim Geometric(p)$, $Y \sim Geometric(q)$, and $\min(X, Y) \sim Geometric((1 - p)(1 - q))$ to infer about $\max(X, Y)$ as a random variable.
+    We can use the distributions of $X \sim Geometric(p)$, $Y \sim Geometric(q)$, and $\min(X, Y) \sim Geometric(1 - (1 - p)(1 - q))$ to infer about $\max(X, Y)$ as a random variable.
 \end{ln-practice}
 
 \subsection{Example (Application)}
