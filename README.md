@@ -17,7 +17,7 @@ On a professional note, yes, you may use these for personal purposes and gaining
 
 On a professional note, once again, the CS70 official course notes are structured in a pedagogical imperative: it connects concepts to optimize student understanding and the coherency of course content (even if it might have been confusing on the first reads).
 This course note does not. I was not obligated to connect concepts. I was only writing the work to organize information for my own sake. This work is not specifically written for the public just like my CSM resources were.
-**My notes is by no means a substitute of CS70.**
+**My notes is by no means a substitute of CS70 official notes.**
 
 But, thinking from the other angle, we may consider these notes I produced as a complementary resource for CS70.
 
