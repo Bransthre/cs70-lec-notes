@@ -1,6 +1,6 @@
 # cs70-lec-notes
 CS70 moment.\
-Hello, I am Brandon, the author of this lecture note series. Here are my notes about how you should treat my notes, for people to learn CS70 properly, and for this series of notes to remain helpful.
+Hello, I am Brandon, the author of this lecture note series. Here are my notes about how you should treat my notes, for people to learn CS70 properly if they upon unfortunate transpirations had to read my notes, and for this series of notes to remain helpful.
 
 ## Any Advices on CS70?
 For some reason, I was patient enough to organize my thoughts right when I completed CS70.\
